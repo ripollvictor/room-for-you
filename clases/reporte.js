@@ -19,6 +19,17 @@ class Reporte{
     getVivienda(){
         return this.vivienda
     }
-    
+    setContenido(value){
+        this.contenido = value
+    }
+    setFecha(value){
+        this.fecha = value
+    }
+    setUsuario(value){
+        this.usuario = value
+    }
+    setVivienda(value){
+        this.vivienda = value
+    }
 
 }

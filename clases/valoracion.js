@@ -22,5 +22,20 @@ class Valoracion{
     getVivienda(){
         return this.vivienda
     }
+    setPuntuacion(value){
+        this.puntuacion = value
+    }
+    setComentario(value){
+        this.comentario = value
+    }
+    setFecha(value){
+        this.fecha = value
+    }
+    setUsuario(value){
+        this.usuario = value
+    }
+    setVivienda(value){
+        this.vivienda = value
+    }
 
 }
