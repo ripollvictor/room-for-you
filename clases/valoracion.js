@@ -11,16 +11,16 @@ class Valoracion{
          return this.puntuacion
      }
      getComentario(){
-         return this.comentario
-     }
-     getFecha(){
-         return this.fecha
-     }
-     getUsuario(){
-         return this.usuario
-     }
-     getVivienda(){
-         return this.vivienda
-     }
+        return this.comentario
+    }
+    getFecha(){
+        return this.fecha
+    }
+    getUsuario(){
+        return this.usuario
+    }
+    getVivienda(){
+        return this.vivienda
+    }
 
 }

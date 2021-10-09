@@ -22,7 +22,7 @@ class Usuario{
    getFechaNacimiento(){
        return this.fechanacimiento
    }
-   getNumerotelefono(){
+   getNumeroTelefono(){
        return this.numerotelefono
    }
    getEmail(){
@@ -31,5 +31,25 @@ class Usuario{
    getContrasena(){
        return this.contrasena
    }
-
+   setNombre(value){
+       this.nombre = value
+   }
+   setApellidos(value){
+       this.apellidos = value
+   }
+   setTags(value){
+       this.tags = value
+   }
+   setFechaNacimiento(value){
+       this.fechanacimiento = value
+   }
+   setNumeroTelefono(values){
+       this.numerotelefono = values
+   }
+   setEmail(value){
+       this.email = value
+    }
+    setContrasena(value){
+        this.contrasena = value
+    }
 }

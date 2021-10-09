@@ -47,5 +47,11 @@ class Vivienda{
    getFechaRegistro(){
        return this.fecharegistro
    }
+   setLatitud(value){
+       this.latitud = value
+   }
+   setLongitud(value){
+       this.longitud = value
+   }
 
 }
