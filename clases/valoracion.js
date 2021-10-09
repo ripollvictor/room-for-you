@@ -10,5 +10,17 @@ class Valoracion{
      getPuntuacion(){
          return this.puntuacion
      }
+     getComentario(){
+         return this.comentario
+     }
+     getFecha(){
+         return this.fecha
+     }
+     getUsuario(){
+         return this.usuario
+     }
+     getVivienda(){
+         return this.vivienda
+     }
 
 }
