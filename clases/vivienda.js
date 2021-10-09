@@ -53,5 +53,28 @@ class Vivienda{
    setLongitud(value){
        this.longitud = value
    }
-
+   setNumero(value){
+       this.numero = value
+   }
+   setEscalera(value){
+       this.escalera = value
+   }
+   setPiso(value){
+       this.piso = value
+   }
+   setPuerta(value){
+       this.puerta = value
+   }
+   setMetrosCuadrados(value){
+       this.metroscruadrados = value
+   }
+   setBanos(value){
+       this.banos = value
+   }
+   setTipo(value){
+       this.tipo = value
+   }
+   setFechaRegistro(value){
+       this.fecharegistro = value
+   }
 }

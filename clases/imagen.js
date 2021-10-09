@@ -10,5 +10,11 @@ getImagen(){
 getLugar(){
     return this.lugar
 }
+setImagen(value){
+    this.imagen = value
+}
+setLugar(value){
+    this.lugar = value
+}
 
 }

@@ -19,5 +19,6 @@ class Reporte{
     getVivienda(){
         return this.vivienda
     }
+    
 
 }

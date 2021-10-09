@@ -18,5 +18,17 @@ class Habitacion{
    getVivienda(){
        return this.vivienda
    }
+   setPrecio(value){
+       this.precio = value
+   }
+   setCaracteristicas(value){
+       this.caracteristicas = value
+   }
+   setMetrosCuadrados(value){
+       this.metroscuadrados = value
+   }
+   setVivienda(value){
+       this.vivienda = value
+   }
 
 }
