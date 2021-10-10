@@ -18,7 +18,7 @@ class Usuario{
        return this.apellidos
    }
    getTags(){
-       return this
+       return this.tags
    }
    getFechaNacimiento(){
        return this.fechanacimiento
