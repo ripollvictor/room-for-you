@@ -23,7 +23,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 //const db = firebase.firestore();
-
+/*
+import firebase from '../database/firebase'
+import { getFirestore, collection, getDocs,doc } from 'firebase/firestore/lite';
+esto es lo que lleven llevar las otras clases
+*/
 export default {
  //   firebase,
     db,

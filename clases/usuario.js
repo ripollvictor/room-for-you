@@ -9,6 +9,7 @@ class Usuario{
       this.contrasena = contrasena
    }
    
+   
    getNombre(){
        return this.nombre
    }
@@ -51,5 +52,12 @@ class Usuario{
     }
     setContrasena(value){
         this.contrasena = value
-    }
+    }  
+    
 }
+export function crearpersona() {
+    var aux = new Usuario('pepe','botella','otaku',Date(1995,11,17),17232312,'poppy@gmail.com','2DEH2E2');
+    return aux; 
+}
+
+

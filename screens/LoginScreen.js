@@ -1,8 +1,14 @@
 import React, {useState} from "react";
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
+import '../clases/usuario'
+//import {anadirusuario} from'../database/pruebas'
+import '../database/pruebas'
+
 
 import firebase from '../database/firebase'
 import { getFirestore, collection, getDocs,doc } from 'firebase/firestore/lite';
+import { crearpersona } from "../clases/usuario";
+import { anadirusuario } from "../database/pruebas";
 
 
 
@@ -44,7 +50,8 @@ const LoginScreen = () => {
 }
 const db = firebase.db;
 
-
+var auxus = crearpersona();
+anadirusuario(auxus);
 (async () => {
     const snapshot = await getDocs(collection(db,'Habitacion'));
 
