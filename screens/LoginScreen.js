@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
+
 import firebase from '../database/firebase'
+import { getFirestore, collection, getDocs,doc } from 'firebase/firestore/lite';
+
 
 
 const LoginScreen = () => {
@@ -39,12 +42,19 @@ const LoginScreen = () => {
         </ScrollView>
     )
 }
+const db = firebase.db;
 
-const snapshot = firebase.db.collection('Habitacion').get();
+
+(async () => {
+    const snapshot = await getDocs(collection(db,'Habitacion'));
+
 snapshot.forEach((doc) => {
   console.log(doc.id, '=>', doc.data());
 });
 
+    // all of the script.... 
+
+})();
 const styles = StyleSheet.create({
     inputComponent: {
         flex:1,
