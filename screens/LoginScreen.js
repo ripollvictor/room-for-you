@@ -49,6 +49,8 @@ const LoginScreen = () => {
     )
 }
 const db = firebase.db;
+/*
+codigo  spagheti para agregar cosas
 
 var auxus = crearpersona();
 anadirusuario(auxus);
@@ -59,9 +61,12 @@ snapshot.forEach((doc) => {
   console.log(doc.id, '=>', doc.data());
 });
 
+
+
     // all of the script.... 
 
 })();
+*/
 const styles = StyleSheet.create({
     inputComponent: {
         flex:1,
