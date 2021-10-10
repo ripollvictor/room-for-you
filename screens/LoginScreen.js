@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
+import firebase from '../database/firebase'
 
 
 const LoginScreen = () => {
@@ -38,6 +39,11 @@ const LoginScreen = () => {
         </ScrollView>
     )
 }
+
+const snapshot = firebase.db.collection('Habitacion').get();
+snapshot.forEach((doc) => {
+  console.log(doc.id, '=>', doc.data());
+});
 
 const styles = StyleSheet.create({
     inputComponent: {
