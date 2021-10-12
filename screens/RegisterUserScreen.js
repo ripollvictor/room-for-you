@@ -88,29 +88,34 @@ const RegisterUserScreen = () => {
     return (
         <ScrollView>
             <View>
-                <Text>
-                    Register User
+                <Text style={styles.titleText}>
+                    Introduce los datos:
                 </Text>
             </View>
             <View style={styles.inputComponent}>
-                <TextInput placeholder="Nombre" 
+                <TextInput style={styles.textInput} placeholder="Nombre" 
                 onChangeText={(value) => handleChangeText("nombre", value)} />
             </View>
             <View style={styles.inputComponent}>
-                <TextInput placeholder="Apellidos"
+                <TextInput style={styles.textInput} placeholder="Apellidos"
                 onChangeText={(value) => handleChangeText("apellidos", value)} />
             </View>
             <View style={styles.inputComponent}>
-                <TextInput placeholder="Tags"
+                <TextInput style={styles.textInput} placeholder="Tags"
                 onChangeText={(value) => handleChangeText("tags", value)} />
             </View>
             <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-      </View>
-      <View>
-        <Button onPress={showTimepicker} title="Show time picker!" />
-      </View>
-            <View style={styles.container}>
+                <Text style={styles.text}>
+                    Fecha de nacimiento:
+                </Text>
+            </View>
+            <View style={styles.button}>
+                <Button color= '#7733CC' onPress={showDatepicker} title="Seleccionar Fecha" />
+            </View>
+            <View style={styles.button}>
+                <Button onPress={showTimepicker} title="Show time picker!" />
+            </View>
+            <View>
             {show && (
                  <DateTimePicker
                  testID="dateTimePicker"
@@ -124,19 +129,19 @@ const RegisterUserScreen = () => {
                   )}
             </View>
             <View style={styles.inputComponent}>
-                <TextInput placeholder="Numero Telefono" 
+                <TextInput style={styles.textInput} placeholder="Numero Telefono" 
                 onChangeText={(value) => handleChangeText("numerotelefono", value)} />
             </View>
             <View style={styles.inputComponent}>
-                <TextInput placeholder="Email" 
+                <TextInput style={styles.textInput} placeholder="Email" 
                 onChangeText={(value) => handleChangeText("email", value)} />
             </View>
             <View style={styles.inputComponent}>
-                <TextInput placeholder="Contraseña" 
+                <TextInput style={styles.textInput} placeholder="Contraseña" 
                 onChangeText={(value) => handleChangeText("contrasena", value)} />
             </View>
-            <View>
-                <Button title="Registrarse" onPress={() => RegisterUser()}/>
+            <View style={styles.button}>
+                <Button color='#177013'title="Registrarse" onPress={() => RegisterUser()}/>
             </View>
         </ScrollView>
     )
@@ -160,17 +165,42 @@ snapshot.forEach((doc) => {
 })();
 */
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 35
+    textInput:{
+        flex:1,
+        padding:10,
+        fontSize:16,
+    },
+    titleText:{
+        flex:1,
+        padding:5,
+        paddingTop: 10,
+        paddingLeft:10,
+        fontSize:18,
+        fontWeight: "bold",
+        borderTopWidth:2,
+    },
+    text:{
+        flex:1,
+        padding:5,
+        paddingTop: 10,
+        paddingLeft:10,
+        fontSize:16
     },
     inputComponent: {
         flex:1,
-        padding:0,
-        margin:10,
-        marginBottom:15,
-        borderBottomWidth:1,
-        borderBottomColor:'#cccccc'
+        marginLeft:20,
+        marginBottom:10,
+        marginRight:30,
+        marginTop:10,
+        borderWidth:2,
+        borderColor:'#cccccc'
+    },
+    button:{
+        flex:1,
+        marginRight:30,
+        marginLeft:20,
+        marginTop:10,
+        marginBottom:10
     }
 })
 export default RegisterUserScreen
