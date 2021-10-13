@@ -10,7 +10,7 @@ import { crearpersona } from "../clases/usuario";
 import { anadirusuario } from "../database/pruebas";
 //import 'react-datepicker/dist/react-datepicker.css';
 import DateTimePicker from "@react-native-community/datetimepicker";
-//import {DatePickerIOS} from "react-native@react-native-community/datetimepicker"
+//import {DatePickerIOS} from "react-native"
 
 
     
@@ -50,9 +50,6 @@ const RegisterUserScreen = () => {
 
       const showDatepicker = () => {
         showMode('date');
-      };
-      const showTimepicker = () => {
-        showMode('time');
       };
 
 
@@ -112,9 +109,7 @@ const RegisterUserScreen = () => {
             <View style={styles.button}>
                 <Button color= '#7733CC' onPress={showDatepicker} title="Seleccionar Fecha" />
             </View>
-            <View style={styles.button}>
-                <Button onPress={showTimepicker} title="Show time picker!" />
-            </View>
+            
             <View>
             {show && (
                  <DateTimePicker
