@@ -23,9 +23,9 @@ const RegisterUserScreen = () => {
         nombre:'',
         apellidos:'',
         tags:'',
-        fechanacimiento:'',
-       time: new Date("2020","06","24"),
-        numerotelefono:'',
+        fechaNacimiento:'',
+        time: new Date("2020","06","24"),
+        numeroTelefono:'',
         email:'',
         contrasena:''
     });
@@ -75,9 +75,9 @@ const RegisterUserScreen = () => {
                 Apellidos: state.apellidos,
                 Contrasena: state.contrasena,
                 Email: state.email,
-                Fechanacimiento: state.time,
+                FechaNacimiento: state.time,
                 Nombre: state.nombre,
-                Numerotelefono: state.numerotelefono,
+                NumeroTelefono: state.numeroTelefono,
                 tags: state.tags
             });
             alert('Se ha registrado correctamente')
