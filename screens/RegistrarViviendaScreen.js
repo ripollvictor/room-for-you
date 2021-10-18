@@ -29,127 +29,119 @@ const RegistrarViviendaScreen = () => {
         imageFirebase: ""
     });
 
-    var img = new Image();
+//     var img 
 
-   const selectFile = () => {
+//    const selectFile = () => {
 
-        var options = {
+//         var options = {
     
-          title: 'Select Image',
+//           title: 'Select Image',
     
-          customButtons: [
+//           customButtons: [
     
-            { 
+//             { 
     
-              name: 'customOptionKey', 
+//               name: 'customOptionKey', 
     
-              title: 'Choose file from Custom Option' 
+//               title: 'Choose file from Custom Option' 
     
-            },
+//             },
     
-          ],
+//           ],
     
-          storageOptions: {
+//           storageOptions: {
     
-            skipBackup: true,
+//             skipBackup: true,
     
-            path: 'images',
+//             path: 'images',
     
-          },
+//           },
     
-        };
-    
-        ImagePicker.launchImageLibraryAsync(options, res => {
-            console.log('Response = ', res);
+//         };
+//         console.log('hola ')
+//         ImagePicker.launchImageLibraryAsync(options, res => {
+//             console.log('Response = ', res);
 
-            if (res.didCancel) {
+            
+      
+//               let source = res;
+      
+//               this.setState({
+      
+//                 resourcePath: source,
+      
+//               });
 
-              console.log('User cancelled image picker');
+//                     console.log(source)
       
-            } else if (res.error) {
+            
       
-              console.log('ImagePicker Error: ', res.error);
+//           });
+    
+//       };
       
-            } else if (res.customButton) {
-      
-              console.log('User tapped custom button: ', res.customButton);
-      
-              alert(res.customButton);
-      
-            } else {
-      
-              let source = res;
-      
-              this.setState({
-      
-                resourcePath: source,
-      
-              });
+    const selecImagenGaleria = async(array) => {
+        const respuesta = {status: false, image: null}
+        const resultPermisos = await Permissions.askAsync(Permissions.CAMERA)
+        if (resultPermisos.status == "denied"){
+            alert("Debes dar acceso a la galería para poder subir imágenes")
+            return respuesta
+        }
+        const result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: array
+        })
+        console.log(result)
+        if(result.cancelled) {return respuesta}
+        respuesta.status = true
+        respuesta.image = result.uri
+        console.log(respuesta)
+        return respuesta
+        
+    }
 
-              img.src(source)
-      
+    const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([])
+
+    function SubirImagen ({imagenesSeleccionadas, setImagenesSeleccionadas}) {
+        
+        const selecImagen = async() => {
+            const respuesta = await selecImagenGaleria([4,4])
+            if(respuesta.status == false) {
+                alert('No has seleccionado ninguna imagen')
+                return
             }
-      
-          });
-    
-      };
-
-    // const selecImagenGaleria = async(array) => {
-    //     const respuesta = {status: false, image: null}
-    //     const resultPermisos = await Permissions.askAsync(Permissions.CAMERA)
-    //     if (resultPermisos.status == "denied"){
-    //         alert("Debes dar acceso a la galería para poder subir imágenes")
-    //         return respuesta
-    //     }
-    //     const result = await ImagePicker.launchImageLibraryAsync({
-    //         allowsEditing: true,
-    //         aspect: array
-    //     })
-    //     if(result.cancelled) {return respuesta}
-    //     respuesta.status = true
-    //     respuesta.image = result.uri
-    //     return respuesta
-    // }
-
-    // const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([])
-
-    // function SubirImagen ({imagenesSeleccionadas, setImagenesSeleccionadas}) {
-    //     const selecImagen = async() => {
-    //         const respuesta = await selecImagenGaleria([4,4])
-    //         if(respuesta.status == false) {
-    //             alert('No has seleccionado ninguna imagen')
-    //             return
-    //         }
-    //         setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
-    //     }
-    //     return(
-    //         <ScrollView horizontal>
-    //             {
-    //                 size(imagenesSeleccionadas) < 10 && (
-    //                     <Icon 
-    //                          style={styles.selecionarImagen}
-    //                          tipo="material-community" 
-    //                          name="camera" 
-    //                          onPress={selecImagen}
-    //                          > 
-    //                     </Icon>
-    //                 )
-    //             }
-    //             {
-    //                 map(imagenesSeleccionadas, (imagenPiso, index) => (
-    //                     <Avatar
-    //                         style={styles.selecionarImagen}
-    //                         key={index}
-    //                         source={{uri: imagenPiso}}
-    //                     />
-    //                 )
-    //                 )
-    //             }
+            
+            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
+            console.log(imagenesSeleccionadas)
+        }
+        return(
+            <ScrollView horizontal>
+                {
+                    size(imagenesSeleccionadas) < 10 && (
+                        <Icon 
+                             style={styles.selecionarImagen}
+                             tipo="material-community" 
+                             name="camera" 
+                             onPress={selecImagen}
+                             > 
+                        </Icon>
+                    )
+                }
+                {
+                    map(imagenesSeleccionadas, (imagenPiso, index) => (
+                        <Avatar
+                            style={styles.selecionarImagen}
+                            key={index}
+                            source={{uri: imagenPiso}}
+                        />
+                    )
+                    )
+                }
                 
                 
-    //         </ScrollView>
-    //     )
-    // }
+            </ScrollView>
+        )
+    }
 
     function handleChangeText(name, value) {
         setState({ ...state, [name]: value });
@@ -217,11 +209,10 @@ const RegistrarViviendaScreen = () => {
                     onChangeText={(value => handleChangeText("banos", value))} />
             </View>
             
-            {/* <SubirImagen
+            <SubirImagen
                 setImagenesSeleccionadas={setImagenesSeleccionadas}
                 imagenesSeleccionadas={imagenesSeleccionadas}
-                onPress={SubirImagen}
-            /> */}
+            />
             <View>
                 <Button title="Foto" onPress={() => selectFile()} />
             </View>
