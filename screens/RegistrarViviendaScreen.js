@@ -26,7 +26,8 @@ const RegistrarViviendaScreen = () => {
         metrosCuadrados: "",
         banos: "",
         puerta: "",
-        imageFirebase: ""
+        imageFirebase: "",
+        imagenesSeleccionadas:[]
     });
 
 //     var img 
@@ -100,9 +101,7 @@ const RegistrarViviendaScreen = () => {
         
     }
 
-    const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([])
-
-    function SubirImagen ({imagenesSeleccionadas, setImagenesSeleccionadas}) {
+    function SubirImagen (imagenesSeleccionadas) {
         
         const selecImagen = async() => {
             const respuesta = await selecImagenGaleria([4,4])
@@ -110,9 +109,12 @@ const RegistrarViviendaScreen = () => {
                 alert('No has seleccionado ninguna imagen')
                 return
             }
-            
-            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
-            console.log(imagenesSeleccionadas)
+            console.log(respuesta.image)
+
+            let joined = state.imagenesSeleccionadas.concat(respuesta.image);
+            setState({ ...state,imagenesSeleccionadas: joined });
+            console.log(state.imagenesSeleccionadas)
+
         }
         return(
             <ScrollView horizontal>
@@ -210,11 +212,11 @@ const RegistrarViviendaScreen = () => {
             </View>
             
             <SubirImagen
-                setImagenesSeleccionadas={setImagenesSeleccionadas}
-                imagenesSeleccionadas={imagenesSeleccionadas}
+                //setState={setState}
+                imagenesSeleccionadas={state.imagenesSeleccionadas}
             />
             <View>
-                <Button title="Foto" onPress={() => selectFile()} />
+                <Button title="Foto" onPress={() => selecImagenGaleria()} />
             </View>
             
             <View>
