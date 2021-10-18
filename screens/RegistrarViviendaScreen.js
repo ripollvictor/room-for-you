@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
-import { Picker } from '@react-native-picker/picker';
-import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs, doc, addDoc } from 'firebase/firestore/lite';
 
-import { Permissions, ImagePicker } from "react-native";
+import * as Permissions from 'expo-permissions'
+import * as ImagePicker from 'expo-image-picker'
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert} from "react-native";
+import {} from "react-native-imagepicker"
+import {Icon, Avatar} from "react-native-elements";
+//import {anadirusuario} from'../database/pruebas'
+import '../database/pruebas'
+import firebase from '../database/firebase'
+import { getFirestore, collection, getDocs,doc, addDoc } from 'firebase/firestore/lite';
+import {map, size} from "lodash"
 
 const db = firebase.db;
 
+
+   
 
 const RegistrarViviendaScreen = () => {
     const [state, setState] = useState({
@@ -22,90 +29,131 @@ const RegistrarViviendaScreen = () => {
         imageFirebase: ""
     });
 
-    const handleChangeText = (name, value) => {
+    var img = new Image();
+
+   const selectFile = () => {
+
+        var options = {
+    
+          title: 'Select Image',
+    
+          customButtons: [
+    
+            { 
+    
+              name: 'customOptionKey', 
+    
+              title: 'Choose file from Custom Option' 
+    
+            },
+    
+          ],
+    
+          storageOptions: {
+    
+            skipBackup: true,
+    
+            path: 'images',
+    
+          },
+    
+        };
+    
+        ImagePicker.launchImageLibraryAsync(options, res => {
+            console.log('Response = ', res);
+
+            if (res.didCancel) {
+
+              console.log('User cancelled image picker');
+      
+            } else if (res.error) {
+      
+              console.log('ImagePicker Error: ', res.error);
+      
+            } else if (res.customButton) {
+      
+              console.log('User tapped custom button: ', res.customButton);
+      
+              alert(res.customButton);
+      
+            } else {
+      
+              let source = res;
+      
+              this.setState({
+      
+                resourcePath: source,
+      
+              });
+
+              img.src(source)
+      
+            }
+      
+          });
+    
+      };
+
+    // const selecImagenGaleria = async(array) => {
+    //     const respuesta = {status: false, image: null}
+    //     const resultPermisos = await Permissions.askAsync(Permissions.CAMERA)
+    //     if (resultPermisos.status == "denied"){
+    //         alert("Debes dar acceso a la galería para poder subir imágenes")
+    //         return respuesta
+    //     }
+    //     const result = await ImagePicker.launchImageLibraryAsync({
+    //         allowsEditing: true,
+    //         aspect: array
+    //     })
+    //     if(result.cancelled) {return respuesta}
+    //     respuesta.status = true
+    //     respuesta.image = result.uri
+    //     return respuesta
+    // }
+
+    // const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([])
+
+    // function SubirImagen ({imagenesSeleccionadas, setImagenesSeleccionadas}) {
+    //     const selecImagen = async() => {
+    //         const respuesta = await selecImagenGaleria([4,4])
+    //         if(respuesta.status == false) {
+    //             alert('No has seleccionado ninguna imagen')
+    //             return
+    //         }
+    //         setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
+    //     }
+    //     return(
+    //         <ScrollView horizontal>
+    //             {
+    //                 size(imagenesSeleccionadas) < 10 && (
+    //                     <Icon 
+    //                          style={styles.selecionarImagen}
+    //                          tipo="material-community" 
+    //                          name="camera" 
+    //                          onPress={selecImagen}
+    //                          > 
+    //                     </Icon>
+    //                 )
+    //             }
+    //             {
+    //                 map(imagenesSeleccionadas, (imagenPiso, index) => (
+    //                     <Avatar
+    //                         style={styles.selecionarImagen}
+    //                         key={index}
+    //                         source={{uri: imagenPiso}}
+    //                     />
+    //                 )
+    //                 )
+    //             }
+                
+                
+    //         </ScrollView>
+    //     )
+    // }
+
+    function handleChangeText(name, value) {
         setState({ ...state, [name]: value });
     }
-
-    uploadImage = uri => {
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-            xhr.onerror = reject;
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    resolve(xhr.response);
-                }
-            };
-            xhr.open("GET", uri);
-            xhr.responseType = "blob";
-            xhr.send();
-        });
-    };
-
-    openGallery = async () => {
-        const resultPermission = await Permissions.askAsync(
-            Permissions.CAMERA_ROLL
-        );
-        if (resultPermission) {
-            const resultImagePicker = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: true,
-                aspect: [4, 3]
-            });
-            if (resultImagePicker.cancelled === false) {
-                const imageUri = resultImagePicker.uri;
-                const { address } = this.state;
-
-                this.uploadImage(imageUri)
-                    .then(resolve => {
-                        let ref = firebase
-                            .storage()
-                            .ref()
-                            .child(`images/${address}`);
-                        ref
-                            .put(resolve)
-                            .then(resolve => {
-                                console.log("Imagen subida correctamente");
-                            })
-                            .catch(error => {
-                                console.log("Error al subir la imagen");
-                            });
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }
-        }
-    };
-
-    loadImage = async () => {
-        const { address } = this.state;
-
-        firebase
-            .storage()
-            .ref(`images/${address}`)
-            .getDownloadURL()
-            .then(resolve => {
-                this.setState({
-                    imageFirebase: resolve
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
-    checkImage = () => {
-        const { imageFirebase } = this.state;
-
-        if (imageFirebase) {
-            return (
-                <Image
-                    style={{ width: 300, height: 300 }}
-                    source={{ uri: imageFirebase }}
-                />
-            );
-        }
-        return null;
-    };
 
     const RegisterVivienda = async () => {
         await addDoc(collection(db, 'Vivienda'), {
@@ -168,9 +216,16 @@ const RegistrarViviendaScreen = () => {
                 <TextInput style={styles.textInput} placeholder="Baños"
                     onChangeText={(value => handleChangeText("banos", value))} />
             </View>
+            
+            {/* <SubirImagen
+                setImagenesSeleccionadas={setImagenesSeleccionadas}
+                imagenesSeleccionadas={imagenesSeleccionadas}
+                onPress={SubirImagen}
+            /> */}
             <View>
-                <Button title="Subir imagenes" onPress={() => openGallery()} />
+                <Button title="Foto" onPress={() => selectFile()} />
             </View>
+            
             <View>
                 <Button title="Registrarse" onPress={() => RegisterVivienda()} />
             </View>
@@ -230,7 +285,14 @@ const styles = StyleSheet.create({
         marginTop: 10,
         borderWidth: 2,
         borderColor: '#cccccc'
+    },
+    selecionarImagen: {
+        height: 70,
+        width: 79,
+        alignItems: "center",
+        justifyContent: "center"
     }
+
 
 })
 
