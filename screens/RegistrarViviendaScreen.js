@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
-import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert} from "react-native";
+import { View, Text, Picker, TextInput, Button, ScrollView, StyleSheet, Alert} from "react-native";
 import {} from "react-native-imagepicker"
 import {Icon, Avatar} from "react-native-elements";
 //import {anadirusuario} from'../database/pruebas'
