@@ -7,11 +7,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import RegistrarViviendaScreen from './screens/RegistrarViviendaScreen';
 import RegisterUserScreen from './screens/RegisterUserScreen';
-
+import Login2 from './screens/Login2';
+//import LoginScreen from './screens/Login';
+// <Stack.Screen name="Login" component= {LoginScreen}/>
 const Stack = createNativeStackNavigator()
 function MyStack() {
   return(
     <Stack.Navigator>
+      <Stack.Screen name="lOGIN" component= {Login2}/>
       <Stack.Screen name="Registrar Vivienda" component= {RegistrarViviendaScreen}/>
       <Stack.Screen name="Registrar Usuario" component= {RegisterUserScreen}/>
       <Stack.Screen name="Home" component= {HomeScreen}/> 

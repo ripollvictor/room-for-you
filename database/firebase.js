@@ -1,7 +1,8 @@
 //import firebase from 'firebase';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-
+//import '@firebase/auth'
+//import { FirebaseAuth } from '@firebase/auth-types'
 
 
 //import 'firebase/firestore';
@@ -22,6 +23,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+//const auth = getAuth();
 //const db = firebase.firestore();
 /*
 import firebase from '../database/firebase'
@@ -31,4 +33,5 @@ esto es lo que lleven llevar las otras clases
 export default {
  //   firebase,
     db,
+    app,
 }
