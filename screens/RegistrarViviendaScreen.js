@@ -128,7 +128,7 @@ const RegistrarViviendaScreen = () => {
                 {
                     map(imagenesSeleccionadas, (imagenPiso, index) => (
                         <Avatar
-                            style={styles.selecionarImagen}
+                            style={styles.miniatureStyle}
                             key={index}
                             source={{uri: imagenPiso}}
                         />
@@ -279,7 +279,20 @@ const styles = StyleSheet.create({
         height: 70,
         width: 79,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginRight: 10,
+        backgroundColor: "#e3e3e3" 
+    },
+    viewImages: {
+        flexDirection: "row",
+        marginHorizontal: 20,
+        marginTop:30
+
+    },
+    miniatureStyle: {
+        width:70,
+        height:70,
+        marginRight:10
     }
 
 
