@@ -9,7 +9,8 @@ import {Icon, Avatar} from "react-native-elements";
 import '../database/pruebas'
 import firebase from '../database/firebase'
 import { getFirestore, collection, getDocs,doc, addDoc } from 'firebase/firestore/lite';
-import {map, size} from "lodash"
+import {map, size,filter} from "lodash"
+import uuid from "uuid"
 
 const db = firebase.db;
 
@@ -31,57 +32,6 @@ const RegistrarViviendaScreen = () => {
     });
 
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
-
-//     var img 
-
-//    const selectFile = () => {
-
-//         var options = {
-    
-//           title: 'Select Image',
-    
-//           customButtons: [
-    
-//             { 
-    
-//               name: 'customOptionKey', 
-    
-//               title: 'Choose file from Custom Option' 
-    
-//             },
-    
-//           ],
-    
-//           storageOptions: {
-    
-//             skipBackup: true,
-    
-//             path: 'images',
-    
-//           },
-    
-//         };
-//         console.log('hola ')
-//         ImagePicker.launchImageLibraryAsync(options, res => {
-//             console.log('Response = ', res);
-
-            
-      
-//               let source = res;
-      
-//               this.setState({
-      
-//                 resourcePath: source,
-      
-//               });
-
-//                     console.log(source)
-      
-            
-      
-//           });
-    
-//       };
       
     const selectImagenGaleria = async(array) => {
         const respuesta = {status: false, image: null}
@@ -131,6 +81,7 @@ const RegistrarViviendaScreen = () => {
                             style={styles.miniatureStyle}
                             key={index}
                             source={{uri: imagenPiso}}
+                            onPress={() => eliminarImagen(imagenPiso)}
                         />
                     )
                     )
@@ -140,6 +91,62 @@ const RegistrarViviendaScreen = () => {
             </ScrollView>
         )
     }
+
+    const eliminarImagen = (image) => {
+        Alert.alert(
+            "Eliminar Imagen",
+            "¿Estas seguro que quieres eliminar la imagen?",
+            [
+                {
+                    text: "No",
+                    style: "cancel"                    
+                },
+                {
+                    text: "Sí",
+                    onPress: () => {
+                        setImagenesSeleccionadas(
+                            filter(imagenesSeleccionadas, (imageURL) => imageURL !== image)
+                        )
+                    }
+                }
+            ],
+            { cancelable: true }
+        )
+    }
+
+    // const eliminarImagen = (image) => {
+    //     console.log('hola')
+    //     Alert.alert(
+    //         "Eliminar Imagen",
+    //         "Desea eliminar la imagen?",
+    //         [
+    //             {
+    //                 text: "No",
+    //                 style: "cancel"
+    //             },
+    //             {
+    //                 text: "Sí",
+    //                 onPress: () => {
+    //                     setImagenesSeleccionadas(
+    //                         filter(imagenesSeleccionadas, (imageURL) => imageURL !== image)
+    //                     )
+    //                 }
+    //             }
+    //         ],
+    //         {
+    //             cancelable: true
+    //         }
+    //     )
+    // }
+    // const imagenesADB = async () => {
+    //     const imagenesUrl = []
+    //     await Promise.all(
+    //         map(imagenesSeleccionadas, async(image) => {
+    //             const respuesta = await imagenesADB(image, "fotoPiso", uuid())
+    //             if(respuesta.statusResponse)
+    //         })
+    //     )
+    // }
 
     function handleChangeText(name, value) {
         setState({ ...state, [name]: value });
