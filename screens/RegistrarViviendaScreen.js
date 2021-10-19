@@ -30,6 +30,8 @@ const RegistrarViviendaScreen = () => {
         imagenesSeleccionadas:[]
     });
 
+    const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
+
 //     var img 
 
 //    const selectFile = () => {
@@ -81,7 +83,7 @@ const RegistrarViviendaScreen = () => {
     
 //       };
       
-    const selecImagenGaleria = async(array) => {
+    const selectImagenGaleria = async(array) => {
         const respuesta = {status: false, image: null}
         const resultPermisos = await Permissions.askAsync(Permissions.CAMERA)
         if (resultPermisos.status == "denied"){
@@ -92,30 +94,24 @@ const RegistrarViviendaScreen = () => {
             allowsEditing: true,
             aspect: array
         })
-        console.log(result)
+        
         if(result.cancelled) {return respuesta}
         respuesta.status = true
         respuesta.image = result.uri
-        console.log(respuesta)
         return respuesta
         
     }
 
-    function SubirImagen (imagenesSeleccionadas) {
-        
-        const selecImagen = async() => {
-            const respuesta = await selecImagenGaleria([4,4])
-            if(respuesta.status == false) {
+    function SubirImagen ({imagenesSeleccionadas, setImagenesSeleccionadas}) {
+        const selectImagen = async() => {
+            const respuesta = await selectImagenGaleria([4,4])
+            if(!respuesta.status) {
                 alert('No has seleccionado ninguna imagen')
                 return
             }
-            console.log(respuesta.image)
-
-            let joined = state.imagenesSeleccionadas.concat(respuesta.image);
-            setState({ ...state,imagenesSeleccionadas: joined });
-            console.log(state.imagenesSeleccionadas)
-
+            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
         }
+        console.log(imagenesSeleccionadas)
         return(
             <ScrollView horizontal>
                 {
@@ -124,7 +120,7 @@ const RegistrarViviendaScreen = () => {
                              style={styles.selecionarImagen}
                              tipo="material-community" 
                              name="camera" 
-                             onPress={selecImagen}
+                             onPress={selectImagen}
                              > 
                         </Icon>
                     )
@@ -212,8 +208,8 @@ const RegistrarViviendaScreen = () => {
             </View>
             
             <SubirImagen
-                //setState={setState}
-                imagenesSeleccionadas={state.imagenesSeleccionadas}
+                setImagenesSeleccionadas={setImagenesSeleccionadas}
+                imagenesSeleccionadas={imagenesSeleccionadas}
             />
             <View>
                 <Button title="Foto" onPress={() => selecImagenGaleria()} />
