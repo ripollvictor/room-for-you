@@ -106,7 +106,7 @@ const RegistrarViviendaScreen = () => {
         const selectImagen = async() => {
             const respuesta = await selectImagenGaleria([4,4])
             if(!respuesta.status) {
-                alert('No has seleccionado ninguna imagen')
+                alert('No has seleccionado ninguna Imagen')
                 return
             }
             setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
