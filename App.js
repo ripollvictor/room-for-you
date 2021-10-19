@@ -13,6 +13,7 @@ import Login2 from './screens/Login2';
 const Stack = createNativeStackNavigator()
 function MyStack() {
   return(
+  
     <Stack.Navigator>
       <Stack.Screen name="lOGIN" component= {Login2}/>
       <Stack.Screen name="Registrar Vivienda" component= {RegistrarViviendaScreen}/>
@@ -20,6 +21,7 @@ function MyStack() {
       <Stack.Screen name="Home" component= {HomeScreen}/> 
 
     </Stack.Navigator>
+   
   )
 
 }

@@ -3,16 +3,16 @@
 
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
-
+import HomeScreen from "./HomeScreen"
 import { getAuth, signInWithPopup, GoogleAuthProvider,signOut } from "firebase/auth";
+//import {StackNavigator} from 'react-navigation';
+
 const provider = new GoogleAuthProvider();
 
 
 
-const Login2 = () => {
-    const [user, setState] = useState({
-    
-    });
+const Login2 = ({navigation}) => {
+    const [user, setState] = useState();
 const Logueate = () => {
 
     const auth = getAuth();
@@ -22,9 +22,12 @@ const Logueate = () => {
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
             // The signed-in user info.
-           user = result.user;
-           this.setState({user});
-           
+           const user1 = result.user;
+           setState(user1);
+           console.log("hola")
+           console.log(user)
+           navigation.navigate('Home',user1)
+          
             // ...
          }).catch((error) => {
             // Handle Errors here.
@@ -34,18 +37,26 @@ const Logueate = () => {
             const email = error.email;
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log("tonto")
             // ...
          });
 };
 
+
+
 const logout=() => {
     const auth = getAuth();
     signOut(auth).then(() => {
+        setState(null);
       // Sign-out successful.
     }).catch((error) => {
       // An error happened.
     });
 };
+const alHome=()=> {
+    
+  
+  }
 
   return ( 
     <ScrollView>
@@ -107,3 +118,8 @@ const styles = StyleSheet.create({
     }
 })
 export default  Login2
+/*
+export function dameeluser() {
+    return user;
+}
+*/
