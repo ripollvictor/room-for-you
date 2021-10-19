@@ -11,7 +11,7 @@ const provider = new GoogleAuthProvider();
 
 
 
-const Login2 = ({navigation}) => {
+const Login2 = ({navigation,route}) => {
     const [user, setState] = useState();
 const Logueate = () => {
 
