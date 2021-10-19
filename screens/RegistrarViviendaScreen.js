@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import * as firebase from 'firebase'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
 import { View, Text, Picker, TextInput, Button, ScrollView, StyleSheet, Alert} from "react-native";
@@ -10,7 +10,7 @@ import '../database/pruebas'
 import firebase from '../database/firebase'
 import { getFirestore, collection, getDocs,doc, addDoc } from 'firebase/firestore/lite';
 import {map, size,filter} from "lodash"
-import uuid from "uuid"
+import uuid from "random-uuid-v4"
 
 const db = firebase.db;
 
@@ -32,6 +32,12 @@ const RegistrarViviendaScreen = () => {
     });
 
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
+
+    // const subirImagenFB = async(image, path, name) => {
+    //     const result = {statusResponse: false, error: null, url: null}
+    //     const ref = firebase.storage().ref(path).child(name)
+    //     const blob = 
+    // }
       
     const selectImagenGaleria = async(array) => {
         const respuesta = {status: false, image: null}
@@ -114,39 +120,16 @@ const RegistrarViviendaScreen = () => {
         )
     }
 
-    // const eliminarImagen = (image) => {
-    //     console.log('hola')
-    //     Alert.alert(
-    //         "Eliminar Imagen",
-    //         "Desea eliminar la imagen?",
-    //         [
-    //             {
-    //                 text: "No",
-    //                 style: "cancel"
-    //             },
-    //             {
-    //                 text: "Sí",
-    //                 onPress: () => {
-    //                     setImagenesSeleccionadas(
-    //                         filter(imagenesSeleccionadas, (imageURL) => imageURL !== image)
-    //                     )
-    //                 }
-    //             }
-    //         ],
-    //         {
-    //             cancelable: true
-    //         }
-    //     )
-    // }
-    // const imagenesADB = async () => {
-    //     const imagenesUrl = []
-    //     await Promise.all(
-    //         map(imagenesSeleccionadas, async(image) => {
-    //             const respuesta = await imagenesADB(image, "fotoPiso", uuid())
-    //             if(respuesta.statusResponse)
-    //         })
-    //     )
-    // }
+    
+    const subirImagenBD = async () => {
+        const imagenesUrl = []
+        await Promise.all(
+            map(imagenesSeleccionadas, async(image) => {
+                const respuesta = await SubirImagen(image, "ImagenesViviendas", uuid())
+                //if(respuesta.stat)
+            })
+        )
+    }
 
     function handleChangeText(name, value) {
         setState({ ...state, [name]: value });
@@ -164,6 +147,7 @@ const RegistrarViviendaScreen = () => {
             Puerta: state.puerta
 
         });
+        const respuesta = await subirImagenBD() 
         alert('Se ha registrado correctamente')
 
     }
@@ -218,10 +202,6 @@ const RegistrarViviendaScreen = () => {
                 setImagenesSeleccionadas={setImagenesSeleccionadas}
                 imagenesSeleccionadas={imagenesSeleccionadas}
             />
-            <View>
-                <Button title="Foto" onPress={() => selecImagenGaleria()} />
-            </View>
-            
             <View>
                 <Button title="Registrarse" onPress={() => RegisterVivienda()} />
             </View>
