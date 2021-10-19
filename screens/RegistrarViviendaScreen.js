@@ -33,7 +33,6 @@ const RegistrarViviendaScreen = () => {
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
 
 //     var img 
-
 //    const selectFile = () => {
 
 //         var options = {
