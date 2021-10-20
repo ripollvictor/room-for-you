@@ -7,11 +7,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import RegistrarViviendaScreen from './screens/RegistrarViviendaScreen';
 import RegisterUserScreen from './screens/RegisterUserScreen';
+import IndexScreen from './screens/IndexScreen';
 
 const Stack = createNativeStackNavigator()
 function MyStack() {
   return(
     <Stack.Navigator>
+      <Stack.Screen name="Index" component={ IndexScreen }/>
       <Stack.Screen name="Registrar Vivienda" component= {RegistrarViviendaScreen}/>
       <Stack.Screen name="Registrar Usuario" component= {RegisterUserScreen}/>
       <Stack.Screen name="Home" component= {HomeScreen}/> 
