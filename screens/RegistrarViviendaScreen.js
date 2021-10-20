@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import * as Permissions from 'expo-permissions'
+import React, { useState, useEffect } from "react";
 import * as ImagePicker from 'expo-image-picker'
-import { View, Text, Picker, TextInput, Button, ScrollView, StyleSheet, Alert} from "react-native";
-import {Icon, Avatar} from "react-native-elements";
-//import {anadirusuario} from'../database/pruebas'
-import '../database/pruebas'
+import { View, Text, Picker, TextInput, Button, ScrollView, StyleSheet, Alert, Platform } from "react-native";
+import { Icon, Avatar } from "react-native-elements";
 import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs,doc, addDoc } from 'firebase/firestore/lite';
-import {map, size,filter} from "lodash"
-import uuid from "random-uuid-v4"
+import { getFirestore, collection, getDocs, doc, addDoc } from 'firebase/firestore/lite';
+import { map, size, filter } from "lodash"
 
 const db = firebase.db;
-
-
-   
 
 const RegistrarViviendaScreen = () => {
     const [state, setState] = useState({
@@ -24,111 +17,106 @@ const RegistrarViviendaScreen = () => {
         escalera: "",
         metrosCuadrados: "",
         banos: "",
-        puerta: "",
-        imageFirebase: "",
-        imagenesSeleccionadas:[]
+        puerta: ""
     });
 
-    const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
-
-    // const subirImagenFB = async(image, path, name) => {
-    //     const result = {statusResponse: false, error: null, url: null}
-    //     const ref = firebase.storage().ref(path).child(name)
-    //     const blob = 
-    // }
-      
-    const selectImagenGaleria = async(array) => {
-        const respuesta = {status: false, image: null}
-        const resultPermisos = await Permissions.askAsync(Permissions.CAMERA)
-        if (resultPermisos.status == "denied"){
-            alert("Debes dar acceso a la galería para poder subir imágenes")
-            return respuesta
+    /*
+        const subirImagenBD = async () => {
+            const imagenesUrl = []
+            await Promise.all(
+                map(imagenesSeleccionadas, async(image) => {
+                    const respuesta = await SubirImagen(image, "ImagenesViviendas", uuid())
+                    //if(respuesta.stat)
+                })
+            )
         }
-        const result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            aspect: array
-        })
-        
-        if(result.cancelled) {return respuesta}
-        respuesta.status = true
-        respuesta.image = result.uri
-        return respuesta
-        
-    }
+    */
+        const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
 
-    function SubirImagen ({imagenesSeleccionadas, setImagenesSeleccionadas}) {
-        const selectImagen = async() => {
-            const respuesta = await selectImagenGaleria([4,4])
-            if(!respuesta.status) {
-                alert('No has seleccionado ninguna Imagen')
-                return
-            }
-            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
-        }
-        console.log(imagenesSeleccionadas)
-        return(
-            <ScrollView horizontal>
-                {
-                    size(imagenesSeleccionadas) < 10 && (
-                        <Icon 
-                             style={styles.selecionarImagen}
-                             tipo="material-community" 
-                             name="camera" 
-                             onPress={selectImagen}
-                             > 
-                        </Icon>
-                    )
-                }
-                {
-                    map(imagenesSeleccionadas, (imagenPiso, index) => (
-                        <Avatar
-                            style={styles.miniatureStyle}
-                            key={index}
-                            source={{uri: imagenPiso}}
-                            onPress={() => eliminarImagen(imagenPiso)}
-                        />
-                    )
-                    )
-                }
-                
-                
-            </ScrollView>
-        )
-    }
 
-    const eliminarImagen = (image) => {
-        Alert.alert(
-            "Eliminar Imagen",
-            "¿Estas seguro que quieres eliminar la imagen?",
-            [
-                {
-                    text: "No",
-                    style: "cancel"                    
-                },
-                {
-                    text: "Sí",
-                    onPress: () => {
-                        setImagenesSeleccionadas(
-                            filter(imagenesSeleccionadas, (imageURL) => imageURL !== image)
-                        )
+
+        useEffect(() => {
+            (async () => {
+                if (Platform.OS !== 'web') {
+                    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                    if (status !== 'granted') {
+                        alert('Debes dar acceso a la galería para poder subir imágenes');
                     }
                 }
-            ],
-            { cancelable: true }
-        )
-    }
-
+            })();
+        }, []);
     
-    const subirImagenBD = async () => {
-        const imagenesUrl = []
-        await Promise.all(
-            map(imagenesSeleccionadas, async(image) => {
-                const respuesta = await SubirImagen(image, "ImagenesViviendas", uuid())
-                //if(respuesta.stat)
-            })
-        )
+        const pickImage = async () => {
+            const respuesta = {status: false, image: null}
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+    
+            if (result.cancelled) {return respuesta;}
+            respuesta.status = true;
+            respuesta.image = result.uri;
+            return respuesta
+        };
+        const eliminarImagen = (image) => {
+            Alert.alert(
+                "Eliminar Imagen",
+                "¿Estas seguro que quieres eliminar la imagen?",
+                [
+                    {
+                        text: "No",
+                        style: "cancel"
+                    },
+                    {
+                        text: "Sí",
+                        onPress: () => {
+                            setImagenesSeleccionadas(
+                                filter(imagenesSeleccionadas, (imageURL) => imageURL !== image)
+                            )
+                        }
+                    }
+                ],
+                { cancelable: true }
+            )
+        }
+        function SubirImagen({ imagenesSeleccionadas, setImagenesSeleccionadas }) {
+            const selectImagen = async () => {
+                const respuesta = await pickImage()
+                if (!respuesta.status) {
+                    alert('No has seleccionado ninguna Imagen')
+                    return
+                }
+                setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
+            }
+            return (
+                <ScrollView horizontal>
+                    {
+                        size(imagenesSeleccionadas) < 10 && (
+                            <Icon
+                                style={styles.selecionarImagen}
+                                tipo="material-community"
+                                name="camera"
+                                onPress={selectImagen}
+                            >
+                            </Icon>
+                        )
+                    }
+                    {
+                        map(imagenesSeleccionadas, (imagenPiso, index) => (
+                            <Avatar
+                                style={styles.miniatureStyle}
+                                key={index}
+                                source={{ uri: imagenPiso }}
+                                onPress={() => eliminarImagen(imagenPiso)}
+                            />
+                        )
+                        )
+                    }
+                </ScrollView>
+            )    
     }
-
     function handleChangeText(name, value) {
         setState({ ...state, [name]: value });
     }
@@ -145,7 +133,7 @@ const RegistrarViviendaScreen = () => {
             Puerta: state.puerta
 
         });
-        const respuesta = await subirImagenBD() 
+        const respuesta = await subirImagenBD()
         alert('Se ha registrado correctamente')
 
     }
@@ -195,7 +183,7 @@ const RegistrarViviendaScreen = () => {
                 <TextInput style={styles.textInput} placeholder="Baños"
                     onChangeText={(value => handleChangeText("banos", value))} />
             </View>
-            
+
             <SubirImagen
                 setImagenesSeleccionadas={setImagenesSeleccionadas}
                 imagenesSeleccionadas={imagenesSeleccionadas}
@@ -206,24 +194,7 @@ const RegistrarViviendaScreen = () => {
         </ScrollView>
     )
 }
-/*
-codigo  spagheti para agregar cosas
 
-var auxus = crearpersona();
-anadirusuario(auxus);
-(async () => {
-    const snapshot = await getDocs(collection(db,'Habitacion'));
-
-snapshot.forEach((doc) => {
-  console.log(doc.id, '=>', doc.data());
-});
-
-
-
-    // all of the script.... 
-
-})();
-*/
 const styles = StyleSheet.create({
     pickerInput: {
         flex: 1,
@@ -266,18 +237,18 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginRight: 10,
-        backgroundColor: "#e3e3e3" 
+        backgroundColor: "#e3e3e3"
     },
     viewImages: {
         flexDirection: "row",
         marginHorizontal: 20,
-        marginTop:30
+        marginTop: 30
 
     },
     miniatureStyle: {
-        width:70,
-        height:70,
-        marginRight:10
+        width: 70,
+        height: 70,
+        marginRight: 10
     }
 
 
