@@ -1,6 +1,7 @@
 //import firebase from 'firebase';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getStorage } from "firebase/storage";
 
 
 
@@ -22,6 +23,14 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
+
+const uploadImage = async ({uri}) => {
+  let storageRef= firebase.storage().ref().child('ImagenesViviendas/${uri}');
+
+  await storageRef.put(uri);
+  return storageRef;
+}
 //const db = firebase.firestore();
 /*
 import firebase from '../database/firebase'
@@ -31,4 +40,6 @@ esto es lo que lleven llevar las otras clases
 export default {
  //   firebase,
     db,
+    uploadImage,
+    storage
 }
