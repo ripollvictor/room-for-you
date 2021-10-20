@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import * as firebase from 'firebase'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
 import { View, Text, Picker, TextInput, Button, ScrollView, StyleSheet, Alert} from "react-native";
