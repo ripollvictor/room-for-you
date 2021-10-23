@@ -11,7 +11,7 @@ import { anadirusuario } from "../database/pruebas";
 //import 'react-datepicker/dist/react-datepicker.css';
 import DateTimePicker from "@react-native-community/datetimepicker";
 //import {DatePickerIOS} from "react-native"
-import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmailAndPassword} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmailAndPassword,updateProfile, update} from "firebase/auth";
 
     
 
@@ -60,8 +60,11 @@ const RegisterUserScreen = () => {
         setState({...state, time: value});
       
     }
-
-    
+/*
+    const auth = getAuth();
+    const user = auth.currentUser;
+    updateProfile()
+*/
     
 
     const RegisterUser = async () => {
@@ -72,6 +75,7 @@ const RegisterUserScreen = () => {
             try{
 
             Registroconemail(state.email,state.contrasena);     
+            
             await addDoc(collection(db,'Usuario'),{
                 Apellidos: state.apellidos,
                 Contrasena: state.contrasena,
@@ -81,6 +85,7 @@ const RegisterUserScreen = () => {
                 NumeroTelefono: state.numerotelefono,
                 tags: state.tags
             });
+
             alert('Se ha registrado correctamente')
         }catch(error){
             console.log("pene");
