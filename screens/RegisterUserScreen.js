@@ -4,14 +4,14 @@ import '../clases/usuario'
 //import {anadirusuario} from'../database/pruebas'
 import DatePicker from 'react-datepicker';
 import '../database/pruebas';
-import { getFirestore, collection, getDocs,doc, addDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs,doc, addDoc,setDoc } from 'firebase/firestore/lite';
 import firebase from '../database/firebase';
 import { crearpersona } from "../clases/usuario";
 import { anadirusuario } from "../database/pruebas";
 //import 'react-datepicker/dist/react-datepicker.css';
 import DateTimePicker from "@react-native-community/datetimepicker";
 //import {DatePickerIOS} from "react-native"
-
+import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmailAndPassword} from "firebase/auth";
 
     
 
@@ -25,7 +25,7 @@ const RegisterUserScreen = () => {
         tags:'',
         fechaNacimiento:'',
         time: new Date("2020","06","24"),
-        numeroTelefono:'',
+        numerotelefono:'',
         email:'',
         contrasena:''
     });
@@ -65,21 +65,47 @@ const RegisterUserScreen = () => {
     
 
     const RegisterUser = async () => {
-        if (state.nombre === '' || state.apellidos === '' || state.tags === '' || state.time === '' || state.numerotelefono === '' || state.email === ''|| state.contrasena === '' ){
+        if (state.nombre === '' || state.apellidos === '' || state.tags === '' ||  state.numerotelefono === '' || state.email === ''|| state.contrasena === '' ){
             alert('Por favor rellena los campos')
         } else{
+
+            try{
+
+            Registroconemail(state.email,state.contrasena);     
             await addDoc(collection(db,'Usuario'),{
                 Apellidos: state.apellidos,
                 Contrasena: state.contrasena,
                 Email: state.email,
                 FechaNacimiento: state.time,
                 Nombre: state.nombre,
-                NumeroTelefono: state.numeroTelefono,
+                NumeroTelefono: state.numerotelefono,
                 tags: state.tags
             });
             alert('Se ha registrado correctamente')
+        }catch(error){
+            console.log("pene");
+            console.error(error);
+        }
         }
     }
+
+
+    const Registroconemail = (email,password) => {
+        const auth = getAuth();
+        
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
+        
+        };
     
 // selected = {this.state.time} onChanged={(value)=>handleChangeText("time" ,value)}
     return (

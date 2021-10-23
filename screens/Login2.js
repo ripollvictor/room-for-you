@@ -4,9 +4,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, ScrollView, StyleSheet } from "react-native";
 import HomeScreen from "./HomeScreen"
-import { getAuth, signInWithPopup, GoogleAuthProvider,signOut } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmailAndPassword} from "firebase/auth";
 //import {StackNavigator} from 'react-navigation';
-
 const provider = new GoogleAuthProvider();
 
 
@@ -42,8 +41,23 @@ const Logueate = () => {
          });
 };
 
+ 
+const Registroconemail = () => {
+const auth = getAuth();
 
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
 
+};
 const logout=() => {
     const auth = getAuth();
     signOut(auth).then(() => {

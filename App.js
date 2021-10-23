@@ -15,9 +15,10 @@ function MyStack() {
   return(
   
     <Stack.Navigator>
+       <Stack.Screen name="Registrar Usuario" component= {RegisterUserScreen}/>
       <Stack.Screen name="lOGIN" component= {Login2}/>
       <Stack.Screen name="Registrar Vivienda" component= {RegistrarViviendaScreen}/>
-      <Stack.Screen name="Registrar Usuario" component= {RegisterUserScreen}/>
+     
       <Stack.Screen name="Home" component= {HomeScreen}/> 
 
     </Stack.Navigator>
