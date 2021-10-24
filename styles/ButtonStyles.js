@@ -31,4 +31,29 @@ const buttonStyles = StyleSheet.create({
     }
 })
 
-export { buttonStyles }
+const blueButtonSyles = StyleSheet.create({
+    normal: {
+        backgroundColor: '#4135F2',
+        borderRadius: 4,
+        alignItems: "center",
+        justifyContent: 'center',
+        flexDirection: 'row',
+        height: 52,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
+    },
+
+    text: {
+        color: '#fff'
+    }
+})
+
+export { buttonStyles, blueButtonSyles }

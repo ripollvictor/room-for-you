@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native"
 const screenStyles = StyleSheet.create({
     container: {
         paddingHorizontal: 22,
-        paddingTop: 32
+        paddingVertical: 32,
+        flex: 1,
     },
 
     logo: {
@@ -20,6 +21,15 @@ const screenStyles = StyleSheet.create({
         fontWeight: "bold",
         alignSelf: 'center',
         marginBottom: 26
+    },
+
+    inputSpace: {
+        marginBottom: 16
+    },
+
+    btnWrap: {
+        flex: 1,
+        justifyContent: "flex-end"
     }
 })
 
