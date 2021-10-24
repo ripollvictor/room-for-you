@@ -7,13 +7,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import RegistrarViviendaScreen from './screens/RegistrarViviendaScreen';
 import RegisterUserScreen from './screens/RegisterUserScreen';
-import IndexScreen from './screens/IndexScreen';
+import InicioScreen from './screens/InicioScreen';
+import IniciarSesionScreen from './screens/IniciarSesionScreen';
 
 const Stack = createNativeStackNavigator()
 function MyStack() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Index" component={ IndexScreen }/>
+      <Stack.Screen name="Inicio" component={ InicioScreen }/>
+      <Stack.Screen name="Iniciar Sesion" component={ IniciarSesionScreen }/>
       <Stack.Screen name="Registrar Vivienda" component= {RegistrarViviendaScreen}/>
       <Stack.Screen name="Registrar Usuario" component= {RegisterUserScreen}/>
       <Stack.Screen name="Home" component= {HomeScreen}/> 
@@ -34,7 +36,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F3F3F3',
     alignItems: 'center',
     justifyContent: 'center',
   },
