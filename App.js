@@ -9,11 +9,13 @@ import RegistrarViviendaScreen from './screens/RegistrarViviendaScreen';
 import RegisterUserScreen from './screens/RegisterUserScreen';
 import InicioScreen from './screens/InicioScreen';
 import IniciarSesionScreen from './screens/IniciarSesionScreen';
+import MatchesScreen from './screens/MatchesScreen';
 
 const Stack = createNativeStackNavigator()
 function MyStack() {
   return(
     <Stack.Navigator>
+      <Stack.Screen name='Matches' component={ MatchesScreen }/>
       <Stack.Screen name="Inicio" component={ InicioScreen }/>
       <Stack.Screen name="Iniciar Sesion" component={ IniciarSesionScreen }/>
       <Stack.Screen name="Registrar Vivienda" component= {RegistrarViviendaScreen}/>
