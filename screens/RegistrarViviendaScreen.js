@@ -5,15 +5,11 @@ import { Icon, Avatar } from "react-native-elements";
 import firebase from '../database/firebase'
 import { getFirestore, collection, getDocs, doc, addDoc } from 'firebase/firestore/lite';
 import { map, size, filter } from "lodash"
-import { v4 as uuidv4 } from 'uuid';
-import {ref, uploadBytes } from "firebase/storage";
-import uploadImage from '../database/firebase';
+import { subirArchivo } from "../database/firebase";
 
 
 const db = firebase.db;
-const storageRef = ref(storage);
 
-const storage = firebase.storage;
 const RegistrarViviendaScreen = () => {
     const [state, setState] = useState({
         tipo: "",
@@ -39,29 +35,6 @@ const RegistrarViviendaScreen = () => {
     */
     const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
 
-    async function uploadImageAsync(uri) {
-        const blob = await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                resolve(xhr.response);
-            };
-            xhr.onerror = function (e) {
-                console.log(e);
-                reject(new TypeError("Network request failed"));
-            };
-            xhr.responseType = "blob";
-            xhr.open("GET", uri, true);
-            xhr.send(null);
-        });
-
-        uploadBytes(storageRef, blob).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
-          });
-          
-        // We're done with the blob, close and release it
-        blob.close();
-
-    }
 
     useEffect(() => {
         (async () => {
@@ -118,6 +91,7 @@ const RegistrarViviendaScreen = () => {
             }
             setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
         }
+        console.log(imagenesSeleccionadas)
         return (
             <ScrollView horizontal>
                 {
@@ -150,18 +124,13 @@ const RegistrarViviendaScreen = () => {
     }
 
     const RegisterVivienda = async () => {
-        await addDoc(collection(db, 'Vivienda'), {
-            Tipo: state.tipo,
-            Address: state.address,
-            Numero: state.numero,
-            Piso: state.piso,
-            Escalera: state.escalera,
-            MetrosCuadrados: state.metrosCuadrados,
-            Banos: state.banos,
-            Puerta: state.puerta
-
-        });
-        await uploadImage(state.imagenesSeleccionadas[0])
+        try{
+            await subirArchivo(imagenesSeleccionadas[0])
+        } catch (e) {
+            console.log("Error:", e);
+        }
+        
+        
         alert('Se ha registrado correctamente')
     }
 
