@@ -23,11 +23,11 @@ const RegistrarViviendaScreen = () => {
     });
 
     /*
-        const subirImagenBD = async () => {
+        const CargarImagenBD = async () => {
             const imagenesUrl = []
             await Promise.all(
                 map(imagenesSeleccionadas, async(image) => {
-                    const respuesta = await SubirImagen(image, "ImagenesViviendas", uuid())
+                    const respuesta = await CargarImagen(image, "ImagenesViviendas", uuid())
                     //if(respuesta.stat)
                 })
             )
@@ -82,7 +82,7 @@ const RegistrarViviendaScreen = () => {
             { cancelable: true }
         )
     }
-    function SubirImagen({ imagenesSeleccionadas, setImagenesSeleccionadas }) {
+    function CargarImagen({ imagenesSeleccionadas, setImagenesSeleccionadas }) {
         const selectImagen = async () => {
             const respuesta = await pickImage()
             if (!respuesta.status) {
@@ -180,7 +180,7 @@ const RegistrarViviendaScreen = () => {
                     onChangeText={(value => handleChangeText("banos", value))} />
             </View>
 
-            <SubirImagen
+            <CargarImagen
                 setImagenesSeleccionadas={setImagenesSeleccionadas}
                 imagenesSeleccionadas={imagenesSeleccionadas}
             />

@@ -24,11 +24,13 @@ const db = getFirestore(app);
 
 const storage = getStorage();
 export function subirArchivo(file){
+  const img = fileToBlob(file);
   const metadata = {
-    contentType: file.type
+    contentType: 'image/png'
   };
-  const imageRef = ref(storage, 'images/' + Math.round(Math.random()*1000));
-  uploadBytesResumable(imageRef, file, metadata).then((snapshot) => {
+  console.log(metadata)
+  const imageRef = ref(storage, 'images/' + Math.round(Math.random()*10000));
+  uploadBytesResumable(imageRef, img, metadata).then((snapshot) => {
     console.log('Uploaded', snapshot.totalBytes, 'bytes.');
     console.log('File metadata:', snapshot.metadata);
     // Let's get a download URL for the file.
@@ -42,6 +44,11 @@ export function subirArchivo(file){
   });
 }
 
+export const fileToBlob = async(path) => {
+  const file = await fetch(path);
+  const blob = await file.blob();
+  return blob;
+}
 //const db = firebase.firestore();
 /*
 const uploadImage = async ({uri}) => {
