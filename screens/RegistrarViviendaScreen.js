@@ -129,8 +129,8 @@ const RegistrarViviendaScreen = () => {
         } catch (e) {
             console.log("Error:", e);
         }
-        
-        
+
+
         alert('Se ha registrado correctamente')
     }
 
