@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Text, TouchableOpacity } from 'react-native'
-import { buttonStyles, blueButtonSyles } from "../styles/ButtonStyles"
+import { buttonStyles, blueButtonSyles } from "./style"
 
 export default class Button extends Component {
     constructor(props) { super(props) }

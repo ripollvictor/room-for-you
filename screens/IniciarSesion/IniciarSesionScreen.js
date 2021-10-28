@@ -1,12 +1,11 @@
+import { screenStyles } from './styles'
+
 import React, { useState } from "react"
 import { View, Image, Text } from "react-native"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
  
-
-import Button from "../components/Button"
-import Input from "../components/Input"
-
-import { screenStyles } from '../styles/IniciarSesionScreenStyles'
+import Button from "../../components/Button/Button"
+import Input from "../../components/Input/Input"
 
 const IniciarSesionScreen = ({navigation}) => {
 
@@ -34,7 +33,7 @@ const IniciarSesionScreen = ({navigation}) => {
 
     return(
         <View style={screenStyles.container}>
-            <Image style={screenStyles.logo} source={require('../assets/logo.png')} />
+            <Image style={screenStyles.logo} source={require('../../assets/logo.png')} />
             <Text style={screenStyles.mainText}>Introduce tus datos</Text>
 
             {/* AQUI VAN LOS INPUTS */}

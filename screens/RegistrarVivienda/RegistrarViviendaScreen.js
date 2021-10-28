@@ -1,11 +1,13 @@
+import { screenStyles } from './styles'
+
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from 'expo-image-picker'
 import { View, Picker, Text, TextInput, Button, ScrollView, StyleSheet, Alert, Platform } from "react-native";
 import { Icon, Avatar } from "react-native-elements";
-import firebase from '../database/firebase'
+import firebase from '../../database/firebase'
 import { getFirestore, collection, getDocs, doc, addDoc } from 'firebase/firestore/lite';
 import { map, size, filter } from "lodash"
-import { subirArchivo } from "../database/firebase";
+import { subirArchivo } from "../../database/helper";
 
 
 const db = firebase.db;
@@ -139,8 +141,8 @@ const RegistrarViviendaScreen = () => {
     return (
         <ScrollView>
 
-            <View style={styles.inputComponent}>
-                <Picker style={styles.pickerInput}
+            <View style={screenStyles.inputComponent}>
+                <Picker style={screenStyles.pickerInput}
                     selectedValue={state.tipo}
                     onValueChange={(itemValue, itemIndex) =>
                         handleChangeText("tipo", itemValue)
@@ -151,32 +153,32 @@ const RegistrarViviendaScreen = () => {
 
                 </Picker>
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Dirección"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Dirección"
                     onChangeText={(value => handleChangeText("address", value))} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Numero"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Numero"
                     onChangeText={(value => handleChangeText("numero", value))} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Piso"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Piso"
                     onChangeText={(value => handleChangeText("piso", value))} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Puerta"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Puerta"
                     onChangeText={(value => handleChangeText("puerta", value))} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Escalera"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Escalera"
                     onChangeText={(value => handleChangeText("escalera", value))} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Metros Cuadrados"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Metros Cuadrados"
                     onChangeText={(value => handleChangeText("metrosCuadrados", value))} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Baños"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Baños"
                     onChangeText={(value => handleChangeText("banos", value))} />
             </View>
 
@@ -191,63 +193,6 @@ const RegistrarViviendaScreen = () => {
     )
 }
 
-const styles = StyleSheet.create({
-    pickerInput: {
-        flex: 1,
-        padding: 10,
-        fontSize: 16,
-    },
-    textInput: {
-        flex: 1,
-        padding: 10,
-        fontSize: 16,
-    },
-    titleText: {
-        flex: 1,
-        padding: 5,
-        paddingTop: 10,
-        paddingLeft: 10,
-        fontSize: 18,
-        fontWeight: "bold",
-        borderTopWidth: 2,
-    },
-    text: {
-        flex: 1,
-        padding: 5,
-        paddingTop: 10,
-        paddingLeft: 10,
-        fontSize: 16
-    },
-    inputComponent: {
-        flex: 1,
-        marginLeft: 20,
-        marginBottom: 10,
-        marginRight: 30,
-        marginTop: 10,
-        borderWidth: 2,
-        borderColor: '#cccccc'
-    },
-    selecionarImagen: {
-        height: 70,
-        width: 79,
-        alignItems: "center",
-        justifyContent: "center",
-        marginRight: 10,
-        backgroundColor: "#e3e3e3"
-    },
-    viewImages: {
-        flexDirection: "row",
-        marginHorizontal: 20,
-        marginTop: 30
 
-    },
-    miniatureStyle: {
-        width: 70,
-        height: 70,
-        marginRight: 10
-    }
-
-
-})
 
 export default RegistrarViviendaScreen

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Image, Text, Animated, PanResponder, View, Dimensions, Touchable } from 'react-native'
-import { viviendaContainerStyles } from "../styles/ViviendaContainerStyles"
+import { viviendaContainerStyles } from "./style"
 
 export default class ViviendaContainer extends Component {
     constructor(props) {

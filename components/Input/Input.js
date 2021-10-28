@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { TextInput } from 'react-native'
-import { textInputStyles } from "../styles/InputStyles"
+import { textInputStyles } from "./style"
 
 export default class Input extends Component {
     constructor(props) { super(props) }

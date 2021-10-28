@@ -1,13 +1,13 @@
+import { screenStyles } from './styles'
+
 import React, { useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
-import db from "../database/firebase";
+import db from "../../database/firebase";
 
 import { View, Image, Text } from "react-native";
-import ViviendaContainer from "../components/ViviendaContainer";
+import ViviendaContainer from "../../components/ViviendaContainer/ViviendaContainer";
 
-import { screenStyles } from "../styles/MatchesScreenStyle";
-
-const MatchesScreen = () => {
+const VerViviendaScreen = () => {
 
     // useEffect(() => {
     //     onSnapshot(collection(db, 'Vivienda'), (snapshot) => {
@@ -25,7 +25,7 @@ const MatchesScreen = () => {
 
             {/* La imagen */}
             <ViviendaContainer 
-                imgSrc={require('../assets/imagen.png')}
+                imgSrc={require('../../assets/imagen.png')}
                 ubi='Avenida Primado Reig'
                 precio='800€/mes'
             />
@@ -39,4 +39,4 @@ const MatchesScreen = () => {
 
 }
 
-export default MatchesScreen
+export default VerViviendaScreen

@@ -1,13 +1,15 @@
+import { screenStyles } from './styles'
+
 import React, {useState} from "react";
-import { View, Text, TextInput, Button, ScrollView, StyleSheet} from "react-native";
-import '../clases/usuario'
+import { View, Text, TextInput, Button, ScrollView } from "react-native";
+import '../../clases/usuario'
 //import {anadirusuario} from'../database/pruebas'
 import DatePicker from 'react-datepicker';
-import '../database/pruebas';
+//import '../../database/pruebas';
 import { getFirestore, collection, getDocs,doc, addDoc,setDoc } from 'firebase/firestore/lite';
-import firebase from '../database/firebase';
-import { crearpersona } from "../clases/usuario";
-import { anadirusuario } from "../database/pruebas";
+import firebase from '../../database/firebase';
+import { crearpersona } from "../../clases/usuario";
+//import { anadirusuario } from "../../database/pruebas";
 //import 'react-datepicker/dist/react-datepicker.css';
 import DateTimePicker from "@react-native-community/datetimepicker";
 //import {DatePickerIOS} from "react-native"
@@ -18,7 +20,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmai
 
 const db = firebase.db;
 
-const RegisterUserScreen = () => {
+const RegistrarUsuarioScreen = () => {
     const [state, setState] = useState({
         nombre:'',
         apellidos:'',
@@ -116,28 +118,28 @@ const RegisterUserScreen = () => {
     return (
         <ScrollView>
             <View>
-                <Text style={styles.titleText}>
+                <Text style={screenStyles.titleText}>
                     Introduce los datos:
                 </Text>
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Nombre" 
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Nombre" 
                 onChangeText={(value) => handleChangeText("nombre", value)} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Apellidos"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Apellidos"
                 onChangeText={(value) => handleChangeText("apellidos", value)} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Tags"
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Tags"
                 onChangeText={(value) => handleChangeText("tags", value)} />
             </View>
             <View>
-                <Text style={styles.text}>
+                <Text style={screenStyles.text}>
                     Fecha de nacimiento:
                 </Text>
             </View>
-            <View style={styles.button}>
+            <View style={screenStyles.button}>
                 <Button color= '#7733CC' onPress={showDatepicker} title="Seleccionar Fecha" />
             </View>
             
@@ -154,19 +156,19 @@ const RegisterUserScreen = () => {
                />      
                   )}
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Numero Telefono" 
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Numero Telefono" 
                 onChangeText={(value) => handleChangeText("numerotelefono", value)} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Email" 
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Email" 
                 onChangeText={(value) => handleChangeText("email", value)} />
             </View>
-            <View style={styles.inputComponent}>
-                <TextInput style={styles.textInput} placeholder="Contraseña" 
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Contraseña" 
                 onChangeText={(value) => handleChangeText("contrasena", value)} />
             </View>
-            <View style={styles.button}>
+            <View style={screenStyles.button}>
                 <Button color='#177013'title="Registrarse" onPress={() => RegisterUser()}/>
             </View>
         </ScrollView>
@@ -190,43 +192,5 @@ snapshot.forEach((doc) => {
 
 })();
 */
-const styles = StyleSheet.create({
-    textInput:{
-        flex:1,
-        padding:10,
-        fontSize:16,
-    },
-    titleText:{
-        flex:1,
-        padding:5,
-        paddingTop: 10,
-        paddingLeft:10,
-        fontSize:18,
-        fontWeight: "bold",
-        borderTopWidth:2,
-    },
-    text:{
-        flex:1,
-        padding:5,
-        paddingTop: 10,
-        paddingLeft:10,
-        fontSize:16
-    },
-    inputComponent: {
-        flex:1,
-        marginLeft:20,
-        marginBottom:10,
-        marginRight:30,
-        marginTop:10,
-        borderWidth:2,
-        borderColor:'#cccccc'
-    },
-    button:{
-        flex:1,
-        marginRight:30,
-        marginLeft:20,
-        marginTop:10,
-        marginBottom:10
-    }
-})
-export default RegisterUserScreen
+
+export default RegistrarUsuarioScreen
