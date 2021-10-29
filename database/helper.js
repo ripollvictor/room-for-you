@@ -6,6 +6,8 @@ import {
 } from "firebase/storage";
 
 export function subirArchivo(file) {
+  
+  const storage = getStorage();
   const imageRef = ref(storage, "images/" + Math.round(Math.random() * 10000));
   uploadString(imageRef, file, "data_url")
     .then((snapshot) => {
