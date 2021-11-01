@@ -5,6 +5,15 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
+import {
+    getAuth, 
+    signOut,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signInWithRedirect,
+    signInWithEmailAndPassword,
+} from 'firebase/auth'
+
 export function subirArchivo(file) {
   
   const storage = getStorage();
@@ -23,4 +32,32 @@ export function subirArchivo(file) {
       console.error("Upload failed", error);
       // ...
     });
+}
+
+export const CerrarSesion = () => {
+    const auth = getAuth()
+    signOut(auth).then(() => {
+        // Hace algo cuando se cierre sesión
+    }).catch((error) => {
+        // Cuando ha ocurrido algun error
+    })
+}
+
+export const IniciarConGoogle = () => {
+    const provider = new GoogleAuthProvider()
+    provider.addScope('https://www.googleapis.com/auth/userinfo.email');
+    provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+
+    const auth = getAuth()
+
+    console.log(signInWithEmailAndPassword)
+
+    //signInWithPopup(auth, provider)
+}
+
+export const DebugDB = () => {
+    const auth = getAuth()
+    const user = auth.currentUser
+
+    alert(user.email)
 }
