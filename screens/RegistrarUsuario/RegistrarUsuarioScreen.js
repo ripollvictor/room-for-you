@@ -6,7 +6,7 @@ import '../../clases/usuario'
 //import {anadirusuario} from'../database/pruebas'
 import DatePicker from 'react-datepicker';
 //import '../../database/pruebas';
-import { getFirestore, collection, getDocs,doc, addDoc,setDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs,doc, addDoc,setDoc,query,where } from 'firebase/firestore/lite';
 import firebase from '../../database/firebase';
 import { crearpersona } from "../../clases/usuario";
 //import { anadirusuario } from "../../database/pruebas";
@@ -14,8 +14,7 @@ import { crearpersona } from "../../clases/usuario";
 import DateTimePicker from "@react-native-community/datetimepicker";
 //import {DatePickerIOS} from "react-native"
 import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmailAndPassword,updateProfile, update} from "firebase/auth";
-import { Console } from 'jest-util';
-//import console = require("console");
+
     
 
 
@@ -76,7 +75,7 @@ const RegistrarUsuarioScreen = () => {
         } else{
 
             try{
-             if(compruebaEmail(state.email)){
+             if((await compruebaEmail(state.email)).length != 0){
                  alert('El correo ya esta en uso')
              }else{
             Registroconemail(state.email,state.contrasena);     
@@ -108,8 +107,9 @@ const RegistrarUsuarioScreen = () => {
         
         console.log("POPU");
         console.log(querySnapshot);
+        console.log(querySnapshot.docs);
         console.log("POPU");
-        return querySnapshot;
+        return querySnapshot.docs;
     }
 
     const Registroconemail = (email,password) => {
