@@ -14,7 +14,8 @@ import { crearpersona } from "../../clases/usuario";
 import DateTimePicker from "@react-native-community/datetimepicker";
 //import {DatePickerIOS} from "react-native"
 import { getAuth, signInWithPopup, GoogleAuthProvider,signOut,createUserWithEmailAndPassword,updateProfile, update} from "firebase/auth";
-
+import { Console } from 'jest-util';
+//import console = require("console");
     
 
 
@@ -75,7 +76,9 @@ const RegistrarUsuarioScreen = () => {
         } else{
 
             try{
-
+             if(compruebaEmail(state.email)){
+                 alert('El correo ya esta en uso')
+             }else{
             Registroconemail(state.email,state.contrasena);     
             
             await addDoc(collection(db,'Usuario'),{
@@ -89,13 +92,25 @@ const RegistrarUsuarioScreen = () => {
             });
 
             alert('Se ha registrado correctamente')
+        }
         }catch(error){
             console.log("pene");
             console.error(error);
         }
         }
     }
-
+  
+    const compruebaEmail = async(email) =>{
+        
+        const q = query(collection(db, "Usuario"), where("Email", "==", email));
+        const querySnapshot = await getDocs(q);
+        
+        
+        console.log("POPU");
+        console.log(querySnapshot);
+        console.log("POPU");
+        return querySnapshot;
+    }
 
     const Registroconemail = (email,password) => {
         const auth = getAuth();

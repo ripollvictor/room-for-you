@@ -38,7 +38,7 @@ function emailUsuario(){
 
 //conseguir el id de la base de datos  del usuario actual
 function idUsuario(email){
-   
+    (async ()=>{
     const q = query(collection(db, "Usuario"), where("Email", "==", email));
 
 const querySnapshot = await getDocs(q);
@@ -46,6 +46,7 @@ querySnapshot.forEach((doc) => {
   // doc.data() is never undefined for query doc snapshots
      return doc.id;
 });
+    })
 
 }
 
