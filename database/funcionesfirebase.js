@@ -7,8 +7,8 @@ import { getAuth } from "firebase/auth";
 
 const db = firebase.db;
 
-function anadirSolicitud(idVivienda){
- (async ()=>{
+export async function anadirSolicitud(idVivienda){
+ //(async ()=>{
      const email = emailUsuario();
      const idUse = idUsuario(email);
      const docRef = await addDoc(collection(db,'Solicitud'),{
@@ -19,7 +19,7 @@ function anadirSolicitud(idVivienda){
          
      })
 
- })
+ //})
 
 }
 //para conseguir el email actual del usuario
