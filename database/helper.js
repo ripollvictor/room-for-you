@@ -76,6 +76,6 @@ export const IniciarConGoogle = async () => {
 export const DebugDB = () => {
     const auth = getAuth();
     const user = auth.currentUser;
-
-    alert(user.email);
+    
+    if (user) alert(user.email);
 };
