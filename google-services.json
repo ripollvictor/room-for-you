@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "46279018872",
+    "project_id": "room-for-you-87832",
+    "storage_bucket": "room-for-you-87832.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46279018872:android:cfc3591449b4655230e08d",
+        "android_client_info": {
+          "package_name": "host.exp.exponent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46279018872-ol5kn61s6c65hrbnerhhc98n5pfqsb21.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "host.exp.exponent",
+            "certificate_hash": "3d17b15470192815fb5aa7053e97ce1a015bf271"
+          }
+        },
+        {
+          "client_id": "46279018872-gfa58kmemct6qm2rgk7nt2q1lfoboftb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKbQyXJpUkil3oZU-tw93Zm7WaqIikYmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46279018872-gfa58kmemct6qm2rgk7nt2q1lfoboftb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "46279018872-dr2o37g9n77dddk2pgh8ff33bee7n2si.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.roomForYou"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
