@@ -13,14 +13,14 @@ const App = () => {
 
     const Stack = createNativeStackNavigator()
 
-    return(
+    return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Inicio" component={ InicioScreen } />
-                <Stack.Screen name="IniciarSesion" component={ IniciarSesionScreen } />
-                <Stack.Screen name="RegistrarUsuario" component={ RegistrarUsuarioScreen } />
-                <Stack.Screen name="RegistrarVivienda" component={ RegistrarViviendaScreen } />
-                <Stack.Screen name="VerVivienda" component={ VerViviendaScreen } />
+                <Stack.Screen name="RegistrarVivienda" component={RegistrarViviendaScreen} />
+                <Stack.Screen name="Inicio" component={InicioScreen} />
+                <Stack.Screen name="IniciarSesion" component={IniciarSesionScreen} />
+                <Stack.Screen name="RegistrarUsuario" component={RegistrarUsuarioScreen} />
+                <Stack.Screen name="VerVivienda" component={VerViviendaScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )

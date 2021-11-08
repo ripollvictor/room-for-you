@@ -50,18 +50,20 @@ const RegistrarViviendaScreen = () => {
     }, []);
 
     const pickImage = async () => {
-        const respuesta = { status: false, image: null }
+        const respuesta = { status: false, image: null, base64: null }
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [9, 16],
             quality: 1,
+            base64: true,
         });
 
         if (result.cancelled) { return respuesta; }
         respuesta.status = true;
         respuesta.image = result.uri;
-        return respuesta
+        respuesta.base64= result.base64;
+        return respuesta;
     };
     const eliminarImagen = (image) => {
         Alert.alert(
@@ -91,7 +93,7 @@ const RegistrarViviendaScreen = () => {
                 alert('No has seleccionado ninguna Imagen')
                 return
             }
-            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
+            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.base64])
         }
         console.log(imagenesSeleccionadas)
         return (
@@ -99,7 +101,7 @@ const RegistrarViviendaScreen = () => {
                 {
                     size(imagenesSeleccionadas) < 10 && (
                         <Icon
-                            style={styles.selecionarImagen}
+                            style={screenStyles.selecionarImagen}
                             tipo="material-community"
                             name="camera"
                             onPress={selectImagen}
@@ -110,7 +112,7 @@ const RegistrarViviendaScreen = () => {
                 {
                     map(imagenesSeleccionadas, (imagenPiso, index) => (
                         <Avatar
-                            style={styles.miniatureStyle}
+                            style={screenStyles.miniatureStyle}
                             key={index}
                             source={{ uri: imagenPiso }}
                             onPress={() => eliminarImagen(imagenPiso)}

@@ -9,7 +9,7 @@ export function subirArchivo(file) {
   
   const storage = getStorage();
   const imageRef = ref(storage, "images/" + Math.round(Math.random() * 10000));
-  uploadString(imageRef, file, "data_url")
+  uploadString(imageRef, file, "base64")
     .then((snapshot) => {
       console.log("Uploaded", snapshot.totalBytes, "bytes.");
       console.log("File metadata:", snapshot.metadata);
