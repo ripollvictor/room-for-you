@@ -22,7 +22,8 @@ export async function subirArchivo(uri) {
   });
 
   const storage = getStorage();
-  const imageRef = ref(storage, "images/" + Math.round(Math.random() * 100000000000));
+  const nombreImagen = Math.round(Math.random() * 100000000000);
+  const imageRef = ref(storage, "images/" + nombreImagen);
   const result = await uploadBytes(imageRef, blob);
   // We're done with the blob, close and release it
   blob.close();

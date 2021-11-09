@@ -16,12 +16,11 @@ const RegistrarViviendaScreen = () => {
     const [state, setState] = useState({
         tipo: "",
         address: "",
-        numero: "",
-        piso: "",
-        escalera: "",
+        numeroPisoEscalera: "",
         metrosCuadrados: "",
         banos: "",
-        puerta: ""
+        numHabitaciones: "",
+        imagenes: []
     });
 
     /*
@@ -62,7 +61,7 @@ const RegistrarViviendaScreen = () => {
         if (result.cancelled) { return respuesta; }
         respuesta.status = true;
         respuesta.image = result.uri;
-        respuesta.base64= result.base64;
+        respuesta.base64 = result.base64;
         return respuesta;
     };
     const eliminarImagen = (image) => {
@@ -95,7 +94,6 @@ const RegistrarViviendaScreen = () => {
             }
             setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
         }
-        console.log(imagenesSeleccionadas)
         return (
             <ScrollView horizontal>
                 {
@@ -128,13 +126,28 @@ const RegistrarViviendaScreen = () => {
     }
 
     const RegisterVivienda = async () => {
-        try{
-            await subirArchivo(imagenesSeleccionadas[0])
+        try {
+            const urlImagenes = [];
+            for (const img of imagenesSeleccionadas) {
+                const urlImg = await subirArchivo(img)
+                console.log(urlImg)
+                urlImagenes.push(urlImg)
+            }
+            console.log("Estas son las img"+urlImagenes);
+
+            await addDoc(collection(db, 'Vivienda'), {
+                tipo: state.tipo,
+                address: state.address,
+                numeroPisoEscalera: state.numeroPisoEscalera,
+                metrosCuadrados: state.metrosCuadrados,
+                banos: state.banos,
+                numHabitaciones: state.numHabitaciones,
+                imagenes: urlImagenes,
+                fechaRegistro: DateTime.now()
+            });
         } catch (e) {
             console.log("Error:", e);
         }
-
-
         alert('Se ha registrado correctamente')
     }
 
@@ -160,20 +173,8 @@ const RegistrarViviendaScreen = () => {
                     onChangeText={(value => handleChangeText("address", value))} />
             </View>
             <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Numero"
-                    onChangeText={(value => handleChangeText("numero", value))} />
-            </View>
-            <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Piso"
-                    onChangeText={(value => handleChangeText("piso", value))} />
-            </View>
-            <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Puerta"
-                    onChangeText={(value => handleChangeText("puerta", value))} />
-            </View>
-            <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Escalera"
-                    onChangeText={(value => handleChangeText("escalera", value))} />
+                <TextInput style={screenStyles.textInput} placeholder="Piso - Escalera - Puerta"
+                    onChangeText={(value => handleChangeText("numeroPisoEscalera", value))} />
             </View>
             <View style={screenStyles.inputComponent}>
                 <TextInput style={screenStyles.textInput} placeholder="Metros Cuadrados"
@@ -182,6 +183,13 @@ const RegistrarViviendaScreen = () => {
             <View style={screenStyles.inputComponent}>
                 <TextInput style={screenStyles.textInput} placeholder="Baños"
                     onChangeText={(value => handleChangeText("banos", value))} />
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput
+                    style={screenStyles.inputComponent}
+                    placeholder="Habitaciones disponibles"
+                    keyboardType="numeric"
+                    onChangeText={(value => handleChangeText("numHabitaciones", value))} />
             </View>
 
             <CargarImagen
