@@ -85,4 +85,4 @@ export async function listaVivienda(){
     resolve(listaViviendas);
 })
 }
-//listaVivienda().then(()=>{});
+//listaVivienda().then((listaVivienda)=>{});
