@@ -2,7 +2,7 @@ import firebase from './firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs,doc ,addDoc, query,where} from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs,doc ,addDoc, query,where,deleteDoc} from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
 
@@ -46,4 +46,30 @@ function emailUsuario(){
         console.log("Upsi2.0");
     }
     return email1;
+}
+
+export function listadeFavoritos(){
+    const email = emailUsuario();
+    conseguirIdUsuario(email).then((idusuario) =>{
+        listafavconid(idusuario).then((listasolicitud)=>{
+                 return listasolicitud;
+        });
+    });
+}
+async function listafavconid(id_usuario) {
+    return new Promise(async function(resolve,reject){
+    const q = query(collection(db, "Solicitud"), where("id_usuario", "==", id_usuario));
+    const querySnapshot = await getDocs(q);
+    let  Solicitudes = null;
+    querySnapshot.forEach((doc) => {
+             Solicitudes.push(doc);
+      });
+
+    resolve(Solicitudes);
+})
+}
+
+
+export async function eliminarSolicitud(idsolicitud){
+    await deleteDoc(doc(db, "Solicitud", idsolicitud));
 }
