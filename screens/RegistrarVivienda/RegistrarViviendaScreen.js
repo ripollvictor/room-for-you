@@ -93,7 +93,7 @@ const RegistrarViviendaScreen = () => {
                 alert('No has seleccionado ninguna Imagen')
                 return
             }
-            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.base64])
+            setImagenesSeleccionadas([...imagenesSeleccionadas, respuesta.image])
         }
         console.log(imagenesSeleccionadas)
         return (
