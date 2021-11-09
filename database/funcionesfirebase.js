@@ -73,3 +73,16 @@ async function listafavconid(id_usuario) {
 export async function eliminarSolicitud(idsolicitud){
     await deleteDoc(doc(db, "Solicitud", idsolicitud));
 }
+
+export async function listaVivienda(){
+    return new Promise(async function(resolve,reject){
+    const q = query(collection(db, "Vivienda"));
+    const querySnapshot = await getDocs(q);
+    let  listaViviendas = null;
+    querySnapshot.forEach((doc) => {
+           listaViviendas.push(doc);
+      });
+    resolve(listaViviendas);
+})
+}
+//listaVivienda().then(()=>{});
