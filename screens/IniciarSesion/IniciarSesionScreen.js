@@ -26,7 +26,7 @@ const IniciarSesionScreen = ({navigation}) => {
             .then((userCredential) => {
                 alert('Logeado')
             })
-            .catch((er) => {
+            .catch((error) => {
                 alert('Upsi')
             })
     }

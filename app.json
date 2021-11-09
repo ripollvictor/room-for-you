@@ -17,9 +17,15 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.roomForYou",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.roomForYou",
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
