@@ -6,13 +6,15 @@ import { getFirestore, collection, getDocs,doc ,addDoc, query,where} from 'fireb
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
 
-
 const db = firebase.db;
+
 export function anadirSolicitud(idVivienda){
     const email = emailUsuario();
-    conseguirIdUsuario(email,idVivienda);
+    conseguirIdUsuario(email).then((idusuario) =>{
+        solicitudaBase(idusuario,idVivienda);
+        });
 }
-
+//añadir a la base  
 async function solicitudaBase(iduse,idVivienda){
      const docRef = await addDoc(collection(db,'Solicitud'),{
          Estado:0,
@@ -21,14 +23,16 @@ async function solicitudaBase(iduse,idVivienda){
          id_vivienda: idVivienda        
      })
 }
-
-async function conseguirIdUsuario(email,idVivienda) {
-    const q = query(collection(db, "Usuario"), where("Email", "==", email));
-    const querySnapshot = await getDocs(q);
-    const iduse = null;  
-    querySnapshot.forEach((doc) => {
-           solicitudaBase(doc.id,idVivienda);        
-      });
+//conseguir el id
+async function conseguirIdUsuario(email) {
+    return new Promise(async function(resolve,reject){
+        const q = query(collection(db, "Usuario"), where("Email", "==", email));
+        const querySnapshot = await getDocs(q); 
+        querySnapshot.forEach((doc) => {
+                 resolve(doc.id);       
+          });
+    })
+    
 }
 
 //para conseguir el email actual del usuario
