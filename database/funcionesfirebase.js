@@ -60,7 +60,7 @@ async function listafavconid(id_usuario) {
     return new Promise(async function(resolve,reject){
     const q = query(collection(db, "Solicitud"), where("id_usuario", "==", id_usuario));
     const querySnapshot = await getDocs(q);
-    let  Solicitudes = null;
+    let  Solicitudes  = new Array();
     querySnapshot.forEach((doc) => {
              Solicitudes.push(doc);
       });
@@ -78,7 +78,7 @@ export async function listaVivienda(){
     return new Promise(async function(resolve,reject){
     const q = query(collection(db, "Vivienda"));
     const querySnapshot = await getDocs(q);
-    let  listaViviendas = null;
+    let  listaViviendas = new Array();
     querySnapshot.forEach((doc) => {
            listaViviendas.push(doc);
       });
