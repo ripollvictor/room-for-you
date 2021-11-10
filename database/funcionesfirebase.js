@@ -123,15 +123,15 @@ export async function modificarVivienda(vivienda){
 }
 /*
 const [state, setState] = useState({
-    tipo: "",
-    address: "",
-    numero: "",
-    piso: "",
-    escalera: "",
-    metrosCuadrados: "",
-    banos: "",
-    puerta: "",
-    id_usuario: "",
-    id_vivienda:"",
+        Banos: vivienda.Banos,
+        Direccion: vivienda.Direccion,
+        EscaleraPisoPuerta: vivienda.EscaleraPisoPuerta,
+        FechaRegistro: vivienda.FechaRegistro,
+        Imagenes: vivienda.Imagenes,
+        MetrosCuadrados: vivienda.MetrosCuadrados,
+        NumHabitaciones: vivienda.NumHabitaciones,
+        Ubicacion: vivienda.Ubicacion,
+        id_usuario: vivienda.id_usuario,
+        id_vivienda: vivienda.id_vivienda
 });
 */
