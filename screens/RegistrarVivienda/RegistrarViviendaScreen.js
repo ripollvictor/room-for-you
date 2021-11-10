@@ -136,14 +136,15 @@ const RegistrarViviendaScreen = () => {
             console.log("Estas son las img"+urlImagenes);
 
             await addDoc(collection(db, 'Vivienda'), {
-                tipo: state.tipo,
-                address: state.address,
-                numeroPisoEscalera: state.numeroPisoEscalera,
-                metrosCuadrados: state.metrosCuadrados,
-                banos: state.banos,
-                numHabitaciones: state.numHabitaciones,
-                imagenes: urlImagenes,
-                fechaRegistro: Date.now()
+                Direccion: state.address,
+                EscaleraPisoPuerta: state.numeroPisoEscalera,
+                MetrosCuadrados: state.metrosCuadrados,
+                Banos: state.banos,
+                NumHabitaciones: state.numHabitaciones,
+                Imagenes: urlImagenes,
+                FechaRegistro: new Date(),
+                Ubicacion: "",
+                id_usuario:""
             });
         } catch (e) {
             console.log("Error:", e);
@@ -151,23 +152,8 @@ const RegistrarViviendaScreen = () => {
         alert('Se ha registrado correctamente')
     }
 
-
-
     return (
         <ScrollView>
-
-            <View style={screenStyles.inputComponent}>
-                <Picker style={screenStyles.pickerInput}
-                    selectedValue={state.tipo}
-                    onValueChange={(itemValue, itemIndex) =>
-                        handleChangeText("tipo", itemValue)
-                    }>
-                    <Picker.Item label="Piso" value="Piso" />
-                    <Picker.Item label="Adosado" value="Adosado" />
-                    <Picker.Item label="Chalet" value="Chalet" />
-
-                </Picker>
-            </View>
             <View style={screenStyles.inputComponent}>
                 <TextInput style={screenStyles.textInput} placeholder="Dirección"
                     onChangeText={(value => handleChangeText("address", value))} />
@@ -182,11 +168,12 @@ const RegistrarViviendaScreen = () => {
             </View>
             <View style={screenStyles.inputComponent}>
                 <TextInput style={screenStyles.textInput} placeholder="Baños"
+                    keyboardType="numeric"
                     onChangeText={(value => handleChangeText("banos", value))} />
             </View>
             <View style={screenStyles.inputComponent}>
                 <TextInput
-                    style={screenStyles.inputComponent}
+                    style={screenStyles.textInput}
                     placeholder="Habitaciones disponibles"
                     keyboardType="numeric"
                     onChangeText={(value => handleChangeText("numHabitaciones", value))} />
