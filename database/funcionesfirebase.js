@@ -2,7 +2,7 @@ import firebase from './firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs,doc ,addDoc, query,where,deleteDoc} from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs,doc ,addDoc, query,where,deleteDoc,setDoc} from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
 
@@ -86,3 +86,39 @@ export async function listaVivienda(){
 })
 }
 //listaVivienda().then((listaVivienda)=>{});
+
+//eliminar vivienda 
+export async function eliminarVivienda(idvivienda){
+    await deleteDoc(doc(db, "Vivienda", idvivienda));
+}
+
+
+export async function modificarVivienda(vivienda){
+    const data ={
+        tipo: vivienda.tipo,
+        ubicacion: vivienda.ubicacion,
+        numero: vivienda.numero,
+        piso: vivienda.piso,
+        escalera: vivienda.escalera,
+        metrosCuadrados: vivienda.metrosCuadrados,
+        banos: vivienda.banos,
+        puerta: vivienda.puerta,
+        id_usuario: vivienda.id_usuario,
+        fechaRegistro: vivienda.fechaRegistro
+    };
+  const res = await setDoc(doc(db,"Vivienda",vivienda.id_vivienda));
+}
+/*
+const [state, setState] = useState({
+    tipo: "",
+    address: "",
+    numero: "",
+    piso: "",
+    escalera: "",
+    metrosCuadrados: "",
+    banos: "",
+    puerta: "",
+    id_usuario: "",
+    id_vivienda:"",
+});
+*/
