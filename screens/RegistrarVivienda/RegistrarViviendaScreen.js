@@ -143,7 +143,7 @@ const RegistrarViviendaScreen = () => {
                 banos: state.banos,
                 numHabitaciones: state.numHabitaciones,
                 imagenes: urlImagenes,
-                fechaRegistro: DateTime.now()
+                fechaRegistro: Date.now()
             });
         } catch (e) {
             console.log("Error:", e);
