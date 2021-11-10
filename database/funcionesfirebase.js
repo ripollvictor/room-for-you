@@ -2,7 +2,7 @@ import firebase from './firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs,doc ,addDoc, query,where,deleteDoc,setDoc} from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc ,addDoc, query,where,deleteDoc,setDoc,getDoc} from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
 
@@ -34,6 +34,7 @@ async function conseguirIdUsuario(email) {
     })
     
 }
+//conseguirIdUsuario(email).then((id usuario)=>{ // continuas el codigo...});
 
 //para conseguir el email actual del usuario
 function emailUsuario(){
@@ -92,6 +93,14 @@ export async function eliminarVivienda(idvivienda){
     await deleteDoc(doc(db, "Vivienda", idvivienda));
 }
 
+export async function getViviendaconid(idvivienda){
+    return new Promise(async function(resolve,reject){
+        const docRef = doc(db, "Vivienda", idvivienda);      
+        const docSnap = await getDoc(docRef);
+        resolve(docSnap)
+        //para poder ver el id .id para la demas informacion .data().banos
+})
+}
 
 export async function modificarVivienda(vivienda){
     const data ={
