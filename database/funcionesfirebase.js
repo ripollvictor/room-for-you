@@ -100,22 +100,26 @@ export async function getViviendaconid(idvivienda){
         resolve(docSnap)
         //para poder ver el id .id para la demas informacion .data().banos
 })
-}
-
+}/* llamada a getVivienda
+getViviendaconid("02").then((vivienda)=>{
+    console.log(vivienda.id);
+    console.log(vivienda.data());
+    console.log(vivienda.data().Numero);
+});
+*/
 export async function modificarVivienda(vivienda){
     const data ={
-        tipo: vivienda.tipo,
-        ubicacion: vivienda.ubicacion,
-        numero: vivienda.numero,
-        piso: vivienda.piso,
-        escalera: vivienda.escalera,
-        metrosCuadrados: vivienda.metrosCuadrados,
-        banos: vivienda.banos,
-        puerta: vivienda.puerta,
-        id_usuario: vivienda.id_usuario,
-        fechaRegistro: vivienda.fechaRegistro
+        Banos: vivienda.Banos,
+        Direccion: vivienda.Direccion,
+        EscaleraPisoPuerta: vivienda.EscaleraPisoPuerta,
+        FechaRegistro: vivienda.FechaRegistro,
+        Imagenes: vivienda.Imagenes,
+        MetrosCuadrados: vivienda.MetrosCuadrados,
+        NumHabitaciones: vivienda.NumHabitaciones,
+        Ubicacion: vivienda.Ubicacion,
+        id_usuario: vivienda.id_usuario
     };
-  const res = await setDoc(doc(db,"Vivienda",vivienda.id_vivienda));
+  const res = await setDoc(doc(db,"Vivienda",vivienda.id_vivienda),data);
 }
 /*
 const [state, setState] = useState({
