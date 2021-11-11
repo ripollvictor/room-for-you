@@ -91,6 +91,15 @@ export async function listaVivienda(){
 //eliminar vivienda 
 export async function eliminarVivienda(idvivienda){
     await deleteDoc(doc(db, "Vivienda", idvivienda));
+   eliminarHabitacion(idvivienda);
+}
+//eliminar habitaciones sin probar 
+async function eliminarHabitacion(idvivienda){
+    const q = query(collection(db, "Habitacion"), where("id_vivienda", "==", idvivienda));
+    const querySnapshot = await getDocs(q);;
+    querySnapshot.forEach((doc) => {
+             deleteDoc(doc);
+      });
 }
 
 export async function getViviendaconid(idvivienda){
