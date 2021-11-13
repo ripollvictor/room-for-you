@@ -58,12 +58,14 @@ function emailUsuario(){
 }
 
 export function listadeFavoritos(){
+    return new Promise(async function(resolve,reject){
     const email = emailUsuario();
     conseguirIdUsuario(email).then((idusuario) =>{
         listafavconid(idusuario).then((listasolicitud)=>{
-                 return listasolicitud;
+                 resolve(listasolicitud);
         });
     });
+})
 }
 async function listafavconid(id_usuario) {
     return new Promise(async function(resolve,reject){
@@ -172,15 +174,15 @@ const [state, setState] = useState({
 });
 */
 ///////////////////////////////////////////////////////
-////////Cosasrelacionadas con Habitacion///////////////
+////////Cosas relacionadas con Habitacion///////////////
 ///////////////////////////////////////////////////////
-export async function habitacionsetEstadoOcupada(idhabitacion){
+export async function habitacionSetEstadoOcupada(idhabitacion){
     const habitref =  doc(db,"Habitacion",idhabitacion);
     const res = await updateDoc(habitref,{Estado: 1});
 
 }
 
-export async function habitacionsetEstadoLibre(idhabitacion){
+export async function habitacionSetEstadoLibre(idhabitacion){
     const habitref =  doc(db,"Habitacion",idhabitacion);
     const res = await updateDoc(habitref,{Estado: 0});
 
@@ -196,7 +198,7 @@ async function eliminarHabitacion(idvivienda){
 }
 // comprobar esto 
 export async function anadirHabitacion(habitacion){
-    const docRef = await addDoc(collection(db,'Solicitud'),habitacion);
+    const docRef = await addDoc(collection(db,'Habitacion'),habitacion);
 }
 
 

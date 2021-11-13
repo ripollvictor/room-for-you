@@ -15,13 +15,13 @@ const ModificarVivienda = ({navigation,vivienda}) => {
         Banos: vivienda.data().Banos,
         Direccion: vivienda.data().Direccion,
         EscaleraPisoPuerta: vivienda.data().EscaleraPisoPuerta,
-        FechaRegistro: vivienda.data().FechaRegistro,
-        Imagenes: vivienda.data().Imagenes,
+        FechaRegistro: vivienda.data().FechaRegistro, // no se edita
+        Imagenes: vivienda.data().Imagenes, //no se edita
         MetrosCuadrados: vivienda.data().MetrosCuadrados,
         NumHabitaciones: vivienda.data().NumHabitaciones,
-        Ubicacion: vivienda.data().Ubicacion,
-        id_usuario: vivienda.data().id_usuario,
-        id_vivienda: vivienda.id
+        Ubicacion: vivienda.data().Ubicacion, //de momento se deja igual
+        id_usuario: vivienda.data().id_usuario, // no se edita
+        id_vivienda: vivienda.id // no se edita
     })
     const handleChangeText = (name, value) => {
         setState({...Vivienda, [name]: value});
