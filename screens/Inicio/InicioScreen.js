@@ -6,7 +6,7 @@ import { IniciarConGoogle, CerrarSesion, DebugDB } from '../../database/helper'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 
 import Button from "../../components/Button/Button"
-import {getViviendaconid , listaVivienda,getViviendaconidvivieda}from "../../database/funcionesfirebase"
+import {getViviendaconid , listaVivienda,getViviendaconidvivieda,anadirHabitacion,habitacionSetEstadoLibre,habitacionSetEstadoOcupada,anadirCompaneroalPiso,eliminarCompanerobyidTabla}from "../../database/funcionesfirebase"
 const InicioScreen = ({navigation}) => {
 
     const IrPagina = nombrePag => {
@@ -19,7 +19,8 @@ const InicioScreen = ({navigation}) => {
 
         console.log(auth)
     }
-
+    // anadirHabitacion(data)
+    const data={Caracteristicas: "grande",Estado: 0,MetrosCuadrados:384343,Precio:349434,id_vivienda:"34HDE4343"}
     return(
         <View style={screenStyles.container}>
             <Image style={screenStyles.logo} source={require('../../assets/logo.png')} />
@@ -32,7 +33,8 @@ const InicioScreen = ({navigation}) => {
             <Button onPress={() => { getViviendaconidvivieda("123456").then((vivienda)=>{
                 console.log(vivienda.data());
                 navigation.navigate("ModificarVivienda",{vivienda});
-            })}}>Prueba</Button>
+            })}}>ModificarVivienda</Button>
+             <Button onPress={() => {eliminarCompanerobyidTabla("ySdrtWsNtf1YEZm8szX2")}}>Prueba</Button>
         </View>
     )
 
