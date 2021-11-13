@@ -6,7 +6,7 @@ import { IniciarConGoogle, CerrarSesion, DebugDB } from '../../database/helper'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 
 import Button from "../../components/Button/Button"
-import {getViviendaconid , listaVivienda}from "../../database/funcionesfirebase"
+import {getViviendaconid , listaVivienda,getViviendaconidvivieda}from "../../database/funcionesfirebase"
 const InicioScreen = ({navigation}) => {
 
     const IrPagina = nombrePag => {
@@ -29,10 +29,10 @@ const InicioScreen = ({navigation}) => {
             <Button onPress={() => { CerrarSesion() }} style={screenStyles.buttonSpace} >Cerrar sesión</Button>
             <Button onPress={() => { DebugDB() }} style={screenStyles.buttonSpace} >Prueba</Button>
             <Button onPress={() => { IrPagina('RegistrarUsuario') }}>Registrarse</Button>
-            <Button onPress={() => { listaVivienda().then((listaVivienda)=>{listaVivienda.forEach(element => {
-                console.log(element.id);
-                console.log(element.data())
-            });}) }}>Prueba</Button>
+            <Button onPress={() => { getViviendaconidvivieda("123456").then((vivienda)=>{
+                console.log(vivienda.data());
+                navigation.navigate("ModificarVivienda",{vivienda});
+            })}}>Prueba</Button>
         </View>
     )
 

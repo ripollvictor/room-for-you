@@ -7,6 +7,7 @@ import IniciarSesionScreen from './screens/IniciarSesion/IniciarSesionScreen'
 import RegistrarUsuarioScreen from './screens/RegistrarUsuario/RegistrarUsuarioScreen';
 import RegistrarViviendaScreen from './screens/RegistrarVivienda/RegistrarViviendaScreen';
 import VerViviendaScreen from './screens/VerViviendas/VerViviendaScreen';
+import ModificarVivienda from './screens/ModificarVivienda/ModificarVivienda';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
                 <Stack.Screen name="RegistrarUsuario" component={ RegistrarUsuarioScreen } />
                 <Stack.Screen name="RegistrarVivienda" component={ RegistrarViviendaScreen } />
                 <Stack.Screen name="VerVivienda" component={ VerViviendaScreen } />
+                <Stack.Screen name="ModificarVivienda" component={ ModificarVivienda} />
             </Stack.Navigator>
         </NavigationContainer>
     )

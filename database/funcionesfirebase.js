@@ -5,7 +5,7 @@ import '../clases/usuario'
 import { getFirestore, collection, getDocs, doc ,addDoc, query,where,deleteDoc,setDoc,getDoc,updateDoc} from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
-import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
+
 
 const db = firebase.db;
 
