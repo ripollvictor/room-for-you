@@ -1,12 +1,12 @@
 import { screenStyles } from './styles'
 
 import React from "react"
-import { View, Image, Text } from "react-native"
+import { View, Text, TextInput, Button, ScrollView } from "react-native"
 import { IniciarConGoogle, CerrarSesion, DebugDB } from '../../database/helper'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 
 import Button from "../../components/Button/Button"
-import {getViviendaconid , listaVivienda}from "../../database/funcionesfirebase"
+import {getViviendaconid , listaVivienda, modificarVivienda}from "../../database/funcionesfirebase"
 
 const ModificarVivienda = ({navigation,vivienda}) => {
     
@@ -27,8 +27,37 @@ const ModificarVivienda = ({navigation,vivienda}) => {
         setState({...Vivienda, [name]: value});
     }
 
-
-
-
+return(
+    <ScrollView>
+            <View>
+                <Text style={screenStyles.titleText}>
+                    Datos de la vivienda:
+                </Text>
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Numero de baños" Text = {Vivienda.Banos} 
+                onChangeText={(value) => handleChangeText("Banos", value)} />
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Dirección" Text = {Vivienda.Direccion} 
+                onChangeText={(value) => handleChangeText("Direccion", value)} />
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Escalera, piso y puerta" Text = {Vivienda.EscaleraPisoPuerta} 
+                onChangeText={(value) => handleChangeText("EscaleraPisoPuerta", value)} />
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Metros Cuadrados" Text = {Vivienda.MetrosCuadrados} 
+                onChangeText={(value) => handleChangeText("MetrosCuadrados", value)} />
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Numero de habitaciones" Text = {Vivienda.NumHabitaciones} 
+                onChangeText={(value) => handleChangeText("NumHabitaciones", value)} />
+            </View>
+            <View style={screenStyles.button}>
+                <Button color='#177013'title="Modificar" onPress={() => modificarVivienda(Vivienda)}/>
+            </View>
+    </ScrollView>
+)
 }
 export default  ModificarVivienda
