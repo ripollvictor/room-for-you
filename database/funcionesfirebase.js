@@ -2,12 +2,20 @@ import firebase from './firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs, doc ,addDoc, query,where,deleteDoc,setDoc,getDoc} from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc ,addDoc, query,where,deleteDoc,setDoc,getDoc,updateDoc} from 'firebase/firestore/lite';
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
+import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 
 const db = firebase.db;
 
+
+
+
+
+//////////////////////////////////////////////////////////////////
+////////Cosas relacionadas con SolicitudFavoritos///////////////
+////////////////////////////////////////////////////////////////
 export function anadirSolicitud(idVivienda){
     const email = emailUsuario();
     conseguirIdUsuario(email).then((idusuario) =>{
@@ -75,6 +83,12 @@ export async function eliminarSolicitud(idsolicitud){
     await deleteDoc(doc(db, "Solicitud", idsolicitud));
 }
 
+
+
+///////////////////////////////////////////////////////
+////////Cosas relacionadas con Vivienda///////////////
+///////////////////////////////////////////////////////
+
 export async function listaVivienda(){
     return new Promise(async function(resolve,reject){
     const q = query(collection(db, "Vivienda"));
@@ -87,22 +101,35 @@ export async function listaVivienda(){
 })
 }
 //listaVivienda().then((listaVivienda)=>{});
-
 //eliminar vivienda 
 export async function eliminarVivienda(idvivienda){
     await deleteDoc(doc(db, "Vivienda", idvivienda));
    eliminarHabitacion(idvivienda);
 }
-//eliminar habitaciones sin probar 
-async function eliminarHabitacion(idvivienda){
-    const q = query(collection(db, "Habitacion"), where("id_vivienda", "==", idvivienda));
-    const querySnapshot = await getDocs(q);;
-    querySnapshot.forEach((doc) => {
-             deleteDoc(doc);
-      });
+
+export async function getViviendaDelUser() {
+    return new Promise(async function(resolve,reject){
+    const email = emailUsuario();
+    conseguirIdUsuario(email).then((idusuario) =>{
+        getviviendaporIdUser(idusuario).then((vivienda)=>{
+            resolve(vivienda);
+        })
+    })
+})
+      
+}
+async function getviviendaporIdUser(iduser) {
+    return new Promise(async function(resolve,reject){
+
+        const q = query(collection(db, "Vivienda"), where("id_usuario", "==", id_usuario));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            resolve(doc);
+      });    
+    })
 }
 
-export async function getViviendaconid(idvivienda){
+export async function getViviendaconidvivieda(idvivienda){
     return new Promise(async function(resolve,reject){
         const docRef = doc(db, "Vivienda", idvivienda);      
         const docSnap = await getDoc(docRef);
@@ -144,3 +171,47 @@ const [state, setState] = useState({
         id_vivienda: vivienda.id_vivienda
 });
 */
+///////////////////////////////////////////////////////
+////////Cosasrelacionadas con Habitacion///////////////
+///////////////////////////////////////////////////////
+export async function habitacionsetEstadoOcupada(idhabitacion){
+    const habitref =  doc(db,"Habitacion",idhabitacion);
+    const res = await updateDoc(habitref,{Estado: 1});
+
+}
+
+export async function habitacionsetEstadoLibre(idhabitacion){
+    const habitref =  doc(db,"Habitacion",idhabitacion);
+    const res = await updateDoc(habitref,{Estado: 0});
+
+}
+
+//eliminar habitaciones sin probar 
+async function eliminarHabitacion(idvivienda){
+    const q = query(collection(db, "Habitacion"), where("id_vivienda", "==", idvivienda));
+    const querySnapshot = await getDocs(q);;
+    querySnapshot.forEach((doc) => {
+             deleteDoc(doc);
+      });
+}
+// comprobar esto 
+export async function anadirHabitacion(habitacion){
+    const docRef = await addDoc(collection(db,'Solicitud'),habitacion);
+}
+
+
+///////////////////////////////////////////////////////
+////////Cosas relacionadas con Companero///////////////
+///////////////////////////////////////////////////////
+
+export async function anadirCompaneroalPiso(idusuario,idvivienda){
+    const docRef = await addDoc(collection(db,'Companeros'),{
+        id_usuario:idusuario,
+        id_vivienda:idvivienda        
+    })
+}
+
+export async function eliminarCompanerobyidTabla(idCompaneros) {
+    await deleteDoc(doc(db, "Companeros", idCompaneros));
+}
+
