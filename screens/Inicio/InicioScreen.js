@@ -29,12 +29,8 @@ const popu = "6EDH4346";
             <Button onPress={() => { IniciarConGoogle() }} style={screenStyles.buttonSpace} imgSrc={require('../../assets/google-icon.png')}>Iniciar sesión con Google</Button>
             <Button onPress={() => { CerrarSesion() }} style={screenStyles.buttonSpace} >Cerrar sesión</Button>
             <Button onPress={() => { DebugDB() }} style={screenStyles.buttonSpace} >Prueba</Button>
-            <Button onPress={() => { IrPagina('RegistrarUsuario') }}>Registrarse</Button>
-            <Button onPress={() => { getViviendaconidvivieda("123456").then((vivienda)=>{
-                console.log(vivienda.data());
-                navigation.navigate("ModificarVivienda",{vivienda});
-            })}}>ModificarVivienda</Button>
-             <Button onPress={() => {console.log(popu);navigation.navigate("RegistrarHabitacion",{popu})}}>Prueba</Button>
+            <Button onPress={() => { IrPagina('RegistrarUsuario') }}style={screenStyles.buttonSpace}>Registrarse</Button>
+             <Button onPress={() => {navigation.navigate("Pruebas")}}style={screenStyles.buttonSpace}>Pruebas Popu algo descriptibo , descriptivo*</Button>
         </View>
     )
 
