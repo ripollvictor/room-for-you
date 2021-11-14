@@ -8,6 +8,7 @@ import RegistrarUsuarioScreen from './screens/RegistrarUsuario/RegistrarUsuarioS
 import RegistrarViviendaScreen from './screens/RegistrarVivienda/RegistrarViviendaScreen';
 import VerViviendaScreen from './screens/VerViviendas/VerViviendaScreen';
 import ModificarVivienda from './screens/ModificarVivienda/ModificarVivienda';
+import RegistrarHabitacion from './screens/RegistrarHabitacion/RegistrarHabitacionScreen';
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
                 <Stack.Screen name="RegistrarVivienda" component={ RegistrarViviendaScreen } />
                 <Stack.Screen name="VerVivienda" component={ VerViviendaScreen } />
                 <Stack.Screen name="ModificarVivienda" component={ ModificarVivienda} />
+                <Stack.Screen name="RegistrarHabitacion" component={ RegistrarHabitacion} />
             </Stack.Navigator>
         </NavigationContainer>
     )

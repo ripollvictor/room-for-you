@@ -8,7 +8,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 import Button from "../../components/Button/Button"
 import {getViviendaconid , listaVivienda,getViviendaconidvivieda,anadirHabitacion,habitacionSetEstadoLibre,habitacionSetEstadoOcupada,anadirCompaneroalPiso,eliminarCompanerobyidTabla}from "../../database/funcionesfirebase"
 const InicioScreen = ({navigation}) => {
-
+const popu = "6EDH4346";
     const IrPagina = nombrePag => {
         navigation.navigate(nombrePag)
     }
@@ -34,7 +34,7 @@ const InicioScreen = ({navigation}) => {
                 console.log(vivienda.data());
                 navigation.navigate("ModificarVivienda",{vivienda});
             })}}>ModificarVivienda</Button>
-             <Button onPress={() => {eliminarCompanerobyidTabla("ySdrtWsNtf1YEZm8szX2")}}>Prueba</Button>
+             <Button onPress={() => {console.log(popu);navigation.navigate("RegistrarHabitacion",{popu})}}>Prueba</Button>
         </View>
     )
 
