@@ -12,6 +12,18 @@ import {
     signInWithCredential,
 } from "firebase/auth";
 
+import {
+    collection,
+    doc,
+    query,
+    where,
+    getDocs,
+    getDoc
+} from 'firebase/firestore/lite'
+
+import firebase from './firebase'
+const db = firebase.db
+
 import * as Google from 'expo-google-app-auth';
 
 export function subirArchivo(file) {
@@ -74,8 +86,60 @@ export const IniciarConGoogle = async () => {
 };
 
 export const DebugDB = () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
     
-    if (user) alert(user.email);
 };
+
+const GetAllDocsFromCollection = async (collectionName) => {
+    return await getDocs( collection(db, collectionName) )
+}
+
+const GetDocsFrom = async (collectionName, fieldName, field) => {
+    return await getDocs( query( collection(db, collectionName), where(fieldName, "==", field) ) )
+}
+
+const GetViviendaIdFromUserId = async (userId) => {
+    const collectionName = "Vivienda"
+    const fieldName = "id_usuario"
+    const field = userId
+
+    let viviendaId
+
+    await GetDocsFrom(collectionName, fieldName, field).then( (res) => {
+        res.forEach(doc => {
+            viviendaId = doc.id
+        })
+    })
+
+    return viviendaId
+}
+
+const GetUserIdFromEmail = async (email) => {
+    const collectionName = "Usuario"
+    const fieldName = "Email"
+    const field = email
+
+    await GetDocsFrom(collectionName, fieldName, field).then( res => {
+        console.log(res)
+    })
+}
+
+const GetEmailFromCurrentUser = () => {
+    const auth = getAuth()
+    const user = auth.currentUser
+    
+    if (user) return user.email
+}
+
+export const GetInterestedUsers = (ofertadorId) => {
+    let email = GetEmailFromCurrentUser()
+    let userId
+    let viviendaId 
+
+    GetUserIdFromEmail(email).then(res => {
+        userId = res
+        GetViviendaIdFromUserId(userId).then(res => { viviendaId = res })
+    })
+    
+
+    console.log(viviendaId)
+}
