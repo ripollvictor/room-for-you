@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Image, Text, Animated, PanResponder, View, Dimensions, Touchable } from 'react-native'
 import { viviendaContainerStyles } from "./style"
+import { cargarArray, anadirFavoritos } from "../../screens/VerViviendas/VerViviendaScreen"
 
 export default class ViviendaContainer extends Component {
     constructor(props) {
@@ -20,12 +21,14 @@ export default class ViviendaContainer extends Component {
 
                 if(gesture.dx === 0 && gesture.dy === 0) {
                     // Se ha pulsado una vez 
-
+                    // abrir nuevo contenedor que muestre las fotos en grande
+                    //TO DO metodo pasar de foto
 
 
                 } else if (this.Derecha(gesture)) {
                     // Se ha movido a la derecha
-
+                    anadirFavoritos()
+                    
 
 
                     Animated.spring(
@@ -38,6 +41,7 @@ export default class ViviendaContainer extends Component {
 
                 } else if (this.Izquierda(gesture)) {
                     // Se ha movido a la izquierda
+                    cargarArray()
 
 
 

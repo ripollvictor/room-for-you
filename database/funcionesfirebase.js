@@ -81,7 +81,7 @@ export async function listaVivienda(){
     let  listaViviendas = new Array();
     querySnapshot.forEach((doc) => {
            listaViviendas.push(doc);
-      });
+    });
     resolve(listaViviendas);
 })
 }
