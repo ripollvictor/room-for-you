@@ -71,75 +71,74 @@ export const IniciarConGoogle = async () => {
 
         signInWithCredential(auth, credentials)
 
-
     }
-
-
-    // try {
-    //     GoogleSignin.hasPlayServices();
-    //     const { accessToken, idToken } = GoogleSignin.signIn();
-    //     const credentials = GoogleAuthProvider.credential(idToken, accessToken);
-    //     const auth = getAuth();
-
-    //     signInWithCredential(auth, credentials);
-    // } catch (error) { }
 };
 
-export const DebugDB = () => {
-    
-};
-
-const GetAllDocsFromCollection = async (collectionName) => {
-    return await getDocs( collection(db, collectionName) )
+const GetDocsFrom = (collectionName, fieldName, value) => {
+    return getDocs(
+        query(
+            collection(db, collectionName),
+            where(fieldName, '==', value)
+        )
+    )
 }
 
-const GetDocsFrom = async (collectionName, fieldName, field) => {
-    return await getDocs( query( collection(db, collectionName), where(fieldName, "==", field) ) )
-}
-
-const GetViviendaIdFromUserId = async (userId) => {
-    const collectionName = "Vivienda"
-    const fieldName = "id_usuario"
-    const field = userId
-
-    let viviendaId
-
-    await GetDocsFrom(collectionName, fieldName, field).then( (res) => {
-        res.forEach(doc => {
-            viviendaId = doc.id
-        })
-    })
-
-    return viviendaId
-}
-
-const GetUserIdFromEmail = async (email) => {
-    const collectionName = "Usuario"
-    const fieldName = "Email"
-    const field = email
-
-    await GetDocsFrom(collectionName, fieldName, field).then( res => {
-        console.log(res)
-    })
-}
-
-const GetEmailFromCurrentUser = () => {
+export const GetEmailFromCurrentUser = () => {
     const auth = getAuth()
     const user = auth.currentUser
-    
-    if (user) return user.email
+    if (user.email) return user.email
 }
 
-export const GetInterestedUsers = (ofertadorId) => {
-    let email = GetEmailFromCurrentUser()
-    let userId
-    let viviendaId 
+export const GetUserIdFromEmail = async email => {
+    const promise = GetDocsFrom('Usuario', 'Email', email)
+    const res = await promise
 
-    GetUserIdFromEmail(email).then(res => {
-        userId = res
-        GetViviendaIdFromUserId(userId).then(res => { viviendaId = res })
-    })
-    
+    // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
+    // el indice 0 y luego obtener la id con su propiedad id.
+    // console.log(res.docs[0].id)
 
-    console.log(viviendaId)
+    return res.docs[0].id
+}
+
+export const GetViviendaIdFromUserId = async userId => {
+    const docRef = doc(db, 'Usuario', userId)
+
+    const promise = GetDocsFrom('Vivienda', 'id_usuario', docRef)
+    const res = await promise
+
+    // console.log(res.docs[0].id)
+    return res.docs[0].id
+}
+
+export const GetSolicitudes = async () => {
+    const email = GetEmailFromCurrentUser()
+
+    const p_UserId = GetUserIdFromEmail(email)
+    const r_UserId = await p_UserId
+
+    const p_ViviendaId = GetViviendaIdFromUserId(r_UserId)
+    const r_ViviendaId = await p_ViviendaId
+
+    const viviendaRef = doc(db, 'Vivienda', r_ViviendaId)
+
+    const p_Solicitudes = GetDocsFrom('Solicitud', 'id_vivienda', viviendaRef)
+    const r_Solicitudes = await p_Solicitudes
+
+    //console.log(r_Solicitudes.docs)
+    return r_Solicitudes.docs
+}
+
+export const GetFavoritos = async () => {
+    const email = GetEmailFromCurrentUser()
+
+    const p_UserId = GetUserIdFromEmail(email)
+    const r_UserId = await p_UserId
+
+    const userRef = doc(db, 'Usuario', r_UserId)
+
+    const p_Favoritos = GetDocsFrom('Solicitud', 'id_usuario', userRef)
+    const r_Favoritos = await p_Favoritos
+
+    //console.log(r_Favoritos.docs)
+    return r_Favoritos.docs
 }
