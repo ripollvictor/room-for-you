@@ -41,7 +41,7 @@ export default class ViviendaContainer extends Component {
 
                 } else if (this.Izquierda(gesture)) {
                     // Se ha movido a la izquierda
-                    cargarArray()
+                    descartarVivienda()
 
 
 
