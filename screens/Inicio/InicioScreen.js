@@ -6,9 +6,9 @@ import { IniciarConGoogle, CerrarSesion, GetFavoritos, GetSolicitudes } from '..
 import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 
 import Button from "../../components/Button/Button"
-
+import {getViviendaconid , listaVivienda,getViviendaconidvivieda,anadirHabitacion,habitacionSetEstadoLibre,habitacionSetEstadoOcupada,anadirCompaneroalPiso,eliminarCompanerobyidTabla}from "../../database/funcionesfirebase"
 const InicioScreen = ({navigation}) => {
-
+const popu = "6EDH4346";
     const IrPagina = nombrePag => {
         navigation.navigate(nombrePag)
     }
@@ -19,7 +19,8 @@ const InicioScreen = ({navigation}) => {
 
         console.log(auth)
     }
-
+    // anadirHabitacion(data)
+    const data={Caracteristicas: "grande",Estado: 0,MetrosCuadrados:384343,Precio:349434,id_vivienda:"34HDE4343"}
     return(
         <View style={screenStyles.container}>
             <Image style={screenStyles.logo} source={require('../../assets/logo.png')} />
