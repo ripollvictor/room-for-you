@@ -123,7 +123,7 @@ export async function getViviendaDelUser() {
 async function getviviendaporIdUser(iduser) {
     return new Promise(async function(resolve,reject){
 
-        const q = query(collection(db, "Vivienda"), where("id_usuario", "==", id_usuario));
+        const q = query(collection(db, "Vivienda"), where("id_usuario", "==", iduser));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             resolve(doc);
