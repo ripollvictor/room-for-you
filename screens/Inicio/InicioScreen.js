@@ -2,7 +2,7 @@ import { screenStyles } from './styles'
 
 import React from "react"
 import { View, Image, Text } from "react-native"
-import { IniciarConGoogle, CerrarSesion, GetFavoritos } from '../../database/helper'
+import { IniciarConGoogle, CerrarSesion, GetFavoritos, GetSolicitudes } from '../../database/helper'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 
 import Button from "../../components/Button/Button"
@@ -27,7 +27,8 @@ const InicioScreen = ({navigation}) => {
             <Button onPress={() => { IrPagina('IniciarSesion') }} style={screenStyles.buttonSpace}>Iniciar sesión</Button>
             <Button onPress={() => { IniciarConGoogle() }} style={screenStyles.buttonSpace} imgSrc={require('../../assets/google-icon.png')}>Iniciar sesión con Google</Button>
             <Button onPress={() => { CerrarSesion() }} style={screenStyles.buttonSpace} >Cerrar sesión</Button>
-            <Button onPress={() => { GetFavoritos() }} style={screenStyles.buttonSpace} >Prueba</Button>
+            <Button onPress={() => { GetFavoritos() }} style={screenStyles.buttonSpace} >Prueba get favoritos</Button>
+            <Button onPress={() => { GetSolicitudes() }} style={screenStyles.buttonSpace} >Prueba get solicitudes</Button>
             <Button onPress={() => { IrPagina('RegistrarUsuario') }}>Registrarse</Button>
         </View>
     )
