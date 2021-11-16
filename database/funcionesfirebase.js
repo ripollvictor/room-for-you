@@ -31,7 +31,7 @@ async function solicitudaBase(iduse,idVivienda){
          id_vivienda: idVivienda        
      })
 }
-//conseguir el id
+//conseguir el i //doc(db, "Solicitud", idsolicitud)
 async function conseguirIdUsuario(email) {
     return new Promise(async function(resolve,reject){
         const q = query(collection(db, "Usuario"), where("Email", "==", email));
@@ -195,7 +195,7 @@ async function eliminarHabitacion(idvivienda){
     querySnapshot.forEach((doc) => {
              deleteDoc(doc);
       });
-}
+} 
 // comprobar esto 
 export async function anadirHabitacion(habitacion){
     const docRef = await addDoc(collection(db,'Habitacion'),habitacion);
