@@ -6,10 +6,11 @@ import InicioScreen from './screens/Inicio/InicioScreen';
 import IniciarSesionScreen from './screens/IniciarSesion/IniciarSesionScreen'
 import RegistrarUsuarioScreen from './screens/RegistrarUsuario/RegistrarUsuarioScreen';
 import RegistrarViviendaScreen from './screens/RegistrarVivienda/RegistrarViviendaScreen';
-import VerViviendaScreen from './screens/VerViviendas/VerViviendaScreen';
+//import VerViviendaScreen from './screens/VerViviendas/VerViviendaScreen';
 import ModificarVivienda from './screens/ModificarVivienda/ModificarVivienda';
 import RegistrarHabitacion from './screens/RegistrarHabitacion/RegistrarHabitacionScreen';
 import Pruebas from './screens/Pruebas/PruebasScreen';
+import VerOfertasScreen from './screens/VerOfertas/VerOfertasScreen';
 
 
 const App = () => {
@@ -19,11 +20,12 @@ const App = () => {
     return(
         <NavigationContainer>
             <Stack.Navigator>
+                <Stack.Screen name='Ver Ofertas' component={ VerOfertasScreen } />
                 <Stack.Screen name="Inicio" component={ InicioScreen } />
                 <Stack.Screen name="IniciarSesion" component={ IniciarSesionScreen } />
                 <Stack.Screen name="RegistrarUsuario" component={ RegistrarUsuarioScreen } />
                 <Stack.Screen name="RegistrarVivienda" component={ RegistrarViviendaScreen } />
-                <Stack.Screen name="VerVivienda" component={ VerViviendaScreen } />
+                {/* <Stack.Screen name="VerVivienda" component={ VerViviendaScreen } /> */}
                 <Stack.Screen name="ModificarVivienda" component={ ModificarVivienda} />
                 <Stack.Screen name="RegistrarHabitacion" component={ RegistrarHabitacion} />
                 <Stack.Screen name="Pruebas" component={ Pruebas} />

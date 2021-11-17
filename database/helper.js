@@ -22,9 +22,11 @@ import {
 } from 'firebase/firestore/lite'
 
 import firebase from './firebase'
-const db = firebase.db
+import * as Google from 'expo-google-app-auth'
 
-import * as Google from 'expo-google-app-auth';
+import { Oferta } from '../clases/Oferta'
+
+const db = firebase.db
 
 export function subirArchivo(file) {
     const storage = getStorage();
@@ -141,4 +143,24 @@ export const GetFavoritos = async () => {
 
     //console.log(r_Favoritos.docs)
     return r_Favoritos.docs
+}
+
+export const GetOfertas = async () => {
+    const promise = getDocs(collection(db, 'Oferta'))
+    const res = await promise
+
+    const ofertas = new Array()
+    let auxOfertaData
+
+    res.forEach(doc => {
+        auxOfertaData = doc.data()
+        ofertas.push(new Oferta(
+            auxOfertaData['Ofertador'],
+            auxOfertaData['Direccion'],
+            auxOfertaData['Precio'],
+            auxOfertaData['Imagenes']
+        ))
+    })
+
+    return ofertas
 }

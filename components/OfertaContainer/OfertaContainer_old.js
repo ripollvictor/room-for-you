@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Image, Text, Animated, PanResponder, View, Dimensions, Touchable } from 'react-native'
-import { viviendaContainerStyles } from "./style"
+import { ofertaContainerStyles } from "./style"
 import { cargarArray, anadirFavoritos } from "../../screens/VerViviendas/VerViviendaScreen"
 
-export default class ViviendaContainer extends Component {
+export default class OfertaContainer extends Component {
     constructor(props) {
         super(props)
 
@@ -79,11 +79,11 @@ export default class ViviendaContainer extends Component {
         
         return(
             <Animated.View 
-                style={[viviendaContainerStyles.container, this.props.style, this.state.pan.getLayout()]}
+                style={[ofertaContainerStyles.container, this.props.style, this.state.pan.getLayout()]}
                 {...this.panResponder.panHandlers}
             >
 
-                <View style={viviendaContainerStyles.shadow}>
+                <View style={ofertaContainerStyles.shadow}>
 
                     <Image
                         source={this.props.imgSrc}

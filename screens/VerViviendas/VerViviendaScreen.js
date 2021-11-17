@@ -5,7 +5,7 @@ import { collection, onSnapshot } from "firebase/firestore";
 import db from "../../database/firebase";
 import {vivienda} from "../../clases/vivienda"
 import { View, Image, Text } from "react-native";
-import ViviendaContainer from "../../components/ViviendaContainer/ViviendaContainer";
+import ViviendaContainer from "../../components/OfertaContainer/OfertaContainer_old";
 import {listaVivienda, anadirSolicitud, listadeFavoritos } from "../../database/funcionesfirebase"
 
 
