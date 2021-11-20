@@ -2,11 +2,12 @@
 import {} from "../Inicio/InicioScreen";
 import { screenStyles } from './styles'
 import React from "react"
-import { View, Image, Text } from "react-native"
+import { View, ImageBackground} from "react-native"
 import { Button } from "react-native-elements/dist/buttons/Button";
 
 const PantallaCargaScreen = ({navigation}) => {
    // uriSplashScreen = '/Users/sergiaguileramorales/Desktop/RoomForYou/App/room-for-you/assets/SplashScreen.png'
+   const image = { uri: "../assets/SplashScreen.png" }
     tiempoCarga()
 
     function irPagina () {
@@ -20,9 +21,10 @@ const PantallaCargaScreen = ({navigation}) => {
     }
     return (
         <View>
-            <Image
-                source={{uri:'../assets/SplashScreen'}}
-            ></Image>
+            <ImageBackground source={image} resizeMode="cover">
+                
+            </ImageBackground>
+            
         </View>
     )
 
