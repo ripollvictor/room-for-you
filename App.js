@@ -17,7 +17,10 @@ const App = () => {
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name = "PantallaCarga" component = {PantallaCargaScreen}/>
+                <Stack.Screen name = "Pantalla Carga" component = {PantallaCargaScreen}
+                options={{
+                    headerShown: false
+                  }}/>
                 <Stack.Screen name="Inicio" component={ InicioScreen } />
                 <Stack.Screen name="IniciarSesion" component={ IniciarSesionScreen } />
                 <Stack.Screen name="RegistrarUsuario" component={ RegistrarUsuarioScreen } />
