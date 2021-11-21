@@ -103,7 +103,7 @@ const VerOfertasScreen = () => {
             })
         } else {
             setCurrentOferta(controllers.container2)
-            setControllers({
+            setControllers({  
                 container1: ofertas[0],
                 back1: true,
                 container2: currentOferta,
