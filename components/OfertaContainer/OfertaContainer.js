@@ -5,6 +5,8 @@ import { ofertaContainerStyles } from "./style"
 
 export const OfertaContainer = (props) => {
 
+    if (props.oferta === undefined) return null
+
     const [index, setIndex] = useState(0)
 
     const numImg = props.oferta ? props.oferta.imagenes.length : 0

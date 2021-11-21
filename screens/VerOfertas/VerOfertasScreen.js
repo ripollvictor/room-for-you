@@ -56,6 +56,7 @@ const VerOfertasScreen = () => {
 
     const GetIndicators = () => {
         const res = new Array()
+        if (currentOferta === undefined) return null
 
         for (let i = 0; i < currentOferta.imagenes.length; i++) {
             res.push(
@@ -85,6 +86,9 @@ const VerOfertasScreen = () => {
         back2: true
     })
 
+    const [indexOferta, setIndexOferta] = useState(1)
+
+    // Salta un error cuando se llega a la ultima oferta -> Faltaria volver a buscar ofertas y si no hay más ofertas mostrar una ventana de ya no hay más
     const Swipe = (lado) => {
         if (lado === 'der') {
 
@@ -96,20 +100,22 @@ const VerOfertasScreen = () => {
         if (controllers.back1) {
             setCurrentOferta(controllers.container1)
             setControllers({
-                container1: currentOferta,
+                container1: ofertas[indexOferta],
                 back1: false,
-                container2: ofertas[1], // esto tendría que ir cambiando por un indice adicional para saber en que posición del array se encuentra de todas las ofertas
+                container2: ofertas[indexOferta + 1],
                 back2: true
             })
         } else {
             setCurrentOferta(controllers.container2)
-            setControllers({  
-                container1: ofertas[0],
+            setControllers({
+                container1: ofertas[indexOferta + 1],
                 back1: true,
-                container2: currentOferta,
+                container2: ofertas[indexOferta],
                 back2: false
             })
         }
+
+        setIndexOferta(indexOferta + 1)
     }
 
 
@@ -121,6 +127,7 @@ const VerOfertasScreen = () => {
             <OfertaContainer oferta={controllers.container2} changeIndexImg={setIndexImg} swipeFunc={Swipe} back={controllers.back2} />
 
             <View style={screenStyles.containerButtons}>
+                
 
             </View>
         </View>
