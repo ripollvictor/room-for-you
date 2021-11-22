@@ -155,6 +155,7 @@ export const GetOfertas = async () => {
     res.forEach(doc => {
         auxOfertaData = doc.data()
         ofertas.push(new Oferta(
+            doc.id,
             auxOfertaData['Ofertador'],
             auxOfertaData['Direccion'],
             auxOfertaData['Precio'],

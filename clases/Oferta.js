@@ -1,5 +1,6 @@
 export class Oferta {
-    constructor(ofertador, direccion, precio, imagenes) {
+    constructor(id, ofertador, direccion, precio, imagenes) {
+        this.id = id
         this.ofertador = ofertador
         this.direccion = direccion
         this.precio = precio

@@ -134,4 +134,65 @@ const VerOfertasScreen = () => {
     )
 }
 
-export default VerOfertasScreen
+/**
+ * Es la que contiene el indicador de imagenes, los botones y las ofertas container
+ * Recordar que cuando se cambia de oferta hay que resetear los valores de los indices de las imagenes
+ */
+const VerOfertas2Screen = () => {
+    const[indexImg, setIndexImg] = useState(0)
+    const[indexOferta, setIndexOferta] = useState(0)
+    const[ofertas, setOfertas] = useState([])
+    const currentOferta = ofertas[indexOferta]
+
+    // Coger todas las ofertas y guardarlas en un array
+    const fillOfertas = async () => {
+        const res = await GetOfertas()
+        setOfertas(res)
+    }
+
+    useEffect(() => {
+        fillOfertas()
+    }, [])
+
+    // Crear los indicadores
+    const createIndicators = () => {
+        if (ofertas.length === 0) { return null }
+
+        const res = new Array()
+        const imagenesCurrentOferta = ofertas[indexOferta].imagenes
+
+        imagenesCurrentOferta.forEach((imagen, index) => {
+            res.push(
+                <View
+                    style = {{
+                        backgroundColor: index == indexImg ? '#000' : 'rgba(0, 0, 0, 0.25)',
+                        marginRight: index == imagenesCurrentOferta.length - 1 ? 0 : 10,
+                        width: 5,
+                        height: 5,
+                        borderRadius: 2.5 // La mitad de los lados
+                    }}
+                    key={index}
+                />
+            )
+        })
+        return res
+    }
+
+    const indicators = createIndicators()
+    
+    return(
+        <View>
+            {indicators}
+
+
+
+
+
+            <Pressable onPress={() => {setIndexOferta(indexOferta + 1)}}>
+                <Text>Pulsa</Text>
+            </Pressable>
+        </View>
+    )
+} 
+
+export default VerOfertas2Screen
