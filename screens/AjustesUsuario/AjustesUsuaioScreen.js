@@ -11,7 +11,16 @@ const AjustesUsuario = ({navigation}) => {
     const datosUser = GetUserDataFromEmail(email);
 
 
-    const [User, setState] = useState({})
+    const [User, setState] = useState({
+        nombre:datosUser.data().Nombre,
+        apellidos:datosUser.data().Apellidos,
+        tags:datosUser.data().tags,
+        time: datosUser.data().Fechanacimiento,
+        numerotelefono:datosUser.data().Numerotelefono,
+        email:datosUser.data().Email,
+        contrasena:datosUser.data().Contrasena,
+        id_user: datosUser.id
+    })
 
 
     const handleChangeText = (name, value) => {
@@ -19,8 +28,8 @@ const AjustesUsuario = ({navigation}) => {
     }
 
 
-
-
+        
+ // value = {Vivienda.Direccion} 
 
     return (
         <ScrollView>
@@ -30,15 +39,15 @@ const AjustesUsuario = ({navigation}) => {
                 </Text>
             </View>
             <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Nombre" 
+                <TextInput style={screenStyles.textInput} placeholder="Nombre"  value = {User.nombre}
                 onChangeText={(value) => handleChangeText("nombre", value)} />
             </View>
             <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Apellidos"
+                <TextInput style={screenStyles.textInput} placeholder="Apellidos" value = {User.apellidos}
                 onChangeText={(value) => handleChangeText("apellidos", value)} />
             </View>
             <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Tags"
+                <TextInput style={screenStyles.textInput} placeholder="Tags"  value ={User.tags}
                 onChangeText={(value) => handleChangeText("tags", value)} />
             </View>
             <View>
@@ -47,7 +56,7 @@ const AjustesUsuario = ({navigation}) => {
                 </Text>
             </View>
             <View style={screenStyles.button}>
-                <Button color= '#7733CC' onPress={showDatepicker} title="Seleccionar Fecha" />
+                <Button color= '#7733CC' onPress={showDatepicker} title="Seleccionar Fecha" /> 
             </View>
             
             <View>
@@ -55,7 +64,7 @@ const AjustesUsuario = ({navigation}) => {
                  <DateTimePicker
                  testID="dateTimePicker"
                  timeZoneOffsetInMinutes={0}
-                 value={date}
+                 value={User.time}
                  mode={mode}
                  is24Hour={true}
                  display="default"
@@ -64,21 +73,29 @@ const AjustesUsuario = ({navigation}) => {
                   )}
             </View>
             <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Numero Telefono" 
+                <TextInput style={screenStyles.textInput} placeholder="Numero Telefono"  value = {User.numerotelefono}
                 onChangeText={(value) => handleChangeText("numerotelefono", value)} />
             </View>
-            <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Email" 
-                onChangeText={(value) => handleChangeText("email", value)} />
-            </View>
-            <View style={screenStyles.inputComponent}>
-                <TextInput style={screenStyles.textInput} placeholder="Contraseña" 
-                onChangeText={(value) => handleChangeText("contrasena", value)} />
-            </View>
+            
             <View style={screenStyles.button}>
                 <Button color='#177013'title="Registrarse" onPress={() => RegisterUser()}/>
             </View>
         </ScrollView>
     )
 }
+
+
+
 export default AjustesUsuario
+
+
+/*
+<View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Email" value = {User.email}
+                onChangeText={(value) => handleChangeText("email", value)} />
+            </View>
+            <View style={screenStyles.inputComponent}>
+                <TextInput style={screenStyles.textInput} placeholder="Contraseña" 
+                onChangeText={(value) => handleChangeText("contrasena", value)} />
+            </View>
+            */
