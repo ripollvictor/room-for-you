@@ -18,7 +18,8 @@ import {
     query,
     where,
     getDocs,
-    getDoc
+    getDoc,
+    setDoc
 } from 'firebase/firestore/lite'
 
 import firebase from './firebase'
@@ -174,4 +175,18 @@ export const GetUserDataFromEmail = async email => {
     // console.log(res.docs[0].id)
 
     return res.docs[0]
+}
+
+export const MofificarDatosUsuaio = async user =>{
+    const data = {
+        Apellidos: user.apellidos,
+        Contrasena: user.contrasena,
+        Email: user.email,
+        FechaNacimiento: user.time,
+        Nombre: user.nombre,
+        NumeroTelefono: user.numerotelefono,
+        tags: user.tags
+    };
+    const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
+    const res = await promise;
 }
