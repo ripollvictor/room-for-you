@@ -28,23 +28,30 @@ import { Oferta } from '../clases/Oferta'
 
 const db = firebase.db
 
-export function subirArchivo(file) {
+export async function subirArchivo(uri) {
+
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+  
     const storage = getStorage();
-    const imageRef = ref(storage, "images/" + Math.round(Math.random() * 10000));
-    uploadString(imageRef, file, "data_url")
-        .then((snapshot) => {
-            console.log("Uploaded", snapshot.totalBytes, "bytes.");
-            console.log("File metadata:", snapshot.metadata);
-            // Let's get a download URL for the file.
-            getDownloadURL(snapshot.ref).then((url) => {
-                console.log("File available at", url);
-                // ...
-            });
-        })
-        .catch((error) => {
-            console.error("Upload failed", error);
-            // ...
-        });
+    const nombreImagen = Math.round(Math.random() * 100000000000);
+    const imageRef = ref(storage, "images/" + nombreImagen);
+    const result = await uploadBytes(imageRef, blob);
+    // We're done with the blob, close and release it
+    blob.close();
+  
+    return await getDownloadURL(imageRef);
 }
 
 export const CerrarSesion = () => {

@@ -19,7 +19,7 @@ const App = () => {
 
     const Stack = createNativeStackNavigator()
 
-    return(
+    return (
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name='Ver Ofertas' component={ VerOfertasScreen } />
