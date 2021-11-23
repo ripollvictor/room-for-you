@@ -1,23 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import InicioScreen from './screens/Inicio/InicioScreen';
-import IniciarSesionScreen from './screens/IniciarSesion/IniciarSesionScreen'
-import RegistrarUsuarioScreen from './screens/RegistrarUsuario/RegistrarUsuarioScreen';
-import RegistrarViviendaScreen from './screens/RegistrarVivienda/RegistrarViviendaScreen';
-//import VerViviendaScreen from './screens/VerViviendas/VerViviendaScreen';
-import ModificarVivienda from './screens/ModificarVivienda/ModificarVivienda';
-import RegistrarHabitacion from './screens/RegistrarHabitacion/RegistrarHabitacionScreen';
-import Pruebas from './screens/Pruebas/PruebasScreen';
-import VerOfertasScreen from './screens/VerOfertas/VerOfertasScreen';
-import VerViviendaScreen from './screens/VerViviendas/VerViviendaScreen';
-import PantallaCargaScreen from './screens/PantallaCarga/PantallaCargaScreen';
-import { ScreenStack } from 'react-native-screens';
 
-import PerfilUsuario from './screens/PerfilUsuario/PerfilUsuarioScreen';
-import AjustesUsuario from './screens/AjustesUsuario/AjustesUsuaioScreen';
+import { MainNavigator } from './src/navigation/MainNavigator';
 
-const App = () => {
+const App1 = () => {
 
     const Stack = createNativeStackNavigator()
 
@@ -29,7 +15,6 @@ const App = () => {
                 options={{
                     headerShown: false
                   }}/>
-               
                 <Stack.Screen name="Inicio" component={ InicioScreen } />
                 <Stack.Screen name="IniciarSesion" component={ IniciarSesionScreen } />
                 <Stack.Screen name="RegistrarUsuario" component={ RegistrarUsuarioScreen } />
@@ -45,5 +30,13 @@ const App = () => {
         </NavigationContainer>
     )
 }
+
+const App = () => {
+    return(
+        <NavigationContainer>
+            <MainNavigator />
+        </NavigationContainer>
+    )
+} 
 
 export default App
