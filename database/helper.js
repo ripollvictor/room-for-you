@@ -18,7 +18,8 @@ import {
     query,
     where,
     getDocs,
-    getDoc
+    getDoc,
+    setDoc
 } from 'firebase/firestore/lite'
 
 import firebase from './firebase'
@@ -171,4 +172,30 @@ export const GetOfertas = async () => {
     })
 
     return ofertas
+}
+
+export const GetUserDataFromEmail = async email => {
+    const promise = GetDocsFrom('Usuario', 'Email', email)
+    const res = await promise
+
+    // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
+    // el indice 0 y luego obtener la id con su propiedad id.
+    // console.log(res.docs[0].id)
+       
+    return res.docs[0]
+}
+
+export const ModificarDatosUsuaio = async user =>{
+    const data = {
+        Apellidos: user.apellidos,
+        Contrasena: user.contrasena,
+        Email: user.email,
+        FechaNacimiento: user.time,
+        Nombre: user.nombre,
+        NumeroTelefono: user.numerotelefono,
+        tags: user.tags
+    };
+    console.log(data);
+    const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
+    const res = await promise;
 }
