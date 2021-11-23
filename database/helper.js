@@ -177,7 +177,7 @@ export const GetUserDataFromEmail = async email => {
     return res.docs[0]
 }
 
-export const MofificarDatosUsuaio = async user =>{
+export const ModificarDatosUsuaio = async user =>{
     const data = {
         Apellidos: user.apellidos,
         Contrasena: user.contrasena,

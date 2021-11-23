@@ -2,7 +2,7 @@ import { screenStyles } from './styles'
 
 import React, {useState} from "react";
 import { View, Text, TextInput, Button, ScrollView } from "react-native"
-import { GetEmailFromCurrentUser, GetUserDataFromEmail } from '../../database/helper'
+import { GetEmailFromCurrentUser, GetUserDataFromEmail , ModificarDatosUsuaio} from '../../database/helper'
 
 const AjustesUsuario = ({navigation}) => {
     
@@ -78,7 +78,7 @@ const AjustesUsuario = ({navigation}) => {
             </View>
             
             <View style={screenStyles.button}>
-                <Button color='#177013'title="Registrarse" onPress={() => RegisterUser()}/>
+                <Button color='#177013'title="Modificar" onPress={() => ModificarDatosUsuaio(User) }/>
             </View>
         </ScrollView>
     )
