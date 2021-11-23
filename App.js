@@ -11,24 +11,26 @@ import ModificarVivienda from './screens/ModificarVivienda/ModificarVivienda';
 import RegistrarHabitacion from './screens/RegistrarHabitacion/RegistrarHabitacionScreen';
 import Pruebas from './screens/Pruebas/PruebasScreen';
 import VerOfertasScreen from './screens/VerOfertas/VerOfertasScreen';
+import HereMap from './screens/Map/HereMap';
 
 
 const App = () => {
 
     const Stack = createNativeStackNavigator()
 
-    return(
+    return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name='Ver Ofertas' component={ VerOfertasScreen } />
-                <Stack.Screen name="Inicio" component={ InicioScreen } />
-                <Stack.Screen name="IniciarSesion" component={ IniciarSesionScreen } />
-                <Stack.Screen name="RegistrarUsuario" component={ RegistrarUsuarioScreen } />
-                <Stack.Screen name="RegistrarVivienda" component={ RegistrarViviendaScreen } />
+                <Stack.Screen name='HereMaps' component={HereMap} />
+                <Stack.Screen name='Ver Ofertas' component={VerOfertasScreen} />
+                <Stack.Screen name="Inicio" component={InicioScreen} />
+                <Stack.Screen name="IniciarSesion" component={IniciarSesionScreen} />
+                <Stack.Screen name="RegistrarUsuario" component={RegistrarUsuarioScreen} />
+                <Stack.Screen name="RegistrarVivienda" component={RegistrarViviendaScreen} />
                 {/* <Stack.Screen name="VerVivienda" component={ VerViviendaScreen } /> */}
-                <Stack.Screen name="ModificarVivienda" component={ ModificarVivienda} />
-                <Stack.Screen name="RegistrarHabitacion" component={ RegistrarHabitacion} />
-                <Stack.Screen name="Pruebas" component={ Pruebas} />
+                <Stack.Screen name="ModificarVivienda" component={ModificarVivienda} />
+                <Stack.Screen name="RegistrarHabitacion" component={RegistrarHabitacion} />
+                <Stack.Screen name="Pruebas" component={Pruebas} />
             </Stack.Navigator>
         </NavigationContainer>
     )
