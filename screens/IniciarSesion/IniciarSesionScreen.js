@@ -25,6 +25,7 @@ const IniciarSesionScreen = ({navigation}) => {
         signInWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
                 alert('Logeado')
+             navigation.navigate('PerfilUsuario') 
             })
             .catch((error) => {
                 alert('Upsi')

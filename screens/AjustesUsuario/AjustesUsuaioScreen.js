@@ -1,27 +1,50 @@
 import { screenStyles } from './styles'
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { View, Text, TextInput, Button, ScrollView } from "react-native"
 import { GetEmailFromCurrentUser, GetUserDataFromEmail , ModificarDatosUsuaio} from '../../database/helper'
+import DateTimePicker from "@react-native-community/datetimepicker";
+const AjustesUsuario = ({route,navigation}) => {
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
 
-const AjustesUsuario = ({navigation}) => {
-    
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+        setState({...state, time: currentDate});
+      };
+
+      const showMode = currentMode => {
+        setShow(true);
+        setMode(currentMode);
+      };
+
+      const showDatepicker = () => {
+        showMode('date');
+      };
 
     const email = GetEmailFromCurrentUser();
-    const datosUser = GetUserDataFromEmail(email);
+   // var datosUser = null;
+  // console.log(route.params)
+    const datosUser = route.params;
+  //GetUserDataFromEmail(email);
+  console.log(datosUser);
+   
 
 
-    const [User, setState] = useState({
-        nombre:datosUser.data().Nombre,
-        apellidos:datosUser.data().Apellidos,
-        tags:datosUser.data().tags,
-        time: datosUser.data().Fechanacimiento,
-        numerotelefono:datosUser.data().Numerotelefono,
-        email:datosUser.data().Email,
-        contrasena:datosUser.data().Contrasena,
-        id_user: datosUser.id
-    })
-
+ 
+      
+  const [User, setState] = useState({
+    nombre:datosUser.data().Nombre,
+    apellidos:datosUser.data().Apellidos,
+    tags:datosUser.data().tags,
+    time: datosUser.data().FechaNacimiento,
+    numerotelefono:datosUser.data().NumeroTelefono,
+    email:datosUser.data().Email,
+    contrasena:datosUser.data().Contrasena,
+    id_user: datosUser.id
+})
 
     const handleChangeText = (name, value) => {
         setState({...User, [name]: value});
@@ -77,11 +100,13 @@ const AjustesUsuario = ({navigation}) => {
                 onChangeText={(value) => handleChangeText("numerotelefono", value)} />
             </View>
             
-            <View style={screenStyles.button}>
+            <View style={screenStyles.scrollview}>
                 <Button color='#177013'title="Modificar" onPress={() => ModificarDatosUsuaio(User) }/>
+                <Button color='#177013'title="Cancelar" onPress={() => history.back()}/>
             </View>
         </ScrollView>
     )
+    
 }
 
 

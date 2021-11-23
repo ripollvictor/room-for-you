@@ -173,7 +173,7 @@ export const GetUserDataFromEmail = async email => {
     // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
     // el indice 0 y luego obtener la id con su propiedad id.
     // console.log(res.docs[0].id)
-
+       
     return res.docs[0]
 }
 
@@ -187,6 +187,7 @@ export const ModificarDatosUsuaio = async user =>{
         NumeroTelefono: user.numerotelefono,
         tags: user.tags
     };
+    console.log(data);
     const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
     const res = await promise;
 }
