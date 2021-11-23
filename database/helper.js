@@ -164,3 +164,14 @@ export const GetOfertas = async () => {
 
     return ofertas
 }
+
+export const GetUserDataFromEmail = async email => {
+    const promise = GetDocsFrom('Usuario', 'Email', email)
+    const res = await promise
+
+    // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
+    // el indice 0 y luego obtener la id con su propiedad id.
+    // console.log(res.docs[0].id)
+
+    return res.docs[0]
+}
