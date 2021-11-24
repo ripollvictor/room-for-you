@@ -14,7 +14,19 @@ import { BottomTabNavigator } from './TabNavigator'
 
 const Stack = createStackNavigator()
 
+import TestTime from '../../tests/carga-imagenes/TestTime'
+const pruebas = true
+
 const MainNavigator = () => {
+
+    if (pruebas) {
+        return(
+            <Stack.Navigator>
+                <Stack.Screen name='Test' component={ TestTime } />
+            </Stack.Navigator>
+        )
+    }
+
     return(
         <Stack.Navigator>
             <Stack.Screen name='Inicio' component={ InicioScreen } />
