@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 
 import { MainNavigator } from './src/navigation/MainNavigator';
+import { colors } from './src/styles/colors';
 
 const App1 = () => {
 
@@ -33,7 +34,7 @@ const App1 = () => {
 
 const App = () => {
     return(
-        <NavigationContainer>
+        <NavigationContainer theme={{...DefaultTheme, colors: {...DefaultTheme.colors, background: colors.gray}}}>
             <MainNavigator />
         </NavigationContainer>
     )

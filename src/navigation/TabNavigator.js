@@ -3,10 +3,12 @@ import { Image, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator  } from '@react-navigation/material-top-tabs'
 
+import { TabIcon } from '../components/elements/Icon'
+
 import VerFavoritosScreen from      '../screens/Favoritos/VerFavoritosScreen'
 import VerSolicitantesScreen from   '../screens/Favoritos/VerSolicitantesScreen'
 
-import { OfertasNavigator, PerfilNavigator, BusquedaNavigator } from './StackNavigator'
+import { OfertasNavigator, FavoritosNavigator, PerfilNavigator, BusquedaNavigator } from './StackNavigator'
 
 const Tab = createBottomTabNavigator()
 const TopTab = createMaterialTopTabNavigator()
@@ -14,8 +16,9 @@ const TopTab = createMaterialTopTabNavigator()
 const BottomTabNavigator = () => {
     return(
         <Tab.Navigator screenOptions={{
-            headerShown: true,
+            headerShown: false,
             tabBarStyle: {
+                height: 60,
                 backgroundColor: 'transparent',
                 position: 'absolute',
                 borderTopWidth: 0,
@@ -25,10 +28,9 @@ const BottomTabNavigator = () => {
         }}>
             <Tab.Screen
                 options={{
-                    headerShown: false,
-                    tabBarIcon: ({size, focused}) => {
+                    tabBarIcon: ({focused}) => {
                         return(
-                            <Image style={{width: 30, height: size, backgroundColor: focused ? '#B77ADF' : 'transparent'}} source={require('../../assets/icons/ofertas.png')} />
+                            <TabIcon isFocused={focused} url={require('../../assets/icons/ofertas.png')} />
                         )
                     }
                 }}
@@ -36,10 +38,9 @@ const BottomTabNavigator = () => {
                 component={ OfertasNavigator } />
             <Tab.Screen
                 options={{
-                    headerShown: false,
-                    tabBarIcon: ({size, focused}) => {
+                    tabBarIcon: ({focused}) => {
                         return(
-                            <Image style={{width: 30, height: size, backgroundColor: focused ? '#B77ADF' : 'transparent'}} source={require('../../assets/icons/busqueda.png')} />
+                            <TabIcon isFocused={focused} url={require('../../assets/icons/busqueda.png')} />
                         )
                     }
                 }}
@@ -47,37 +48,25 @@ const BottomTabNavigator = () => {
                 component={ BusquedaNavigator } />
             <Tab.Screen
                 options={{
-                    title: 'Favoritos',
-                    headerShown: true,
-                    tabBarIcon: ({size, focused}) => {
+                    tabBarIcon: ({focused}) => {
                         return(
-                            <Image style={{width: 30, height: size, backgroundColor: focused ? '#B77ADF' : 'transparent'}} source={require('../../assets/icons/favoritos.png')} />
+                            <TabIcon isFocused={focused} url={require('../../assets/icons/favoritos.png')} />
                         )
                     }
                 }}
                 name='FavoritosTab'
-                component={ FavoritosTabNavigator } />
+                component={ FavoritosNavigator } />
             <Tab.Screen
                 options={{
-                    headerShown: false,
-                    tabBarIcon: ({size, focused}) => {
+                    tabBarIcon: ({focused}) => {
                         return(
-                            <Image style={{width: size, height: size, backgroundColor: focused ? '#B77ADF' : 'transparent'}} source={require('../../assets/icons/perfil.png')} />
+                            <TabIcon isFocused={focused} url={require('../../assets/icons/perfil.png')} />
                         )
                     }
                 }}
                 name='PerfilTab'
                 component={ PerfilNavigator } />
         </Tab.Navigator>
-    )
-}
-
-const FavoritosTabNavigator = () => {
-    return(
-        <TopTab.Navigator>
-            <TopTab.Screen name='Favoritos' component={ VerFavoritosScreen } />
-            <TopTab.Screen name='Solicitantes' component={ VerSolicitantesScreen } />
-        </TopTab.Navigator>
     )
 }
 
