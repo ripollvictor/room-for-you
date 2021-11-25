@@ -90,7 +90,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege@gmail.com',
+            email:'samuelvege1@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser();
@@ -101,7 +101,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege@gmail.com',
+            email:'samuelvege2@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser();
@@ -112,7 +112,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'',
-            email:'samuelvege@gmail.com',
+            email:'samuelvege3@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser();
@@ -134,7 +134,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege@gmail.com',
+            email:'samuelvege4@gmail.com',
             contrasena:''
         });
         RegisterUser();
@@ -145,7 +145,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege@gmail.com',
+            email:'samuelvege5@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser();
@@ -156,7 +156,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege1@gmail.com',
+            email:'samuelvege6@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser(); 
@@ -167,7 +167,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege2@gmail.com',
+            email:'samuelvege7@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser(); setState({
@@ -177,7 +177,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege3@gmail.com',
+            email:'samuelvege8@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser(); setState({
@@ -187,7 +187,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege9@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser(); setState({
@@ -197,7 +197,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'Esto626No',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege10@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser(); setState({
@@ -207,7 +207,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'123456789098765432177013',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege11@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser(); setState({
@@ -217,7 +217,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'177013',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege12@gmail.com',
             contrasena:'S177013'
         });
         RegisterUser();
@@ -228,7 +228,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege13@gmail.com',
             contrasena:'177013'
         });
         RegisterUser();
@@ -239,7 +239,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege14@gmail.com',
             contrasena:'samuel'
         });
         RegisterUser();
@@ -250,7 +250,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege15@gmail.com',
             contrasena:'s177013'
         });
         RegisterUser();
@@ -261,7 +261,7 @@ const RegistrarUsuario1Screen = () => {
             fechaNacimiento:'',
             time: new Date("2020","02","22"),
             numerotelefono:'626802895',
-            email:'samuelvege4@gmail.com',
+            email:'samuelvege16@gmail.com',
             contrasena:'S123'
         });
         RegisterUser();
