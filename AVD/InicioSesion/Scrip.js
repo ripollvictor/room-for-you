@@ -40,25 +40,26 @@ function generatePasswordRand(length,type) {
     return pass;
 }
 
-var x = 1;
+
 const checkLogIn = (correo) => {
     const auth = aut.getAuth()
 
     var password = generatePasswordRand(20,"rand")
+   
     aut.signInWithEmailAndPassword(auth, correo, password)
         .then((userCredential) => {          
-            console.log(x +"\t\t" + correo +"\t\t" + password +"\t\t"+ "Exito")
+            console.log(x+1 +"\t\t" + correo +"\t\t" + password +"\t\t"+ "Exito")
             x = x + 1;
         })
         .catch((error) => {          
-            console.log(x +"\t\t" + correo +"\t\t" + password +"\t\t"+ "Fallo")
+            console.log(x+1 +"\t\t" + correo +"\t\t" + password +"\t\t"+ "Fallo")
             x = x + 1;
         })
 }
 
 console.log("Numero Intento \t Correo Utilizado\t\t\tContraseña\t\t\tResultado")
 
- Inicioscript("diego.ruiz.2000@hotmail.com",3)
+ Inicioscript("diego.ruiz.2000@hotmail.com",100)
 function Inicioscript(correo,intentos){
  var i = 1;
     for(x = 0;i<intentos+1;i++){
