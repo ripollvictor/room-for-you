@@ -11,12 +11,14 @@ import RegistrarUsuario5Screen from '../screens/RegistrarUsuario/RegistrarUsuari
 import RegistrarUsuario6Screen from '../screens/RegistrarUsuario/RegistrarUsuarioScreen_6'
 
 import { BottomTabNavigator } from './TabNavigator'
+import ChatScreen from '../../old/screens/Chat/ChatScreen'
 
 const Stack = createStackNavigator()
 
 const MainNavigator = () => {
     return(
         <Stack.Navigator>
+            <Stack.Screen name='Chat' component={ChatScreen}/>
             <Stack.Screen name='Inicio' component={ InicioScreen } />
             <Stack.Screen name='Iniciar Sesión' component={ IniciarSesionScreen } />
             <Stack.Screen name='Registrar 1' component={ RegistrarUsuario1Screen } />

@@ -1,39 +1,51 @@
-import { React } from "react";
-import { Platform, KeyboardAvoidingView, SafeAreaView } from "react-native";
-import { GiftedChat } from "react-native-gifted-chat";
+import { View, Image, Text } from "react-native"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState, useCallback, useEffect } from 'react'
+import { GiftedChat } from 'react-native-gifted-chat'
+
+import Button from "../../components/Button/Button"
+import Input from "../../components/Input/Input"
 
 const ChatScreen = ({navigation}) => {
-
     const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
-  }, [])
+    useEffect(() => {
+        setMessages([
+          {
+            _id: 1,
+            text: 'Hello developer',
+            createdAt: new Date(),
+            user: {
+              _id: 2,
+              name: 'React Native',
+              avatar: 'https://placeimg.com/140/140/any',
+            },
+          },
+        ])
+      }, [])
 
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-  }, [])
+      const onSend = useCallback((messages = []) => {
+        setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+      }, [])
+    
 
-    return (
-        <GiftedChat
-      messages={messages}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: 1,
-      }}
-    />
+
+    
+
+    return(
+        
+            <GiftedChat
+                messages={messages}
+                onSend={messages => onSend(messages)}
+                user={{
+                  _id: 1,
+                }}
+            />
+           
+
+       
     )
+
 }
 
 export default ChatScreen
