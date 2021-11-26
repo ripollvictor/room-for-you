@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { MainNavigator } from './src/navigation/MainNavigator';
+import ChatScreen from './old/screens/Chat/ChatScreen';
 
 const App1 = () => {
 
@@ -10,6 +11,7 @@ const App1 = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+                <Stack.Screen name = 'Chat' component={ChatScreen}/>
                 <Stack.Screen name='Ver Ofertas' component={ VerOfertasScreen } />
                 <Stack.Screen name = "Pantalla Carga" component = {PantallaCargaScreen}
                 options={{
