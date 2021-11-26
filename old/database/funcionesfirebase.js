@@ -45,7 +45,7 @@ async function conseguirIdUsuario(email) {
 //conseguirIdUsuario(email).then((id usuario)=>{ // continuas el codigo...});
 
 //para conseguir el email actual del usuario
-function emailUsuario(){
+export function emailUsuario(){
     const auth = getAuth();
     const user = auth.currentUser;
     const email1 = null;
