@@ -200,13 +200,23 @@ const RegistrarUsuario1Screen = () => {
             numerotelefono: '626802895',
             email: 'samuelvege16@gmail.com',
             contrasena: 'S123'
-        }
+        },
+        {
+        nombre: 'Samuel',
+        apellidos: 'Diaz',
+        tags: 'Deportista',
+        fechaNacimiento: '',
+        time: new Date("2020", "02", "22"),
+        numerotelefono: '626802895',
+        email: 'samuelvege5@gmail.com',
+        contrasena: 'S177013'
+    }
     ])
 
     let [index, setIndex] = useState(-1)
 
     useEffect(() => {
-        if (index >= 0 && index < pruebas.length - 1)
+        if (index >= 0 && index < pruebas.length)
             RegisterUser()
     }, [state])
 
@@ -275,31 +285,31 @@ const RegistrarUsuario1Screen = () => {
 
     async function EliminarPrueba(usp) {
         return new Promise(async function (resolve, reject) {
-            const q = query(collection(db, "Usuario"), where("Nombre", "==", usp));
+            const q = query(collection(db, "Usuario"), where("FechaNacimiento", "==", usp));
             const querySnapshot = await getDocs(q);
             resolve(querySnapshot)
         })
     }
 
-    var arr2 = []
+    var arr = []
     async function EliminarPrueba2(usp) {
         EliminarPrueba(usp).then((qu) => {
             return new Promise(async function (resolve, reject) {
-                var arr = []
+                var arraux = []
                 qu.forEach((doc) => {
-                    arr.push(doc.id)
+                    arraux.push(doc.id)
                 })
-                arr2 = arr
-                resolve(arr)
+                arr = arraux
+                resolve(arraux)
             })
         })
     }
 
     async function EliminarPrueba3(usp) {
-        EliminarPrueba2(usp).then((c) => {
-            arr2.forEach((item) => {
-                const a = doc(db, 'Usuario', item);
-                deleteDoc(a);
+        EliminarPrueba2(usp).then((arraux) => {
+            arr.forEach((item) => {
+                const del = doc(db, 'Usuario', item);
+                deleteDoc(del);
             })
 
         })
@@ -316,7 +326,7 @@ const RegistrarUsuario1Screen = () => {
                 <Button color='#177013' title="Probar:" onPress={() => { ejecutarPrueba() }} />
             </View>
             <View style={screenStyles.button}>
-                <Button color='#177013' title="Eliminar Prueba:" onPress={() => EliminarPrueba3("Samuel")} />
+                <Button color='#177013' title="Eliminar Prueba:" onPress={() => EliminarPrueba3(new Date("2020", "02", "22"))} />
             </View>
         </ScrollView>
     )
