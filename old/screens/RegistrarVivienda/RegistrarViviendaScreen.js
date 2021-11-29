@@ -183,6 +183,7 @@ const RegistrarViviendaScreen = () => {
                 setImagenesSeleccionadas={setImagenesSeleccionadas}
                 imagenesSeleccionadas={imagenesSeleccionadas}
             />
+            
             <View>
                 <Button title="Registrarse" onPress={() => RegisterVivienda()} />
             </View>

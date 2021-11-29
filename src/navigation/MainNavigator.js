@@ -14,7 +14,7 @@ import { BottomTabNavigator } from './TabNavigator'
 
 const Stack = createStackNavigator()
 
-import TestTime from '../../tests/carga-imagenes/TestTime'
+import TestTime from '../../tests/TestTime'
 const pruebas = true
 
 const MainNavigator = () => {
