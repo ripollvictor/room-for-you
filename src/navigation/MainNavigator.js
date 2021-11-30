@@ -17,7 +17,7 @@ const Stack = createStackNavigator()
 const MainNavigator = () => {
     return(
         <Stack.Navigator>
-            <Stack.Screen name='Inicio' component={ InicioScreen } />
+            <Stack.Screen options={{ headerShown: false }} name='Inicio' component={ InicioScreen } />
             <Stack.Screen name='Iniciar Sesión' component={ IniciarSesionScreen } />
             <Stack.Screen name='Registrar 1' component={ RegistrarUsuario1Screen } />
             <Stack.Screen name='Registrar 2' component={ RegistrarUsuario2Screen } />

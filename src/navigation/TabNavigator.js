@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator  } from '@react-navigation/material-top-tabs'
 
 import { TabIcon } from '../components/elements/Icon'
+import { variables } from '../styles/variables'
 
 import VerFavoritosScreen from      '../screens/Favoritos/VerFavoritosScreen'
 import VerSolicitantesScreen from   '../screens/Favoritos/VerSolicitantesScreen'
@@ -18,7 +19,7 @@ const BottomTabNavigator = () => {
         <Tab.Navigator screenOptions={{
             headerShown: false,
             tabBarStyle: {
-                height: 60,
+                height: variables.bottomMenuHeight,
                 backgroundColor: 'transparent',
                 position: 'absolute',
                 borderTopWidth: 0,
