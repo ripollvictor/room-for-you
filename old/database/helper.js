@@ -199,3 +199,15 @@ export const ModificarDatosUsuaio = async user =>{
     const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
     const res = await promise;
 }
+
+export async function listaViviendaPorPrecio(precio){
+   
+    const q = query(collection(db, "Vivienda"),where("Precio","<=", precio));
+    const docums = getDocs(q);
+    const querySnapshot = await docums
+    let  listaViviendas = new Array();
+    querySnapshot.forEach((doc) => {
+           listaViviendas.push(doc)
+    });
+    return listaViviendas
+}
