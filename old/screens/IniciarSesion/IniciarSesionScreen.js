@@ -3,9 +3,12 @@ import { screenStyles } from './styles'
 import React, { useState } from "react"
 import { View, Image, Text } from "react-native"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebase from '../../database/firebase';
  
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
+
+const db = firebase.db;
 
 const IniciarSesionScreen = ({navigation}) => {
 
@@ -24,8 +27,9 @@ const IniciarSesionScreen = ({navigation}) => {
         const auth = getAuth()
         signInWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
-                alert('Logeado')
-             navigation.navigate('PerfilUsuario') 
+                //alert('Logeado')
+                navigation.navigate('Ver Favoritos') 
+            // navigation.navigate('PerfilUsuario') 
             })
             .catch((error) => {
                 alert('Upsi')
@@ -34,7 +38,6 @@ const IniciarSesionScreen = ({navigation}) => {
 
     return(
         <View style={screenStyles.container}>
-            <Image style={screenStyles.logo} source={require('../../assets/logo.png')} />
             <Text style={screenStyles.mainText}>Introduce tus datos</Text>
 
             {/* AQUI VAN LOS INPUTS */}
@@ -42,7 +45,7 @@ const IniciarSesionScreen = ({navigation}) => {
             <Input onChangeText={(value) => { handleChangeText('password', value) }} inputType='password' placeholder='Contraseña' />
 
             <View style={screenStyles.btnWrap}>
-                <Button btnType='blue' onPress={() => { checkLogIn() }}>Iniciar sesión</Button>
+                <Button btnType='blue' onPress={() => { checkLogIn(); }}>Iniciar sesión</Button>
             </View>
 
         </View>
