@@ -10,6 +10,8 @@ const App1 = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+                <Stack.Screen name='RegistrarViviendaPruebas' component={ RegistrarViviendaPruebas } />
+
                 <Stack.Screen name='Ver Ofertas' component={ VerOfertasScreen } />
                 <Stack.Screen name = "Pantalla Carga" component = {PantallaCargaScreen}
                 options={{

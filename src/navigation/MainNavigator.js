@@ -9,6 +9,7 @@ import RegistrarUsuario3Screen from '../screens/RegistrarUsuario/RegistrarUsuari
 import RegistrarUsuario4Screen from '../screens/RegistrarUsuario/RegistrarUsuarioScreen_4'
 import RegistrarUsuario5Screen from '../screens/RegistrarUsuario/RegistrarUsuarioScreen_5'
 import RegistrarUsuario6Screen from '../screens/RegistrarUsuario/RegistrarUsuarioScreen_6'
+import RegistrarViviendaPruebas from'../screens/Ofertas/RegistrarViviendaPruebas'
 
 import { BottomTabNavigator } from './TabNavigator'
 
@@ -25,6 +26,8 @@ const MainNavigator = () => {
             <Stack.Screen name='Registrar 4' component={ RegistrarUsuario4Screen } />
             <Stack.Screen name='Registrar 5' component={ RegistrarUsuario5Screen } />
             <Stack.Screen name='Registrar 6' component={ RegistrarUsuario6Screen } />
+            <Stack.Screen name='RegistrarViviendaPruebas' component={ RegistrarViviendaPruebas } />
+
             <Stack.Screen options={{ headerShown: false }} name='Main' component={ BottomTabNavigator } />
         </Stack.Navigator>
     )
