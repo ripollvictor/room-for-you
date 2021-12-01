@@ -2,12 +2,13 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import VerOfertasScreen from        '../screens/Ofertas/VerOfertasScreen'
-import BusquedaScreen from          '../screens/BusquedaScreen'
+import BusquedaScreen from          '../screens/HereMapScreen'
 import VerPerfilScreen from         '../screens/VerPerfilScreen'
 
 import ListaMisOfertasScreen from   '../screens/Ofertas/ListaMisOfertasScreen'
 import RegistrarOfertaScreen from   '../screens/Ofertas/RegistrarOfertaScreen'
 import VerOfertaScreen from         '../screens/Ofertas/VerOfertaScreen'
+import HereMapScreen from '../screens/HereMapScreen'
 
 const Stack = createStackNavigator()
 
@@ -22,7 +23,7 @@ const OfertasNavigator = () => {
 const BusquedaNavigator = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-            <Stack.Screen name='Busqueda' component={ BusquedaScreen } />
+            <Stack.Screen name='HereMap' component={ HereMapScreen } />
         </Stack.Navigator>
     )
 }
