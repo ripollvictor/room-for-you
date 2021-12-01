@@ -1,11 +1,13 @@
 import { screenStyles } from './styles'
-
+import firebase from '../../database/firebase';
 import React, { useState } from "react"
 import { View, Image, Text } from "react-native"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
  
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
+
+const db = firebase.db;
 
 const IniciarSesionScreen = ({navigation}) => {
 
@@ -25,7 +27,7 @@ const IniciarSesionScreen = ({navigation}) => {
         signInWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
                 alert('Logeado')
-             navigation.navigate('PerfilUsuario') 
+             navigation.navigate('Chat') 
             })
             .catch((error) => {
                 alert('Upsi')
@@ -34,7 +36,7 @@ const IniciarSesionScreen = ({navigation}) => {
 
     return(
         <View style={screenStyles.container}>
-            <Image style={screenStyles.logo} source={require('../../assets/logo.png')} />
+            
             <Text style={screenStyles.mainText}>Introduce tus datos</Text>
 
             {/* AQUI VAN LOS INPUTS */}
