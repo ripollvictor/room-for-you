@@ -7,6 +7,14 @@ const global = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         paddingHorizontal: variables.spaceHorizontal,
+    },
+    
+    font: {
+        fontFamily: 'nk57-monospace'
+    },
+
+    textInContainer: {
+        fontSize: variables.buttonFontSize
     }
 })
 

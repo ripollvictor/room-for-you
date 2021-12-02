@@ -2,6 +2,7 @@ import React from 'react'
 import { Pressable, Text, Image } from 'react-native'
 import { colors } from '../../styles/colors'
 import { defaultButton } from '../../styles/elements/buttonStyles'
+import { global } from '../../styles/global'
 
 /**
  * 
@@ -11,7 +12,7 @@ import { defaultButton } from '../../styles/elements/buttonStyles'
 const DefaultButton = ({title, bold, center, marginBottom, backgroundColor, func}) => {
 
     const stylesView = [defaultButton.container]
-    const stylesText = []
+    const stylesText = [global.font, global.textInContainer]
 
     if (center) { stylesView.push(defaultButton.centerText) }
     if (marginBottom) { stylesView.push({marginBottom: marginBottom}) }
@@ -22,7 +23,8 @@ const DefaultButton = ({title, bold, center, marginBottom, backgroundColor, func
 
     return(
         <Pressable onPress={func} style={stylesView}>
-            {bold ? <Text style={{fontWeight: 'bold'}}>{title}</Text> : <Text>{title}</Text>}
+            {/*bold ? <Text style={[stylesText, {fontWeight: 'bold'}]}>{title}</Text> : <Text style={stylesText}>{title}</Text>*/}
+            <Text style={stylesText}>{title}</Text>
         </Pressable>
     )
 }
