@@ -1,17 +1,23 @@
 //import axios from 'axios'
-import React, { useState } from "react"
-import { View, Image, Text, Button, TextInput } from "react-native"
+import React, { useEffect, useState } from "react"
+import { View, Image, Text, Button, TextInput, Alert } from "react-native"
 import MapView, { Marker } from 'react-native-maps';
 import { useRef } from "react";
+import { screenStyles } from "../styles/global";
+import { Input } from "react-native-elements/dist/input/Input";
+
+const apiKey = "rSSmSMdz4ocAJ0Jd4S8dknHpPCqsyXFQPlT3vo3-Bno";
 
 
-function log(eventName, e) {
-    console.log(eventName, e.nativeEvent);
-}
 
 const HereMapScreen = ({ navigation }) => {
     //const [coord, setCoord] = useState({ x: 21, });
     const mapRef = useRef(null);
+
+    const [ubi, setUbi] = useState({
+        latitude: "",
+        longitude: "",
+    });
 
     const [mapRegion, setmapRegion] = useState({
         latitude: 39.4702,
@@ -20,12 +26,41 @@ const HereMapScreen = ({ navigation }) => {
         longitudeDelta: 0.0421,
     });
 
-    const goToTokyo = () => {
-        //Animate the user to new region. Complete this animation in 3 seconds
-        mapRef.current.animateToRegion(mapRegion, 1000);
+    const [address, setAddress] = useState("");
+    function log(e) {
+        console.log(e.nativeEvent);
+        setUbi({ latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude })
+    }
+
+    useEffect(() => {
+        const timeOutId = setTimeout(() => searchAddress(), 600);
+        return () => clearTimeout(timeOutId);
+    }, [address])
+
+    const searchAddress = async () => {
+        try {
+            const response = await fetch(
+                'https://geocode.search.hereapi.com/v1/geocode?q=' + address + '&apiKey=' + apiKey
+            );
+            const json = await response.json();
+            if (address != "") {
+                setmapRegion({ ...mapRegion, longitude: await json.items[0].position.lng, latitude: await json.items[0].position.lat });
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
     };
+
     return (
-        <View>
+        <View style={screenStyles.container}>
+            <Input style={screenStyles.inputSearch} placeholder="Buscar"
+                onChangeText={(value => setAddress(value))} />
+<Button
+                title="Añadir Ubicación"
+                color="#f194ff"
+                onPress={() => Alert.alert(ubi.latitude+ "\n"+ ubi.longitude)}
+            />
             <MapView
                 ref={mapRef}
                 style={{ alignSelf: 'stretch', height: '100%' }}
@@ -34,12 +69,11 @@ const HereMapScreen = ({ navigation }) => {
 
                 <Marker
                     coordinate={mapRegion}
-                    onDragEnd={e => log('onDragEnd', e)}
+                    onDragEnd={e => log(e)}
                     draggable
                 />
-                <Button onPress={() => goToTokyo()} title="Go to Tokyo" />
-                </MapView>
-
+            </MapView>
+            
         </View>
     );
 
