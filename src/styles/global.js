@@ -13,6 +13,10 @@ const global = StyleSheet.create({
         fontFamily: 'nk57-monospace'
     },
 
+    bold: {
+        fontFamily: 'nk57-monospace-bold'
+    },
+
     textInContainer: {
         fontSize: variables.buttonFontSize
     }

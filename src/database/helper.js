@@ -10,6 +10,7 @@ import {
     signOut,
     GoogleAuthProvider,
     signInWithCredential,
+    signInWithEmailAndPassword
 } from "firebase/auth";
 
 import {
@@ -53,6 +54,11 @@ export async function subirArchivo(uri) {
     return await getDownloadURL(imageRef);
 }
 
+export const InicarSesion = async (email, password) => {
+    const auth = getAuth()
+    return signInWithEmailAndPassword(auth, email, password)
+}
+
 export const CerrarSesion = () => {
     const auth = getAuth();
     signOut(auth)
@@ -77,7 +83,7 @@ export const IniciarConGoogle = async () => {
         const auth = getAuth()
         const credentials = GoogleAuthProvider.credential(idToken, accessToken);
 
-        signInWithCredential(auth, credentials)
+        return signInWithCredential(auth, credentials)
 
     }
 };

@@ -9,21 +9,25 @@ import { global } from '../../styles/global'
  * @param {object} props 
  * @returns {JSX.Element} Botón por defecto
  */
-const DefaultButton = ({title, bold, center, marginBottom, backgroundColor, func}) => {
+const DefaultButton = ({title, bold, center, textColor, marginBottom, backgroundColor, func, moreStyles}) => {
 
     const stylesView = [defaultButton.container]
-    const stylesText = [global.font, global.textInContainer]
+    const stylesText = [global.textInContainer]
 
+    // estilos del contenedor del botón
+    if (moreStyles) { stylesView.push(moreStyles) }
     if (center) { stylesView.push(defaultButton.centerText) }
     if (marginBottom) { stylesView.push({marginBottom: marginBottom}) }
     if (backgroundColor) { stylesView.push({backgroundColor: backgroundColor}) }
         else { stylesView.push({backgroundColor: colors.white}) }
     
-    //if (bold) { stylesText.push(boldStyle) }
+    // estilos del texto del botón
+    if (bold) { stylesText.push(global.bold) }
+        else { stylesText.push(global.font) }
+    if (textColor) {stylesText.push({color: textColor})}
 
     return(
         <Pressable onPress={func} style={stylesView}>
-            {/*bold ? <Text style={[stylesText, {fontWeight: 'bold'}]}>{title}</Text> : <Text style={stylesText}>{title}</Text>*/}
             <Text style={stylesText}>{title}</Text>
         </Pressable>
     )

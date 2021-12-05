@@ -3,5 +3,6 @@ export const variables = {
     spaceHorizontal: 36,
     elementMinHeight: 40,
     spaceBetweenElems : 22,
-    buttonFontSize: 12
+    buttonFontSize: 12,
+    heightTopHeader: 90
 }
