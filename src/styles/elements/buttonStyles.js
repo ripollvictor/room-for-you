@@ -8,7 +8,7 @@ const defaultButton = StyleSheet.create({
         paddingVertical: 2,
         backgroundColor: colors.white,
         borderWidth: 2,
-        borderRadius: 14,
+        borderRadius: variables.borderRadius,
         minHeight: variables.elementMinHeight,
         justifyContent: 'center',
     },
@@ -18,4 +18,13 @@ const defaultButton = StyleSheet.create({
     }
 })
 
-export { defaultButton }
+const btnImg = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderRadius: variables.borderRadius
+    }
+})
+
+export { defaultButton, btnImg }

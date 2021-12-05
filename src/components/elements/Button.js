@@ -1,8 +1,9 @@
 import React from 'react'
-import { Pressable, Text, Image } from 'react-native'
+import { Pressable, Text, Image, View } from 'react-native'
 import { colors } from '../../styles/colors'
-import { defaultButton } from '../../styles/elements/buttonStyles'
+import { btnImg, defaultButton } from '../../styles/elements/buttonStyles'
 import { global } from '../../styles/global'
+import { variables } from '../../styles/variables'
 
 /**
  * 
@@ -33,4 +34,46 @@ const DefaultButton = ({title, bold, center, textColor, marginBottom, background
     )
 }
 
-export { DefaultButton }
+const ButtonImg = ({imgSource, backgroundColor, widthContianer, heightContianer, widthImg, heightImg, func}) => {
+    const stylesContainer = [btnImg.container, {width: widthContianer, height: heightContianer}]
+    const stylesImg = [{width: widthImg, height: heightImg}]
+
+    if (backgroundColor) { stylesContainer.push({backgroundColor: backgroundColor}) }
+
+    return(
+        <Pressable
+            style={stylesContainer}
+            onPress={func}
+        >
+            <Image source={imgSource} style={stylesImg} />
+        </Pressable>
+    )
+}
+
+const ButtonImgShadow = (props) => {
+    const button = ButtonImg(props)
+    const styleContainer = {
+        position: 'relative'
+    }
+    const styleShadow = {
+        width: props.widthContianer,
+        height: props.heightContianer,
+        backgroundColor: colors.black,
+        top: -4,
+        left: -4,
+        position: 'absolute',
+        zIndex: -1,
+        borderRadius: variables.borderRadius
+    }
+
+    return(
+        <View
+            style={styleContainer}
+        >
+            {button}
+            <View style={styleShadow} />
+        </View>
+    )
+}
+
+export { DefaultButton, ButtonImg, ButtonImgShadow }
