@@ -54,7 +54,7 @@ const ChatScreen = ({ navigation }) => {
   //   }
   // }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
   //  const q = query(collection(db, 'Mensajes'), orderBy('createdAt', 'desc'))
     //console.log(q)
     const unsuscribe = onSnapshot(query(collection(db, 'Mensajes'), orderBy('createdAt', 'desc')), (snapshot) => setMessages(
@@ -79,13 +79,14 @@ const ChatScreen = ({ navigation }) => {
       createdAt,
       user
     } = messages[0]
+    console.log(messages)
     const docRef = await addDoc(collection(db, 'Mensajes'), {
       _id,
       text,
       createdAt,
       user
     })
-  }, [])
+  }, []) 
 
 
 
