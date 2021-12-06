@@ -1,6 +1,8 @@
 //import firebase from 'firebase';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+//import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { onSnapshot , collection, orderBy, query, getFirestore} from "@firebase/firestore/";
+
 
 
 // Your web app's Firebase configuration
