@@ -53,14 +53,14 @@ const ButtonImg = ({imgSource, backgroundColor, widthContianer, heightContianer,
 const ButtonImgShadow = (props) => {
     const button = ButtonImg(props)
     const styleContainer = {
-        position: 'relative'
+        position: 'relative',
     }
     const styleShadow = {
         width: props.widthContianer,
         height: props.heightContianer,
         backgroundColor: colors.black,
-        top: -4,
-        left: -4,
+        top: -5,
+        left: -7,
         position: 'absolute',
         zIndex: -1,
         borderRadius: variables.borderRadius

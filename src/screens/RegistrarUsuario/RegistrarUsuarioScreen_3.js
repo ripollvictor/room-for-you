@@ -1,7 +1,8 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useEffect } from 'react'
+import { Alert, View } from 'react-native'
 
-const RegistrarUsuario3Screen = () => {
+const RegistrarUsuario3Screen = ({navigation}) => {
+
     return(
         <View></View>
     )

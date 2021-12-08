@@ -1,5 +1,5 @@
-import React from 'react'
-import { Image, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { Alert, BackHandler, Image, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator  } from '@react-navigation/material-top-tabs'
 
@@ -14,7 +14,31 @@ import { OfertasNavigator, FavoritosNavigator, PerfilNavigator, BusquedaNavigato
 const Tab = createBottomTabNavigator()
 const TopTab = createMaterialTopTabNavigator()
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({navigation}) => {
+
+    useEffect(() => {
+        navigation.addListener('beforeRemove', e => {
+            e.preventDefault()
+
+            Alert.alert(
+                '¿Quieres salir de la aplicación?', null,
+                [
+                    {
+                        text: 'No',
+                        style: 'cancel',
+                        onPress: () => {}
+                    },
+                    {
+                        text: 'Sí',
+                        style: 'destructive',
+                        onPress: () => { BackHandler.exitApp() }
+                    }
+                ]
+            )
+        })
+    }, [navigation])
+
+
     return(
         <Tab.Navigator screenOptions={{
             headerShown: false,

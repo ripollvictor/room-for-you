@@ -12,7 +12,8 @@ const App = () => {
 
     const [fontsLoaded] = useFonts({
         'nk57-monospace': require('./assets/fonts/nk57-monospace.ttf'),
-        'nk57-monospace-bold' : require('./assets/fonts/nk57-monospace_bold.ttf')
+        'nk57-monospace-bold': require('./assets/fonts/nk57-monospace_bold.ttf'),
+        'millimetre': require('./assets/fonts/Millimetre-Regular.otf')
     })
     
     if (!fontsLoaded) return <AppLoading />

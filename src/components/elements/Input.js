@@ -10,7 +10,7 @@ import { variables } from '../../styles/variables'
  * @param {object} props 
  * @returns {JSX.Element} Input de texto
  */
-const TextField = ({title, center, marginBottom, focusColor, password, returnKeyType, onChangeText}) => {
+const TextField = ({title, center, marginBottom, focusColor, password, returnKeyType, onChangeText, keyboardType}) => {
 
     const [backgroundColor, setBackgroundColor] = useState({backgroundColor: colors.white})
     const stylesView = [defaultButton.container, global.font, global.textInContainer]
@@ -29,6 +29,7 @@ const TextField = ({title, center, marginBottom, focusColor, password, returnKey
             placeholderTextColor = 'black'
             onFocus = {() => {setBackgroundColor({backgroundColor: focusColor})}}
             onBlur = {() => {setBackgroundColor({backgroundColor: colors.white})}}
+            keyboardType = {keyboardType}
             secureTextEntry = {password}
             onChangeText = {onChangeText}
         />

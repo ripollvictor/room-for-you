@@ -19,6 +19,17 @@ const global = StyleSheet.create({
 
     textInContainer: {
         fontSize: variables.buttonFontSize
+    },
+
+    title: {
+        fontFamily: 'millimetre',
+        fontSize: 52,
+        textAlign: 'center'
+    },
+    description: {
+        fontFamily: 'nk57-monospace',
+        fontSize: 14,
+        textAlign: 'center'
     }
 })
 

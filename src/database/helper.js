@@ -25,6 +25,7 @@ import {
 
 import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
+import { OfertaDB } from "./OfertaDB";
 
 const db = firebase.db
 
@@ -142,7 +143,7 @@ export const GetSolicitudes = async () => {
     return r_Solicitudes.docs
 }
 
-export const GetFavoritos = async () => {
+const GetFavoritos = async () => {
     const email = GetEmailFromCurrentUser()
 
     const p_UserId = GetUserIdFromEmail(email)
@@ -166,7 +167,7 @@ export const GetOfertas = async () => {
 
     res.forEach(doc => {
         auxOfertaData = doc.data()
-        ofertas.push(new Oferta(
+        ofertas.push(new OfertaDB(
             doc.id,
             auxOfertaData['Ofertador'],
             auxOfertaData['Direccion'],
@@ -176,6 +177,40 @@ export const GetOfertas = async () => {
     })
 
     return ofertas
+}
+
+/**
+ * Devuelve las ofertas que el usuario logeado le ha gustado en forma de objeto con su id, dirección, imagenes (array de string) y precio
+ * @returns Un array de objetos OfertaDB
+ */
+export const GetOfertasFavoritas = async () => {
+
+    const solicitudesDoc = await GetFavoritos()
+    const ofertasRef = []
+    const ofertas = []
+
+    solicitudesDoc.forEach(doc => {
+        ofertasRef.push(doc.data()['id_vivienda'])
+    })
+
+    for (const ref of ofertasRef) {
+        const doc = await getDoc(ref)
+        const docAuxData = doc.data()
+
+        ofertas.push(new OfertaDB(
+            doc.id,
+            docAuxData['Ofertador'],
+            docAuxData['Direccion'],
+            docAuxData['Precio'],
+            docAuxData['Imagenes']
+        ))
+    }
+
+    return ofertas
+}
+
+export const GetOfertaById = async (ofertaId) => {
+    
 }
 
 export const GetUserDataFromEmail = async email => {
