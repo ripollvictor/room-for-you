@@ -20,7 +20,7 @@ import {
     getDocs,
     getDoc,
     setDoc
-} from 'firebase/firestore/lite'
+} from 'firebase/firestore'
 
 import firebase from './firebase'
 import * as Google from 'expo-google-app-auth'

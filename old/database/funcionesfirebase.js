@@ -2,7 +2,7 @@ import {db} from './firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs, doc ,addDoc, query,where,deleteDoc,setDoc,getDoc,updateDoc} from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, doc ,addDoc, query,where,deleteDoc,setDoc,getDoc,updateDoc} from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
 

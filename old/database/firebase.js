@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 //import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { onSnapshot , collection, orderBy, query, getFirestore} from "@firebase/firestore/";
+import {initializeFirestore} from "@firebase/firestore";
 
 
 
@@ -22,7 +22,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+ })
 const auth = getAuth()
 
 export {

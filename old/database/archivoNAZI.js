@@ -3,7 +3,7 @@ import firebase from '../database/firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
-import { getFirestore, collection, getDocs,doc ,addDoc, query,where} from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs,doc ,addDoc, query,where} from 'firebase/firestore';
 import { getAuth } from "firebase/auth";
 
 const db = firebase.db;
