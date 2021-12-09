@@ -1,5 +1,5 @@
 import { screenStyles } from './styles'
-import firebase from '../../database/firebase';
+import {db} from '../../database/firebase';
 import React, { useState } from "react"
 import { View, Image, Text } from "react-native"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -7,7 +7,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Button from "../../components/Button/Button"
 import Input from "../../components/Input/Input"
 
-const db = firebase.db;
 
 const IniciarSesionScreen = ({navigation}) => {
 

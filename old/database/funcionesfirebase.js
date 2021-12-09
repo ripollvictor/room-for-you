@@ -1,4 +1,4 @@
-import firebase from './firebase'
+import {db} from './firebase'
 //import { collection, doc,setDoc } from 'firebase/firestore';
 import '../clases/usuario'
 //import firebase from '../database/firebase'
@@ -7,7 +7,6 @@ import { getAuth } from "firebase/auth";
 import { connectStorageEmulator } from '@firebase/storage';
 
 
-const db = firebase.db;
 
 
 
