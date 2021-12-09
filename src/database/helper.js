@@ -197,3 +197,30 @@ export const ModificarDatosUsuaio = async user =>{
     const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
     const res = await promise;
 }
+
+export async function GetOfertasWithinRadio (latCrentro, longCentro, radio) {
+    const promise = GetOfertas()
+    const res = await promise
+
+    const ofertas = new Array()
+    const latCentroEnRadianes = latCrentro * Math.PI / 180
+    const radioTierra = 6371000
+
+    res.forEach( oferta => {
+        var latOferta = oferta.latitud
+        var longOferta = oferta.longitud
+        var latOfertaEnRadianes = latOferta * Math.PI / 180
+        var variacionLatEnRadianes = (latCrentro - latOferta) * Math.PI / 180
+        var variacionLongEnRadianes = (longCentro - longOferta) * Math.PI / 180
+        
+        var calculo1 = Math.sin(variacionLatEnRadianes / 2) * Math.sin(variacionLatEnRadianes / 2) + Math.cos(latCentroEnRadianes) * Math.cos(latOfertaEnRadianes) * Math.sin(variacionLongEnRadianes / 2) * Math.sin(variacionLongEnRadianes / 2)
+        var calculo2 = 2 * Math.atan2(Math.sqrt(calculo1), Math.sqrt(1 - calculo1))
+        var distancia = radioTierra * calculo2
+
+        if(distancia <= radio) {
+            ofertas.push(oferta)
+        }
+    })
+
+    return ofertas
+}
