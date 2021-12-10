@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, Pressable } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { View, Text, Pressable, Alert, Animated } from 'react-native'
 import { Indicator } from '../../components/elements/Indicator'
 import { colors } from '../../styles/colors'
 import { global } from '../../styles/global'
 import { variables } from '../../styles/variables'
 import { OfertaDB } from '../../database/OfertaDB'
 import { GetOfertas } from '../../database/helper'
+import { ButtonImgShadow } from '../../components/elements/Button'
+import { OfertaContainer } from '../../components/elements/OfertaContainer'
 
 const VerOfertasScreen = () => {
 
     const [indexFotoActual, setIndexFotoActual] = useState(0)
     const [indexOfertaActual, setOfertaActual] = useState(0)
     const [ofertas, setOfertas] = useState([new OfertaDB()])
+    
+    const [currentColor, setCurrentColor] = useState(colors.secondary)
+
+    const opacityAnim = useRef(new Animated.Value(0)).current
 
     useEffect(() => {
         updateOfertas()
@@ -50,20 +56,81 @@ const VerOfertasScreen = () => {
         return res
     }
 
+    const NextImg = () => { if (indexFotoActual !== ofertas[indexOfertaActual].imagenes.length - 1) setIndexFotoActual(indexFotoActual + 1) }
+    const PrevImg = () => { if (indexFotoActual !== 0) setIndexFotoActual(indexFotoActual - 1) }
+
     const indicadores = GetIndicators()
+
+
+
+
+
+
+    const NotFav = () => {
+
+    }
+
+    const AddFav = () => {
+
+    }
 
     return(
         <View style={[global.default, {paddingTop: 71}]}>
             <View
                 style={{
                     flexDirection: 'row',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    marginBottom: 42
                 }}
             >
                 {indicadores}
             </View>
-            <Pressable onPress={() => {setOfertaActual(0)}}><Text>Prueba</Text></Pressable>
-            <Pressable onPress={() => {setIndexFotoActual(1)}}><Text>Prueba</Text></Pressable>
+
+            <OfertaContainer 
+                color={currentColor} alpha={opacityAnim}
+            />
+
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                position: 'absolute',
+                bottom: 100,
+                left: 0,
+                right: 0,
+                paddingHorizontal: variables.spaceHorizontal,
+                zIndex: 10
+            }}>
+                <ButtonImgShadow
+                    imgSource={require('../../../assets/ofertas/triste.png')} 
+                    widthContianer={77}
+                    heightContianer={55}
+                    widthImg={42}
+                    heightImg={42}
+                    backgroundColor={colors.primary}
+                    func={() => {NotFav()}}
+                    marginRight={variables.spaceBetweenElems}
+                />
+                <ButtonImgShadow
+                    imgSource={require('../../../assets/ofertas/zoom.png')} 
+                    widthContianer={77}
+                    heightContianer={55}
+                    widthImg={42}
+                    heightImg={42}
+                    backgroundColor={colors.white}
+                    func={() => {}}
+                    marginRight={variables.spaceBetweenElems}
+                />
+                <ButtonImgShadow
+                    imgSource={require('../../../assets/ofertas/contento.png')} 
+                    widthContianer={77}
+                    heightContianer={55}
+                    widthImg={42}
+                    heightImg={42}
+                    backgroundColor={colors.secondary}
+                    func={() => {AddFav()}}
+                />
+            </View>
+
         </View>
     )
 }

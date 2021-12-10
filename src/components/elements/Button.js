@@ -34,8 +34,8 @@ const DefaultButton = ({title, bold, center, textColor, marginBottom, background
     )
 }
 
-const ButtonImg = ({imgSource, backgroundColor, widthContianer, heightContianer, widthImg, heightImg, func}) => {
-    const stylesContainer = [btnImg.container, {width: widthContianer, height: heightContianer}]
+const ButtonImg = ({imgSource, backgroundColor, widthContianer, heightContianer, widthImg, heightImg, func, marginRight}) => {
+    const stylesContainer = [btnImg.container, {width: widthContianer, height: heightContianer}, {marginRight: marginRight ? marginRight : 0}]
     const stylesImg = [{width: widthImg, height: heightImg}]
 
     if (backgroundColor) { stylesContainer.push({backgroundColor: backgroundColor}) }
