@@ -165,7 +165,9 @@ export const GetOfertas = async () => {
             auxOfertaData['Ofertador'],
             auxOfertaData['Direccion'],
             auxOfertaData['Precio'],
-            auxOfertaData['Imagenes']
+            auxOfertaData['Imagenes'],
+            auxOfertaData['Latitud'],
+            auxOfertaData['Longitud']
         ))
     })
 
@@ -198,24 +200,24 @@ export const ModificarDatosUsuaio = async user =>{
     const res = await promise;
 }
 
-export async function GetOfertasWithinRadio (latCrentro, longCentro, radio) {
+export async function GetOfertasWithinRadio (latCentro, longCentro, radio) {
     const promise = GetOfertas()
     const res = await promise
 
     const ofertas = new Array()
-    const latCentroEnRadianes = latCrentro * Math.PI / 180
+    const latCentroEnRadianes = latCentro * Math.PI / 180
     const radioTierra = 6371000
 
     res.forEach( oferta => {
-        var latOferta = oferta.latitud
-        var longOferta = oferta.longitud
-        var latOfertaEnRadianes = latOferta * Math.PI / 180
-        var variacionLatEnRadianes = (latCrentro - latOferta) * Math.PI / 180
-        var variacionLongEnRadianes = (longCentro - longOferta) * Math.PI / 180
+        let latOferta = oferta.latitud
+        let longOferta = oferta.longitud
+        let latOfertaEnRadianes = latOferta * Math.PI / 180
+        let variacionLatEnRadianes = (latCentro - latOferta) * Math.PI / 180
+        let variacionLongEnRadianes = (longCentro - longOferta) * Math.PI / 180
         
-        var calculo1 = Math.sin(variacionLatEnRadianes / 2) * Math.sin(variacionLatEnRadianes / 2) + Math.cos(latCentroEnRadianes) * Math.cos(latOfertaEnRadianes) * Math.sin(variacionLongEnRadianes / 2) * Math.sin(variacionLongEnRadianes / 2)
-        var calculo2 = 2 * Math.atan2(Math.sqrt(calculo1), Math.sqrt(1 - calculo1))
-        var distancia = radioTierra * calculo2
+        let calculo1 = Math.sin(variacionLatEnRadianes / 2) * Math.sin(variacionLatEnRadianes / 2) + Math.cos(latCentroEnRadianes) * Math.cos(latOfertaEnRadianes) * Math.sin(variacionLongEnRadianes / 2) * Math.sin(variacionLongEnRadianes / 2)
+        let calculo2 = 2 * Math.atan2(Math.sqrt(calculo1), Math.sqrt(1 - calculo1))
+        let distancia = radioTierra * calculo2
 
         if(distancia <= radio) {
             ofertas.push(oferta)
