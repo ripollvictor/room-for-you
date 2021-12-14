@@ -10,11 +10,10 @@ const ChatScreen = ({ navigation, route }) => {
     const { emailOfertador } = route.params
     const [messages, setMessages] = useState([]);
 
-    const db = firebase.db
-
+    const db = firebase.db;
 
     useLayoutEffect(() => {
-        const q = query(collection(db, "Mensajes"),where("receiver", "in", [emailOfertador+"//"+GetEmailFromCurrentUser, GetEmailFromCurrentUser+"//"+emailOfertador]), orderBy('createdAt', 'desc'))
+        const q = query(collection(db, "Mensajes"),where("receiver", "in", [emailOfertador+"//"+GetEmailFromCurrentUser(), GetEmailFromCurrentUser()+"//"+emailOfertador]), orderBy('createdAt', 'desc'))
         const unsuscribe = onSnapshot(q, (snapshot) =>
             setMessages(
                 snapshot.docs.map(doc => ({
@@ -35,7 +34,7 @@ const ChatScreen = ({ navigation, route }) => {
             createdAt,
             text,
             user, 
-            receiver: emailOfertador+"//"+GetEmailFromCurrentUser 
+            receiver: emailOfertador+"//"+GetEmailFromCurrentUser()
         });
     }, [])
 

@@ -24,34 +24,35 @@ import {
     addDoc,
 } from 'firebase/firestore'
 
-import { db } from './conection'
+import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
 import { OfertaDB } from "./OfertaDB";
 import { UsuarioDB } from "./UsuarioDB";
 
+const db = firebase.db;
 export async function subirArchivo(uri) {
 
     const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+            console.log(e);
+            reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
     });
-  
+
     const storage = getStorage();
     const nombreImagen = Math.round(Math.random() * 100000000000);
     const imageRef = ref(storage, "images/" + nombreImagen);
     const result = await uploadBytes(imageRef, blob);
     // We're done with the blob, close and release it
     blob.close();
-  
+
     return await getDownloadURL(imageRef);
 }
 
@@ -81,7 +82,7 @@ export const IniciarConGoogle = async () => {
     if (type === 'success') {
 
         // Comprobar si el email ya está en la base de datos y si no lo está registrarlo en la base de datos
-        
+
         const auth = getAuth()
         const credentials = GoogleAuthProvider.credential(idToken, accessToken);
 
@@ -224,7 +225,7 @@ export const GetOfertasFavoritas = async () => {
 }
 
 export const GetOfertaById = async (ofertaId) => {
-    
+
 }
 
 export const GetUserDataFromEmail = async email => {
@@ -234,11 +235,11 @@ export const GetUserDataFromEmail = async email => {
     // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
     // el indice 0 y luego obtener la id con su propiedad id.
     // console.log(res.docs[0].id)
-       
+
     return res.docs[0]
 }
 
-export const ModificarDatosUsuaio = async user =>{
+export const ModificarDatosUsuaio = async user => {
     const data = {
         Apellidos: user.apellidos,
         Contrasena: user.contrasena,
@@ -249,7 +250,7 @@ export const ModificarDatosUsuaio = async user =>{
         tags: user.tags
     };
     console.log(data);
-    const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
+    const promise = setDoc(doc(db, "Usuario", user.id_user), data);
     const res = await promise;
 }
 
@@ -271,5 +272,33 @@ export const RegistrarUsuarioDB = async userDB => {
 export const GetEmailOfertador = async ofertadorRef => {
     const ofertador = await getDoc(ofertadorRef)
     const email = ofertador.data()['Email']
-    return email 
+    return email
 }
+
+
+export const GetChatsUser = async () => {
+    const chats= [];
+    //Coger las solicitudoes donde eres el Solicitante
+
+    const email = GetEmailFromCurrentUser()
+
+    const userRef = await GetUserRefByEmail(email);
+
+    const solicitantes = await GetDocsFrom("Chats", "Solicitante", userRef);
+
+    chats.push(solicitantes.docs);
+    //Coger la solicitudes donde eres el Ofertador
+    const ofertadores = await GetDocsFrom("Chats", "Ofertador", userRef);
+
+    chats.push(ofertadores.docs);
+
+
+    return chats;
+}
+
+const GetUserRefByEmail = async email => {
+    const userID = await GetUserIdFromEmail(email);
+    const userRef = doc(db, "Usuario", userID)
+    return userRef
+}
+
