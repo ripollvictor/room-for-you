@@ -17,7 +17,7 @@ const ChatScreen = ({ navigation }) => {
   
 
   useLayoutEffect(() => {
-  const q = query(collection(db, "Mensajes"), where("user", "==", "ripollaltea@gmail.com"), where("receiver", "==", "diego.ruiz.2000@hotmail.com"), orderBy('createdAt', 'desc'))
+  const q = query(collection(db, "Mensajes"), where("receiver", "in", ["diego.ruiz.2000@hotmail.com//ripollaltea@gmail.com", "ripollaltea@gmail.com//diego.ruiz.2000@hotmail.com"]), orderBy('createdAt', 'desc'))
   const unsuscribe = onSnapshot(q, (snapshot) => 
   setMessages(
     snapshot.docs.map(doc => ({
@@ -37,8 +37,8 @@ const ChatScreen = ({ navigation }) => {
       _id,
       createdAt,
       text,
-      user: "ripollaltea@gmail.com",
-      receiver: "diego.ruiz.2000@hotmail.com"
+      user,
+      receiver: "diego.ruiz.2000@hotmail.com//ripollaltea@gmail.com"
     });  
   }, [])
 
