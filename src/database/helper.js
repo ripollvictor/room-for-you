@@ -226,3 +226,23 @@ export async function GetOfertasWithinRadio (latCentro, longCentro, radio) {
 
     return ofertas
 }
+
+async function filtroPrecio(lista,precioMax){
+    const ofertas = new Array()
+    lista.forEach(oferta => {
+        if(oferta.precio <= precioMax){
+            ofertas.push(oferta)
+        }
+    })
+    return ofertas
+}
+
+
+export async function aplicarFiltros(latCentro, longCentro, radio,precioMax) {
+    const promise = GetOfertasWithinRadio (latCentro, longCentro, radio)
+    const res = await promise
+    const promise2 = filtroPrecio(res,precioMax)
+    const res2 = await promise2
+    return res2 
+
+}
