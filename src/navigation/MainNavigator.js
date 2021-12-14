@@ -17,6 +17,8 @@ import RegistrarOfertaScreen from '../screens/Ofertas/RegistrarOfertaScreen'
 import RegistrarOferta2Screen from '../screens/Ofertas/RegistrarOferta2Screen'
 import RegistrarOferta3Screen from '../screens/Ofertas/RegistrarOferta3Screen'
 
+import ChatScreen from '../screens/Mensajeria/ChatScreen'
+
 import { BottomTabNavigator } from './TabNavigator'
 import { variables } from '../styles/variables'
 import { CustomHeader } from './CustomHeader'
@@ -47,6 +49,8 @@ const MainNavigator = () => {
             <Stack.Screen name='Oferta 1' component={ RegistrarOfertaScreen } />
             <Stack.Screen name='Oferta 2' component={ RegistrarOferta2Screen } />
             <Stack.Screen name='Oferta 3' component={ RegistrarOferta3Screen } />
+
+            <Stack.Screen name='Chat' component={ ChatScreen } />
 
             <Stack.Screen options={{ headerShown: false }} name='Main' component={ BottomTabNavigator } />
         </Stack.Navigator>

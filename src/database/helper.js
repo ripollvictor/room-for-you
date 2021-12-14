@@ -22,7 +22,7 @@ import {
     getDoc,
     setDoc,
     addDoc,
-} from 'firebase/firestore/lite'
+} from 'firebase/firestore'
 
 import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
@@ -268,4 +268,10 @@ export const RegistrarUsuarioDB = async userDB => {
         'FotoPerfil': userDB.fotoPerfil,
         'FechaNacimiento': userDB.fechaNacimiento
     })
+}
+
+export const GetEmailOfertador = async ofertadorRef => {
+    const ofertador = await getDoc(ofertadorRef)
+    const email = ofertador.data()['Email']
+    return email 
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView, Pressable } from 'react-native'
 import { OfertaFavorita } from '../../components/elements/OfertaFavorita'
-import { GetOfertasFavoritas } from '../../database/helper'
+import { GetOfertasFavoritas, GetEmailOfertador } from '../../database/helper'
 import { OfertaDB } from '../../database/OfertaDB'
 import { global } from '../../styles/global'
 import { variables } from '../../styles/variables'
@@ -13,7 +13,6 @@ const VerFavoritosScreen = ({navigation}) => {
 
     const updateFavoritos = async () => {
         const res = await GetOfertasFavoritas()
-        console.log(res)
         setOfertasFavoritas(res)
     }
 
@@ -31,35 +30,35 @@ const VerFavoritosScreen = ({navigation}) => {
 
         while ( i < ofertasFavoritas.length ) {
             if ( i + 1 === ofertasFavoritas.length ) {
-                let id1 = ofertasFavoritas[i].id
+                let id1 = ofertasFavoritas[i].ofertador
                 ofertasElem.push(
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: variables.spaceBetweenElems}} key={i} >
                         <OfertaFavorita
                             imgSource={{uri: ofertasFavoritas[i].imagenes[0]}}
                             title={ofertasFavoritas[i].direccion}
                             price={ofertasFavoritas[i].precio}
-                            func={() => VerOferta(id1)}
+                            func={() => AbrirChat(id1)}
                             key={i}
                         />
                     </View>
                 )
             } else {
-                let id1 = ofertasFavoritas[i].id
-                let id2 = ofertasFavoritas[i + 1].id
+                let id1 = ofertasFavoritas[i].ofertador
+                let id2 = ofertasFavoritas[i + 1].ofertador
                 ofertasElem.push(
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: variables.spaceBetweenElems}} key={i} >
                         <OfertaFavorita
                             imgSource={{uri: ofertasFavoritas[i].imagenes[0]}}
                             title={ofertasFavoritas[i].direccion}
                             price={ofertasFavoritas[i].precio}
-                            func={() => VerOferta(id1)}
+                            func={() => AbrirChat(id1)}
                             key={i}
                         />
                         <OfertaFavorita
                             imgSource={{uri: ofertasFavoritas[i + 1].imagenes[0]}}
                             title={ofertasFavoritas[i + 1].direccion}
                             price={ofertasFavoritas[i + 1].precio}
-                            func={() => VerOferta(id2)}
+                            func={() => AbrirChat(id2)}
                             key={i + 1}
                         />
                     </View>
@@ -72,8 +71,9 @@ const VerFavoritosScreen = ({navigation}) => {
         setFavoritos(ofertasElem)
     }, [ofertasFavoritas])
 
-    const VerOferta = (viviendaId) => {
-        console.log(viviendaId)
+    const AbrirChat = async (ofertador) => {
+        const emailOfertador = await GetEmailOfertador(ofertador)
+        navigation.navigate('Chat', {emailOfertador: emailOfertador})
     }
 
     return(
