@@ -158,7 +158,7 @@ const VerOfertasScreen = () => {
             else if (indexes[i] % 3 === 1) elem(2)
         })
 
-        
+        // falta cambiar rotation, opacity, pan y pancontroller para el siguiente oferta container
     }
 
     const NotFav = () => {

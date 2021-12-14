@@ -76,4 +76,28 @@ const ButtonImgShadow = (props) => {
     )
 }
 
+const ButtonShadow = ({backgroundColor, widthContianer, heightContianer, func, text}) => {
+    const stylesContainer = [btnImg.container, {width: widthContianer, height: heightContianer}, {marginRight: marginRight ? marginRight : 0}]
+    const stylesShadow = [{
+        width: props.widthContianer,
+        height: props.heightContianer,
+        backgroundColor: colors.black,
+        top: -5,
+        left: -7,
+        position: 'absolute',
+        zIndex: -1,
+        borderRadius: variables.borderRadius
+    }]
+    const stylesText = [global.description]
+
+    return(
+        <View style={{position: 'relative'}}>
+            <Pressable style={stylesContainer} onPress={func}>
+                <Text style={stylesText}>{text}</Text>
+            </Pressable>
+            <View style={stylesShadow} />
+        </View>
+    )
+}
+
 export { DefaultButton, ButtonImg, ButtonImgShadow }

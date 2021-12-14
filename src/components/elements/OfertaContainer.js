@@ -32,7 +32,6 @@ const OfertaContainer = ({direccion, precio, funcInfo, moreStyles, color, alpha,
         <Animated.View
             style={[{
                 flex: 1,
-                marginBottom: 140,
             }, panLayout]}
 
             {...panController}
