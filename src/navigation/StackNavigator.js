@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import VerOfertasScreen from        '../screens/Ofertas/VerOfertasScreen'
-import BusquedaScreen from          '../screens/BusquedaScreen'
+import BusquedaScreen from          '../screens/Busqueda/BusquedaScreen'
 import VerFavoritosScreen from      '../screens/Favoritos/VerFavoritosScreen'
 import VerPerfilScreen from         '../screens/VerPerfilScreen'
 

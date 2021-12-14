@@ -13,6 +13,7 @@ const VerFavoritosScreen = ({navigation}) => {
 
     const updateFavoritos = async () => {
         const res = await GetOfertasFavoritas()
+        console.log(res)
         setOfertasFavoritas(res)
     }
 
@@ -23,8 +24,6 @@ const VerFavoritosScreen = ({navigation}) => {
     }, [])
 
     useEffect(() => {
-
-
         if (ofertasFavoritas.length === 0) return undefined
 
         let i = 0

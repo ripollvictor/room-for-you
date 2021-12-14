@@ -15,7 +15,8 @@ const InfoContainer = ({direccion, precio, funcInfo, moreStyles}) => {
                 width: '100%',
                 paddingTop: 22,
                 paddingHorizontal: 17,
-                paddingBottom: 20
+                paddingBottom: 20,
+                zIndex: 6
             }]}
         >
             <Text style={{fontFamily: 'nk57-monospace', fontSize: 18, marginBottom: 20}}>{direccion}</Text>
@@ -25,11 +26,18 @@ const InfoContainer = ({direccion, precio, funcInfo, moreStyles}) => {
     )
 }
 
-const OfertaContainer = ({direccion, precio, funcInfo, moreStyles, color, alpha}) => {
+const OfertaContainer = ({direccion, precio, funcInfo, moreStyles, color, alpha, rotation, imagenURL, panController, panLayout}) => {
 
     return(
         <Animated.View
-            style={[moreStyles, {
+            style={[{
+                flex: 1,
+                marginBottom: 140,
+            }, panLayout]}
+
+            {...panController}
+        >
+            <Animated.View style={{
                 width: '100%',
                 borderRadius: variables.borderRadius,
                 borderWidth: 2,
@@ -37,21 +45,33 @@ const OfertaContainer = ({direccion, precio, funcInfo, moreStyles, color, alpha}
                 paddingHorizontal: 11,
                 paddingBottom: 28,
                 flex: 1,
-                marginBottom: 140
-            }]}
-        >
-            <Animated.View style={{
-                backgroundColor: color,
-                opacity: alpha,
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                borderRadius: variables.borderRadius
-            }} />
-            
-            <InfoContainer direccion={direccion} precio={precio} funcInfo={funcInfo} />
+                transform: [{rotate: rotation}],
+            }}>
+                <Animated.View style={{
+                    backgroundColor: color,
+                    opacity: alpha,
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    borderRadius: variables.borderRadius,
+                    zIndex: 3
+                }} />
+
+                <Image source={{uri: imagenURL}} style={{
+                    resizeMode: 'cover',
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    borderRadius: variables.borderRadius,
+                    zIndex: 2
+                }} />
+                
+                <InfoContainer direccion={direccion} precio={precio} funcInfo={funcInfo} />
+            </Animated.View>
         </Animated.View>
     )
 }

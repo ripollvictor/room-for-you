@@ -19,7 +19,38 @@ const RegistrarUsuario1Screen = ({navigation}) => {
     const CheckFields = () => {
         // Comprobaciones
 
-        navigation.navigate('Registrar 2')
+        const errores = []
+
+        if (email === '') errores.push('El email está vacio')
+        if (password === '') errores.push('La contraseña está vacia')
+        if (perfilSource === '') errores.push('No hay foto de perfil')
+        if (confirm !== password) errores.push('No coincide con la contraseña introducida')
+
+        if ( errores.length === 0 ) {
+            navigation.navigate('Registrar 2', {
+                email: email,
+                telefono: telefono,
+                fotoPerfil: perfilSource,
+                password: password
+            })
+        } else {
+            Alert.alert('Errores', ParseErrores(errores), [{
+                text: 'OK',
+                onPress: () => {}
+            }])
+        }
+    }
+
+    /**
+     * Devuelve un string con todos los errores
+     * @param {string[]} listaErrores 
+     */
+    const ParseErrores = listaErrores => {
+        let res = ''
+        listaErrores.forEach(error => {
+            res += '- ' + error + '\n'
+        })
+        return res
     }
 
     return(

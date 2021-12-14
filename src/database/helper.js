@@ -20,12 +20,14 @@ import {
     where,
     getDocs,
     getDoc,
-    setDoc
+    setDoc,
+    addDoc,
 } from 'firebase/firestore/lite'
 
 import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
 import { OfertaDB } from "./OfertaDB";
+import { UsuarioDB } from "./UsuarioDB";
 
 const db = firebase.db
 
@@ -60,17 +62,16 @@ export const InicarSesion = async (email, password) => {
     return signInWithEmailAndPassword(auth, email, password)
 }
 
-export const CerrarSesion = () => {
+export const CerrarSesion = async () => {
     const auth = getAuth();
-    signOut(auth)
-        .then(() => {
-            // Hace algo cuando se cierre sesión
-        })
-        .catch((error) => {
-            // Cuando ha ocurrido algun error
-        });
+    return signOut(auth)
 };
 
+
+/**
+ * 
+ * @returns {integer} 0 - si el usuario ha cancelado la operación de iniciar sesión con google, 1 - si no está registrado en la base de datos, 2 - si está registrado
+ */
 export const IniciarConGoogle = async () => {
 
     const { type, accessToken, idToken } = await Google.logInAsync({
@@ -80,14 +81,22 @@ export const IniciarConGoogle = async () => {
     })
 
     if (type === 'success') {
+
+        // Comprobar si el email ya está en la base de datos y si no lo está registrarlo en la base de datos
         
         const auth = getAuth()
         const credentials = GoogleAuthProvider.credential(idToken, accessToken);
 
-        return signInWithCredential(auth, credentials)
+        await signInWithCredential(auth, credentials)
 
+        const res = await GetUserIdFromEmail(auth.currentUser.email)
+        if (res === false) return 1
+
+        return 2
+    } else {
+        return 0
     }
-};
+}
 
 const GetDocsFrom = (collectionName, fieldName, value) => {
     return getDocs(
@@ -104,9 +113,16 @@ export const GetEmailFromCurrentUser = () => {
     if (user.email) return user.email
 }
 
+/**
+ * Obtener el ID de un usario dado su email
+ * @param {string} email 
+ * @returns {bool|integer} Puede devolver falso cuando el usuario no está registrado en la base de datos y si lo está devolverá la ID del usuario
+ */
 export const GetUserIdFromEmail = async email => {
     const promise = GetDocsFrom('Usuario', 'Email', email)
     const res = await promise
+
+    if (res.docs.length === 0) return false
 
     // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
     // el indice 0 y luego obtener la id con su propiedad id.
@@ -237,4 +253,19 @@ export const ModificarDatosUsuaio = async user =>{
     console.log(data);
     const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
     const res = await promise;
+}
+
+/**
+ * Registrar un usuario en la base de datos
+ * @param {UsuarioDB} userDB 
+ */
+export const RegistrarUsuarioDB = async userDB => {
+    addDoc(collection(db, 'Usuario'), {
+        'Nombre': userDB.nombre,
+        'Apellidos': userDB.apellidos,
+        'Email': userDB.email,
+        'Telefono': userDB.telefono,
+        'FotoPerfil': userDB.fotoPerfil,
+        'FechaNacimiento': userDB.fechaNacimiento
+    })
 }

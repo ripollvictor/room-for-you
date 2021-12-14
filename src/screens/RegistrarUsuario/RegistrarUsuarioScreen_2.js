@@ -1,27 +1,93 @@
 import React, { useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import { global } from '../../styles/global'
 import { variables } from '../../styles/variables'
 import { ButtonImgShadow, ButtonImg } from '../../components/elements/Button'
 import { TextField, PasswordField } from '../../components/elements/Input'
 import { colors } from '../../styles/colors'
+import { UsuarioDB } from '../../database/UsuarioDB'
+import { RegistrarUsuarioDB } from '../../database/helper'
 
-const RegistrarUsuario2Screen = ({navigation}) => {
+const RegistrarUsuario2Screen = ({route, navigation}) => {
 
+    const {email, fotoPerfil, telefono, password} = route.params
+    const [nombre, setNombre] = useState('')
+    const [apellidos, setApellidos] = useState('')
+    const [fechaNacimiento, setFechaNacimiento] = useState('')
 
     /**
      * Comprobar que todos los campos cumplen todas las condiciones y si está todo correcto registrar al nuevo usuario
      */
-     const CheckFields = () => {
+     const CheckFields = async () => {
         // Comprobaciones
 
-        // Registrar usuario y mantener sesión iniciada
+        const errores = []
 
-        navigation.navigate('Main')
+        if (nombre === '') errores.push('El nombre está vacio')
+        if (apellidos === '') errores.push('Los apellidos están vacios')
+        if (fechaNacimiento === '') errores.push('La fecha de nacimiento está vacio')
+        if (checkFechaNacimiento()) errores.push('La fecha no sigue el estandar DD-MM-AAAA')
+
+        if (errores.length === 0) {
+            // registrar
+
+            const diaMesAnyo = fechaNacimiento.split('-')
+            const dia = diaMesAnyo[0]
+            const mes = diaMesAnyo[1] - 1
+            const anyo = diaMesAnyo[2]
+
+            const fechaNacDateObj = new Date(anyo, mes, dia)
+            const newUser = new UsuarioDB(nombre, apellidos, email, fechaNacDateObj, fotoPerfil, telefono)
+
+            await RegistrarUsuarioDB(newUser)
+
+            Alert.alert('¿Qué quieres hacer?', '', [
+                {
+                    text: 'Registrar una habitación',
+                    onPress: () => {
+                        navigation.navigate('Oferta 1')
+                    }
+                },
+                {
+                    text: 'Buscar un piso',
+                    onPress: () => {
+                        navigation.navigate('Busqueda')
+                    }
+                }
+            ])
+
+        } else {
+            // mostrar errores
+            console.log('error')
+
+        }
+
+        
+    }
+
+    /**
+     * Si ha encontrado algun error devolverá true
+     * @returns 
+     */
+    const checkFechaNacimiento = () => {
+        const diaMesAnyo = fechaNacimiento.split('-')
+
+        if (diaMesAnyo.length !== 3) return true
+
+        const dia = diaMesAnyo[0]
+        const mes = diaMesAnyo[1]
+        const anyo = diaMesAnyo[2]
+
+        if (!(dia.length === 2 || dia.length === 1)) return true
+        if (!(mes.length === 2 || mes.length === 1)) return true
+        if (parseInt(mes) > 12) return true
+        if (anyo.length !== 4) return true
+
+        return false
     }
 
     return(
-        <View style={global.default}>
+        <ScrollView style={global.default}>
             <Text style={[global.title, {marginTop: 126, marginBottom: 46}]}>¡Háblanos de ti!</Text>
             <Text style={[global.description, {marginBottom: 36}]}>Para que el resto de personas puedan comunicarse</Text>
             <TextField
@@ -29,21 +95,21 @@ const RegistrarUsuario2Screen = ({navigation}) => {
                 focusColor = {colors.secondary}
                 marginBottom={variables.spaceBetweenElems}
                 returnKeyType = 'next'
-                onChangeText = {(value) => {}}
+                onChangeText = {(value) => {setNombre(value)}}
             />
             <TextField
                 title = 'Apellidos'
                 focusColor = {colors.secondary}
                 marginBottom={variables.spaceBetweenElems}
                 returnKeyType = 'next'
-                onChangeText = {(value) => {}}
+                onChangeText = {(value) => {setApellidos(value)}}
             />
             <TextField
                 title = 'Fecha de nacimiento'
                 focusColor = {colors.secondary}
                 marginBottom={128}
                 keyboardType = 'numeric'
-                onChangeText = {(value) => {}}
+                onChangeText = {(value) => {setFechaNacimiento(value)}}
             />
             <View style={{alignItems: 'flex-end'}}>
                 <ButtonImg 
@@ -56,7 +122,7 @@ const RegistrarUsuario2Screen = ({navigation}) => {
                     func={() => CheckFields()}
                 />
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

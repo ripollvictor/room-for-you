@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Pressable, Alert, Animated } from 'react-native'
+import { View, Text, Pressable, Alert, Animated, PanResponder, Dimensions } from 'react-native'
 import { Indicator } from '../../components/elements/Indicator'
 import { colors } from '../../styles/colors'
 import { global } from '../../styles/global'
@@ -18,6 +18,62 @@ const VerOfertasScreen = () => {
     const [currentColor, setCurrentColor] = useState(colors.secondary)
 
     const opacityAnim = useRef(new Animated.Value(0)).current
+    const rotationAnim = useRef(new Animated.Value(0)).current
+    const pan = useRef(new Animated.ValueXY()).current
+
+    const rotation = rotationAnim.interpolate({
+        inputRange: [-300, 300],
+        outputRange: ['-20deg', '20deg']
+    })
+    const opacity = opacityAnim.interpolate({
+        inputRange: [0, 300],
+        outputRange: [0, 0.5]
+    })
+
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove: (_, gesture) => {
+            if (gesture.dx < 0) { setCurrentColor(colors.primary) }
+                else { setCurrentColor(colors.secondary) }
+            pan.x.setValue(gesture.dx)
+            pan.y.setValue(0)
+            rotationAnim.setValue(gesture.dx)
+            opacityAnim.setValue(Math.abs(gesture.dx))
+        },
+        onPanResponderRelease: (_, gesture) => {
+
+            if (gesture.dx === 0 && gesture.dy === 0) {
+                // se ha clickado
+
+                if (gesture.x0 > Dimensions.get('screen').width / 2) { NextImg() }
+                else { PrevImg() }
+
+            } else if (gesture.dx > Dimensions.get('screen').width / 2) {
+                // derecha
+                
+                
+
+            } else if (Math.abs(gesture.dx) > Dimensions.get('screen').width / 2) {
+                // izquierda
+
+
+
+            } else {
+                Animated.spring(
+                    pan,
+                    {toValue: {x: 0, y: 0}, useNativeDriver: false}
+                ).start()
+                Animated.spring(
+                    rotationAnim,
+                    {toValue: 0, useNativeDriver: false}
+                ).start()
+                Animated.spring(
+                    opacityAnim,
+                    {toValue: 0, useNativeDriver: false}
+                ).start()
+            }
+        }
+    })
 
     useEffect(() => {
         updateOfertas()
@@ -61,17 +117,12 @@ const VerOfertasScreen = () => {
 
     const indicadores = GetIndicators()
 
-
-
-
-
-
     const NotFav = () => {
 
     }
 
     const AddFav = () => {
-
+        console.log(Object.keys(pan.y))
     }
 
     return(
@@ -86,8 +137,13 @@ const VerOfertasScreen = () => {
                 {indicadores}
             </View>
 
-            <OfertaContainer 
-                color={currentColor} alpha={opacityAnim}
+            <OfertaContainer
+                direccion={ofertas[indexOfertaActual].direccion}
+                precio={ofertas[indexOfertaActual].precio}
+                color={currentColor} alpha={opacity} rotation={rotation}
+                imagenURL={ofertas[indexOfertaActual].imagenes[indexFotoActual]}
+                panController={panResponder.panHandlers}
+                panLayout={pan.getLayout()}
             />
 
             <View style={{
@@ -98,7 +154,8 @@ const VerOfertasScreen = () => {
                 left: 0,
                 right: 0,
                 paddingHorizontal: variables.spaceHorizontal,
-                zIndex: 10
+                zIndex: 10,
+                
             }}>
                 <ButtonImgShadow
                     imgSource={require('../../../assets/ofertas/triste.png')} 
@@ -107,7 +164,7 @@ const VerOfertasScreen = () => {
                     widthImg={42}
                     heightImg={42}
                     backgroundColor={colors.primary}
-                    func={() => {NotFav()}}
+                    func={() => {PrevImg()}}
                     marginRight={variables.spaceBetweenElems}
                 />
                 <ButtonImgShadow

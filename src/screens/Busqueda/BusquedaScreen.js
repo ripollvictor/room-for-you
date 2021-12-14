@@ -3,7 +3,9 @@ import { View } from 'react-native'
 
 const BusquedaScreen = () => {
     return(
-        <View></View>
+        <View>
+            
+        </View>
     )
 }
 

@@ -5,16 +5,22 @@ import { colors } from '../styles/colors'
 import { global } from '../styles/global'
 import { variables } from '../styles/variables'
 import { IniciarConGoogle } from '../database/helper'
+import { getAuth } from 'firebase/auth'
 
 const InicioScreen = ({navigation}) => {
 
     const CheckGoogleLogIn = async () => {
         try {
-            await IniciarConGoogle()
-            navigation.navigate('Main')
+            const res = await IniciarConGoogle()
+            if ( res === 2 )
+                navigation.navigate('Main')
+            else if ( res === 1 ) {
+                const auth = getAuth()
+                navigation.navigate('Registrar 2', { email: auth.currentUser.email, fotoPerfil: auth.currentUser.photoURL })
+            }
         }
-        catch {
-            console.log('error')
+        catch (e) {
+            console.error(e)
         }
     }
 
