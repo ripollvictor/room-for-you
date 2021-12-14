@@ -7,57 +7,38 @@ import Input from "../../components/Input/Input"
 import { db, auth } from '../../database/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { GiftedChat } from 'react-native-gifted-chat';
-import {addDoc, onSnapshot, collection, orderBy, query } from "@firebase/firestore";
+import {addDoc, onSnapshot, collection, orderBy, query, where } from "@firebase/firestore";
 
 
 
 const ChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
 
-  const uploadMessages = async (id,text,created,user) => {
-    await addDoc(collection(db, 'Mensajes'), {
-      _id: id,
-      text: text,
-      createdAt: created,
-      user: user
-    })
-    console.log(id);
-  }
-
-  const getMessages = async () => {
-    const q = query(collection(db, "Mensajes"), orderBy('createdAt', 'desc'))
-    const unsuscribe = onSnapshot(q, (snapshot) => 
-    setMessages(
-      snapshot.docs.map(doc => ({
-        _id: doc.data()._id,
-        text: doc.data().text,
-        createdAt: doc.data().createdAt.toDate(),
-        user: doc.data().user
-      }))
-    ));
-  }
+  
 
   useLayoutEffect(() => {
-  const q = query(collection(db, "Mensajes"), orderBy('createdAt', 'desc'))
+  const q = query(collection(db, "Mensajes"), where("user", "==", "ripollaltea@gmail.com"), where("receiver", "==", "diego.ruiz.2000@hotmail.com"), orderBy('createdAt', 'desc'))
   const unsuscribe = onSnapshot(q, (snapshot) => 
   setMessages(
     snapshot.docs.map(doc => ({
       _id: doc.data()._id,
       text: doc.data().text,
       createdAt: doc.data().createdAt.toDate(),
-      user: doc.data().user
+      user: doc.data().user,
+      receiver: doc.data().receiver
     }))
   ));
   }, [])
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-    const { _id, createdAt, text, user } = messages[0];    
+    const { _id, createdAt, text, user} = messages[0];    
     addDoc(collection(db, 'Mensajes'), {
       _id,
       createdAt,
       text,
-      user
+      user: "ripollaltea@gmail.com",
+      receiver: "diego.ruiz.2000@hotmail.com"
     });  
   }, [])
 
@@ -68,6 +49,7 @@ const ChatScreen = ({ navigation }) => {
       user={{
         _id: auth?.currentUser.email,
       }}
+      
     />
   )
 }
