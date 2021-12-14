@@ -19,7 +19,8 @@ import {
     where,
     getDocs,
     getDoc,
-    setDoc
+    setDoc,
+    addDoc
 } from 'firebase/firestore/lite'
 
 import firebase from './conection'
@@ -244,5 +245,30 @@ export async function aplicarFiltros(latCentro, longCentro, radio,precioMax) {
     const promise2 = filtroPrecio(res,precioMax)
     const res2 = await promise2
     return res2 
+
+}
+
+/**
+ * 
+ * @param {OfertaDB} oferta 
+ */
+export async function crearSolicitud(oferta){
+    const p_OfertaRef = doc(db, 'Oferta', oferta.id)
+    const r_Oferta = await p_OfertaRef
+
+    const email = GetEmailFromCurrentUser()
+
+    const p_UserId = GetUserIdFromEmail(email)
+    const r_UserId = await p_UserId
+
+    const p_UserRef = doc(db, 'Usuario', r_UserId)
+    const r_UserRef = await p_UserRef
+
+    const docRef = await addDoc(collection(db, 'Solicitud'),{
+        Estado:0,
+        Fecha: new Date(),
+        id_user: r_UserRef,
+        id_oferta: r_Oferta 
+    })
 
 }
