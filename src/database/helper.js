@@ -22,14 +22,13 @@ import {
     getDoc,
     setDoc,
     addDoc,
+    refEqual,
 } from 'firebase/firestore'
 
 import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
 import { OfertaDB } from "./OfertaDB";
 import { UsuarioDB } from "./UsuarioDB"
-
-const db = firebase.db
 
 const db = firebase.db;
 export async function subirArchivo(uri) {
@@ -279,23 +278,32 @@ export const GetEmailOfertador = async ofertadorRef => {
 
 
 export const GetChatsUser = async () => {
-    const chats= [];
+    let usuariosRef = [];
     //Coger las solicitudoes donde eres el Solicitante
 
     const email = GetEmailFromCurrentUser()
 
     const userRef = await GetUserRefByEmail(email);
+    
 
-    const solicitantes = await GetDocsFrom("Chats", "Solicitante", userRef);
+    let Solicitante = await getDocs(query(collection(db, "Chats"), where("Solicitante", "==", userRef)));
+    Solicitante.forEach((doc) => {
+        usuariosRef.push(doc.data()['Ofertador'])
+    });
+    let Ofertador = await getDocs(query(collection(db, "Chats"), where("Ofertador", "==", userRef)));
+    Ofertador.forEach((doc) => {
+        usuariosRef.push(doc.data()['Solicitante'])
+    });
 
-    chats.push(solicitantes.docs);
-    //Coger la solicitudes donde eres el Ofertador
-    const ofertadores = await GetDocsFrom("Chats", "Ofertador", userRef);
+    let usuarios = []
 
-    chats.push(ofertadores.docs);
+    for (let ref of usuariosRef) {
+        let datos = await getDoc(ref)
+        usuarios.push(datos.data());
+    }
 
 
-    return chats;
+    return usuarios;
 }
 
 const GetUserRefByEmail = async email => {

@@ -1,19 +1,16 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useState } from 'react'
+import { View, SectionList, FlatList, Button } from 'react-native'
 import { GetChatsUser, GetEmailFromCurrentUser } from '../../database/helper'
 
 
 const ListaContactosScreen = ({ navigation }) => {
 
+    const [UserChat, setUserChat] = useState([]);
+
     GetChatsUser().then(data => {
-        console.log(data[0].id);
+        setUserChat[data];
     });
 
-
-
-    return(
-        <View></View>
-    )
 }
 
 export default ListaContactosScreen

@@ -5,7 +5,7 @@ import { CerrarSesion } from '../database/helper'
 const VerPerfilScreen = ({navigation}) => {
 
     const Salir = async () => {
-        navigation.navigate('')
+        navigation.navigate('ListaContactos')
     }
 
     return(
