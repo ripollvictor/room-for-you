@@ -1,5 +1,6 @@
 import React from 'react'
 import { Pressable, Text, Image, View, Animated } from 'react-native'
+import { OfertaDB } from '../../database/OfertaDB'
 import { colors } from '../../styles/colors'
 import { btnImg, defaultButton } from '../../styles/elements/buttonStyles'
 import { global } from '../../styles/global'
@@ -26,7 +27,18 @@ const InfoContainer = ({direccion, precio, funcInfo, moreStyles}) => {
     )
 }
 
-const OfertaContainer = ({direccion, precio, funcInfo, moreStyles, color, alpha, rotation, imagenURL, panController, panLayout}) => {
+const OfertaContainer = ({funcInfo, moreStyles, color, alpha, rotation, panController, panLayout, oferta, indexFoto}) => {
+
+    let direccion = '', precio = '', imagenURL = require('../../../assets/icons/ofertas.png')
+
+    if (oferta !== undefined) {
+        direccion = oferta.direccion
+        precio = oferta.precio
+        imagenURL = {'uri': oferta.imagenes[indexFoto]}
+    }
+    if (oferta === undefined) {
+        return(<Text>No hay ofertas</Text>)
+    }
 
     return(
         <Animated.View
@@ -58,7 +70,7 @@ const OfertaContainer = ({direccion, precio, funcInfo, moreStyles, color, alpha,
                     zIndex: 3
                 }} />
 
-                <Image source={{uri: imagenURL}} style={{
+                <Image source={imagenURL} style={{
                     resizeMode: 'cover',
                     position: 'absolute',
                     top: 0,

@@ -63,7 +63,7 @@ const RegistrarUsuario1Screen = ({navigation}) => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [9, 16],
+            aspect: [4, 4],
             quality: 1,
             base64: true,
         });

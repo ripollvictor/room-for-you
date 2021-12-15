@@ -31,7 +31,6 @@ import { UsuarioDB } from "./UsuarioDB"
 
 const db = firebase.db
 
-const db = firebase.db;
 export async function subirArchivo(uri) {
 
     const blob = await new Promise((resolve, reject) => {

@@ -106,59 +106,66 @@ const VerOfertasScreen = () => {
     }, [])
 
     useEffect(() => {
-        // comprueba si hay un cambio que no sea la primera ejecución
-        if (ofertas[0].id !== undefined) {
+        // comprueba si hay un cambio que no sea la primera ejecución y solo entrará en el if cuando la base de datos devuelva las ofertas
+        if (ofertas[0].id !== undefined && ofertas.length > 1) {
 
-            
+            // la primera vez obviamente tiene que guardar la longitud del array de imagenes de la primera oferta
+            // cuando se cambie a la siguiente oferta hay que cambiar otra vez este estado
+            setImgsLength(ofertas[0].imagenes.length)
 
-
+            // ahora hay que rellenar los contenedores de ofertas
+            setOferta1(ofertas[0])
+            setOferta2(ofertas[1])
+            setOferta3(ofertas[2])
 
         }
     }, [ofertas])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     useEffect(() => {
-        console.log(ofertas.length)
+        
+    }, [indexOfertaActual])
 
 
-        let index1 = indexOfertaActual
-        let index2 = indexOfertaActual + 1
-        let index3 = indexOfertaActual + 2
 
-        if (index2 === ofertas.length) { index2 = 0 }
-        if (index3 === ofertas.length) { index3 = 0 }
-        if (index3 === ofertas.length + 1) { index3 = 1 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // useEffect(() => {
+    //     console.log(ofertas.length)
+
+
+    //     let index1 = indexOfertaActual
+    //     let index2 = indexOfertaActual + 1
+    //     let index3 = indexOfertaActual + 2
+
+    //     if (index2 === ofertas.length) { index2 = 0 }
+    //     if (index3 === ofertas.length) { index3 = 0 }
+    //     if (index3 === ofertas.length + 1) { index3 = 1 }
 
         
         
         
 
         
-        if (ofertas[indexOfertaActual] !== undefined) setOferta1(ofertas[index1])
-        if (ofertas[indexOfertaActual + 1] !== undefined)  setOferta2(ofertas[index2])
-        if (ofertas[indexOfertaActual + 2] !== undefined)  setOferta3(ofertas[index3])
+    //     if (ofertas[indexOfertaActual] !== undefined) setOferta1(ofertas[index1])
+    //     if (ofertas[indexOfertaActual + 1] !== undefined)  setOferta2(ofertas[index2])
+    //     if (ofertas[indexOfertaActual + 2] !== undefined)  setOferta3(ofertas[index3])
 
-    }, [ofertas])
+    // }, [ofertas])
 
     // Cuando se actualiza la oferta que se ve hay que cambiar siempre el indice de la foto actual a 0
     useEffect(() => {
@@ -344,10 +351,9 @@ const VerOfertasScreen = () => {
                 zIndex: indexZ1
             }}>
                 <OfertaContainer
-                    direccion={oferta1.direccion}
-                    precio={oferta1.precio}
+                    oferta={oferta1}
                     color={currentColor} alpha={opacityController1} rotation={rotationController1}
-                    imagenURL={oferta1.imagenes[indexFotoActual]}
+                    indexFoto={indexFotoActual}
                     panController={panController1.panHandlers}
                     panLayout={pan1.getLayout()}
                 />
@@ -363,10 +369,9 @@ const VerOfertasScreen = () => {
                 zIndex: indexZ2
             }}>
                 <OfertaContainer
-                    direccion={oferta2.direccion}
-                    precio={oferta2.precio}
+                    oferta={oferta2}
                     color={currentColor} alpha={opacityController2} rotation={rotationController2}
-                    imagenURL={oferta2.imagenes[indexFotoActual]}
+                    indexFoto={indexFotoActual}
                     panController={panController2.panHandlers}
                     panLayout={pan2.getLayout()}
                 />
@@ -382,10 +387,9 @@ const VerOfertasScreen = () => {
                 zIndex: indexZ3
             }}>
                 <OfertaContainer
-                    direccion={oferta3.direccion}
-                    precio={oferta3.precio}
+                    oferta={oferta3}
                     color={currentColor} alpha={opacityController3} rotation={rotationController3}
-                    imagenURL={oferta3.imagenes[indexFotoActual]}
+                    indexFoto={indexFotoActual}
                     panController={panController3.panHandlers}
                     panLayout={pan3.getLayout()}
                 />
