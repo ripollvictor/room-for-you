@@ -10,6 +10,7 @@ import ListaMisOfertasScreen from   '../screens/Ofertas/ListaMisOfertasScreen'
 import RegistrarOfertaScreen from   '../screens/Ofertas/RegistrarOfertaScreen'
 import VerOfertaScreen from         '../screens/Ofertas/VerOfertaScreen'
 import VerSolicitantesScreen from   '../screens/Favoritos/VerSolicitantesScreen'
+import ListaContactosScreen from '../screens/Mensajeria/ListaContactosScreen'
 
 
 const Stack = createStackNavigator()
@@ -25,7 +26,7 @@ const OfertasNavigator = () => {
 const BusquedaNavigator = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-            <Stack.Screen name='Busqueda' component={ BusquedaScreen } />
+            <Stack.Screen name='ListaContactos' component={ ListaContactosScreen } />
         </Stack.Navigator>
     )
 }

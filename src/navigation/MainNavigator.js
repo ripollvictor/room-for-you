@@ -18,6 +18,7 @@ import RegistrarOferta2Screen from '../screens/Ofertas/RegistrarOferta2Screen'
 import RegistrarOferta3Screen from '../screens/Ofertas/RegistrarOferta3Screen'
 
 import ChatScreen from '../screens/Mensajeria/ChatScreen'
+import ListaContactosScreen from '../screens/Mensajeria/ListaContactosScreen'
 
 import { BottomTabNavigator } from './TabNavigator'
 import { variables } from '../styles/variables'
@@ -51,6 +52,7 @@ const MainNavigator = () => {
             <Stack.Screen name='Oferta 3' component={ RegistrarOferta3Screen } />
 
             <Stack.Screen name='Chat' component={ ChatScreen } />
+            <Stack.Screen name='ListaContactos' component={ ListaContactosScreen } />
 
             <Stack.Screen options={{ headerShown: false }} name='Main' component={ BottomTabNavigator } />
         </Stack.Navigator>
