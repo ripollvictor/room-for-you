@@ -130,7 +130,6 @@ const RegistrarViviendaScreen = () => {
             const urlImagenes = [];
             for (const img of imagenesSeleccionadas) {
                 const urlImg = await subirArchivo(img)
-                console.log(urlImg)
                 urlImagenes.push(urlImg)
             }
             console.log("Estas son las img"+urlImagenes);

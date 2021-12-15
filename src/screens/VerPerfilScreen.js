@@ -5,9 +5,7 @@ import { CerrarSesion } from '../database/helper'
 const VerPerfilScreen = ({navigation}) => {
 
     const Salir = async () => {
-        await CerrarSesion()
-        console.log(navigation.removeListener)
-        navigation.navigate('Inicio')
+        navigation.navigate('')
     }
 
     return(
