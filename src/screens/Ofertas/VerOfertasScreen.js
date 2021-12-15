@@ -11,6 +11,8 @@ import { OfertaContainer } from '../../components/elements/OfertaContainer'
 
 const VerOfertasScreen = () => {
 
+    const [imgsLength, setImgsLength] = useState(0)
+
     const [indexFotoActual, setIndexFotoActual] = useState(0)
     const [indexOfertaActual, setIndexOfertaActual] = useState(0)
     const [ofertas, setOfertas] = useState([new OfertaDB()])
@@ -104,18 +106,128 @@ const VerOfertasScreen = () => {
     }, [])
 
     useEffect(() => {
-        if (ofertas[indexOfertaActual] !== undefined) setOferta1(ofertas[indexOfertaActual])
-            else setOferta1(new OfertaDB())
-        if (ofertas[indexOfertaActual + 1] !== undefined)  setOferta2(ofertas[indexOfertaActual + 1])
-            else setOferta2(new OfertaDB())
-        if (ofertas[indexOfertaActual + 2] !== undefined)  setOferta3(ofertas[indexOfertaActual + 2])
-            else setOferta3(new OfertaDB())
+        // comprueba si hay un cambio que no sea la primera ejecución
+        if (ofertas[0].id !== undefined) {
+
+            
+
+
+
+        }
+    }, [ofertas])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    useEffect(() => {
+        console.log(ofertas.length)
+
+
+        let index1 = indexOfertaActual
+        let index2 = indexOfertaActual + 1
+        let index3 = indexOfertaActual + 2
+
+        if (index2 === ofertas.length) { index2 = 0 }
+        if (index3 === ofertas.length) { index3 = 0 }
+        if (index3 === ofertas.length + 1) { index3 = 1 }
+
+        
+        
+        
+
+        
+        if (ofertas[indexOfertaActual] !== undefined) setOferta1(ofertas[index1])
+        if (ofertas[indexOfertaActual + 1] !== undefined)  setOferta2(ofertas[index2])
+        if (ofertas[indexOfertaActual + 2] !== undefined)  setOferta3(ofertas[index3])
+
     }, [ofertas])
 
     // Cuando se actualiza la oferta que se ve hay que cambiar siempre el indice de la foto actual a 0
     useEffect(() => {
         setIndexFotoActual(0)
+        if (ofertas[indexOfertaActual] !== undefined) { setImgsLength(ofertas[indexOfertaActual].imagenes.length) }
+            else { setImgsLength(0) }
+
+        if (indexOfertaActual === ofertas.length && ofertas.length > 0) {
+            setIndexOfertaActual(0)
+        }
+
     }, [indexOfertaActual])
+
+    useEffect(() => {
+        if (pan === pan1) {
+            setPanController1(panResponder)
+            setPanController2({})
+            setPanController3({})
+
+            setOpacityController1(opacity)
+            setOpacityController2(0)
+            setOpacityController3(0)
+
+            setRotationController1(rotation)
+            setRotationController2('0deg')
+            setRotationController3('0deg')
+
+            setPan2({getLayout: () => {}})
+            setPan3({getLayout: () => {}})
+        }
+    }, [pan1])
+
+    useEffect(() => {
+        if (pan === pan2) {
+            setPanController1({})
+            setPanController2(panResponder)
+            setPanController3({})
+
+            setOpacityController1(0)
+            setOpacityController2(opacity)
+            setOpacityController3(0)
+
+            setRotationController1('0deg')
+            setRotationController2(rotation)
+            setRotationController3('0deg')
+
+            setPan1({getLayout: () => {}})
+            setPan3({getLayout: () => {}})
+        }
+    }, [pan2])
+
+    useEffect(() => {
+        if (pan === pan3) {
+            setPanController1({})
+            setPanController2({})
+            setPanController3(panResponder)
+
+            setOpacityController1(0)
+            setOpacityController2(0)
+            setOpacityController3(opacity)
+
+            setRotationController1('0deg')
+            setRotationController2('0deg')
+            setRotationController3(rotation)
+
+            setPan1({getLayout: () => {}})
+            setPan2({getLayout: () => {}})
+        }
+    }, [pan3])
 
     const updateOfertas = async () => {
         const res = await GetOfertas()
@@ -126,23 +238,26 @@ const VerOfertasScreen = () => {
         
         let res = []
 
-        ofertas[indexOfertaActual].imagenes.forEach((imagen, index) => {
+        if (imgsLength !== 0) {
+            ofertas[indexOfertaActual].imagenes.forEach((imagen, index) => {
 
-            let marginR = 0
-
-            if (index !== ofertas[indexOfertaActual].imagenes.length - 1) marginR = 10
-
-            if (indexFotoActual === index)
-                res.push(<Indicator actual key={index} marginRight={marginR} />)
-            else
-                res.push(<Indicator key={index} marginRight={marginR} />)
-        })
+                let marginR = 0
+    
+                if (index !== ofertas[indexOfertaActual].imagenes.length - 1) marginR = 10
+    
+                if (indexFotoActual === index)
+                    res.push(<Indicator actual key={index} marginRight={marginR} />)
+                else
+                    res.push(<Indicator key={index} marginRight={marginR} />)
+            })
+        }
+        
 
         return res
     }
 
-    const NextImg = () => { if (indexFotoActual !== ofertas[indexOfertaActual].imagenes.length - 1) setIndexFotoActual(indexFotoActual + 1) }
-    const PrevImg = () => { if (indexFotoActual !== 0) setIndexFotoActual(indexFotoActual - 1) }
+    const NextImg = () => { if (indexFotoActual < imgsLength - 1) setIndexFotoActual(indexFotoActual + 1) }
+    const PrevImg = () => { if (indexFotoActual > 0) setIndexFotoActual(indexFotoActual - 1) }
 
     const indicadores = GetIndicators()
 
@@ -159,6 +274,9 @@ const VerOfertasScreen = () => {
         })
 
         // falta cambiar rotation, opacity, pan y pancontroller para el siguiente oferta container
+        if (pan === pan1) { setPan2(pan) }
+        else if (pan === pan2) { setPan3(pan) }
+        else if (pan === pan3) { setPan1(pan) }
     }
 
     const NotFav = () => {
