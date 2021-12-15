@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, ScrollView, Alert } from 'react-native'
 import { global } from '../../styles/global'
 import { variables } from '../../styles/variables'
 import { ButtonImgShadow, ButtonImg } from '../../components/elements/Button'
 import { TextField, PasswordField } from '../../components/elements/Input'
 import { colors } from '../../styles/colors'
+import * as ImagePicker from 'expo-image-picker'
+
 
 const RegistrarUsuario1Screen = ({navigation}) => {
+
+    const [imgSource, setImgSource] = useState(require('../../../assets/registrar/suma.png'))
+
     const   [email, setEmail] = useState(''),
             [telefono, setTelefono] = useState(''),
             [password, setPassword] = useState(''),
@@ -22,6 +27,7 @@ const RegistrarUsuario1Screen = ({navigation}) => {
         const errores = []
 
         if (email === '') errores.push('El email está vacio')
+        if (telefono === '') errores.push('El teléfono está vacio')
         if (password === '') errores.push('La contraseña está vacia')
         if (perfilSource === '') errores.push('No hay foto de perfil')
         if (confirm !== password) errores.push('No coincide con la contraseña introducida')
@@ -39,6 +45,44 @@ const RegistrarUsuario1Screen = ({navigation}) => {
                 onPress: () => {}
             }])
         }
+    }
+
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('Debes dar acceso a la galería para poder subir imágenes');
+                }
+            }
+        })();
+    }, []);
+
+    const pickImage = async () => {
+        const respuesta = { status: false, image: null, base64: null }
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [9, 16],
+            quality: 1,
+            base64: true,
+        });
+
+        if (result.cancelled) { return respuesta; }
+        respuesta.status = true;
+        respuesta.image = result.uri;
+        respuesta.base64 = result.base64;
+        return respuesta;
+    };
+
+    async function CargarImagen() {
+            const respuesta = await pickImage()
+            if (!respuesta.status) {
+                alert('No has seleccionado ninguna Imagen')
+                return
+            }
+            setImgSource({uri:respuesta.image})
+            setPerfilSource(respuesta.image)
     }
 
     /**
@@ -63,13 +107,13 @@ const RegistrarUsuario1Screen = ({navigation}) => {
                 }}
             >
                 <ButtonImgShadow
-                    imgSource={require('../../../assets/registrar/suma.png')} 
+                    imgSource={imgSource} 
                     widthContianer={93}
                     heightContianer={93}
                     widthImg={25}
                     heightImg={25}
                     backgroundColor={colors.gray}
-                    func={() => {console.log('hoola')}}
+                    func={CargarImagen}
                 />
             </View>
             <Text style={[global.title, {marginBottom: 54}]}>

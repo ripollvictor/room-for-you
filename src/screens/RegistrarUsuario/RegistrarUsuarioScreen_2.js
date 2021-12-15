@@ -7,6 +7,8 @@ import { TextField, PasswordField } from '../../components/elements/Input'
 import { colors } from '../../styles/colors'
 import { UsuarioDB } from '../../database/UsuarioDB'
 import { RegistrarUsuarioDB } from '../../database/helper'
+import { subirArchivo } from "../../database/helper";
+
 
 const RegistrarUsuario2Screen = ({route, navigation}) => {
 
@@ -29,6 +31,15 @@ const RegistrarUsuario2Screen = ({route, navigation}) => {
         if (checkFechaNacimiento()) errores.push('La fecha no sigue el estandar DD-MM-AAAA')
 
         if (errores.length === 0) {
+            let urlImgFirebase = '';
+
+            // para saber si es un usuario sin registrar de google es que no tiene ni contraseña ni telefono
+            if(telefono === '') {
+                urlImgFirebase = fotoPerfil;
+            } else {
+                urlImgFirebase = await subirArchivo(fotoPerfil)
+            }
+
             // registrar
 
             const diaMesAnyo = fechaNacimiento.split('-')
@@ -37,7 +48,7 @@ const RegistrarUsuario2Screen = ({route, navigation}) => {
             const anyo = diaMesAnyo[2]
 
             const fechaNacDateObj = new Date(anyo, mes, dia)
-            const newUser = new UsuarioDB(nombre, apellidos, email, fechaNacDateObj, fotoPerfil, telefono)
+            const newUser = new UsuarioDB(nombre, apellidos, email, fechaNacDateObj, urlImgFirebase, telefono)
 
             await RegistrarUsuarioDB(newUser)
 
@@ -108,7 +119,6 @@ const RegistrarUsuario2Screen = ({route, navigation}) => {
                 title = 'Fecha de nacimiento'
                 focusColor = {colors.secondary}
                 marginBottom={128}
-                keyboardType = 'numeric'
                 onChangeText = {(value) => {setFechaNacimiento(value)}}
             />
             <View style={{alignItems: 'flex-end'}}>
