@@ -50,6 +50,47 @@ const ButtonImg = ({imgSource, backgroundColor, widthContianer, heightContianer,
     )
 }
 
+const ViewImg = ({imgSource, backgroundColor, widthContianer, heightContianer, widthImg, heightImg, marginRight}) => {
+    const stylesContainer = [btnImg.container, {width: widthContianer, height: heightContianer}, {marginRight: marginRight ? marginRight : 0}]
+    const stylesImg = [{width: widthImg, height: heightImg}]
+
+    if (backgroundColor) { stylesContainer.push({backgroundColor: backgroundColor}) }
+
+    return(
+        <View
+            style={stylesContainer}
+        >
+            <Image source={imgSource} style={stylesImg} />
+        </View>
+    )
+}
+
+const ViewImgShadow = (props) => {
+    const button = ViewImg(props)
+    const styleContainer = {
+        position: 'relative',
+    }
+    const styleShadow = {
+        width: props.widthContianer,
+        height: props.heightContianer,
+        backgroundColor: colors.black,
+        top: -5,
+        left: -7,
+        position: 'absolute',
+        zIndex: -1,
+        borderRadius: variables.borderRadius
+    }
+
+    return(
+        <View
+            style={styleContainer}
+        >
+            {button}
+            <View style={styleShadow} />
+        </View>
+    )
+}
+
 const ButtonImgShadow = (props) => {
     const button = ButtonImg(props)
     const styleContainer = {
@@ -100,4 +141,4 @@ const ButtonShadow = ({backgroundColor, widthContianer, heightContianer, func, t
     )
 }
 
-export { DefaultButton, ButtonImg, ButtonImgShadow }
+export { DefaultButton, ButtonImg, ButtonImgShadow, ViewImgShadow }

@@ -24,10 +24,12 @@ import {
     addDoc,
 } from 'firebase/firestore'
 
-import { db } from './conection'
+import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
 import { OfertaDB } from "./OfertaDB";
-import { UsuarioDB } from "./UsuarioDB";
+import { UsuarioDB } from "./UsuarioDB"
+
+const db = firebase.db
 
 export async function subirArchivo(uri) {
 
