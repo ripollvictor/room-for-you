@@ -16,29 +16,6 @@ const TopTab = createMaterialTopTabNavigator()
 
 const BottomTabNavigator = ({navigation}) => {
 
-    useEffect(() => {
-        navigation.addListener('beforeRemove', e => {
-            e.preventDefault()
-
-            Alert.alert(
-                '¿Quieres salir de la aplicación?', null,
-                [
-                    {
-                        text: 'No',
-                        style: 'cancel',
-                        onPress: () => {}
-                    },
-                    {
-                        text: 'Sí',
-                        style: 'destructive',
-                        onPress: () => { BackHandler.exitApp() }
-                    }
-                ]
-            )
-        })
-    }, [navigation])
-
-
     return(
         <Tab.Navigator screenOptions={{
             headerShown: false,

@@ -540,7 +540,7 @@ const VerOfertasScreen = () => {
                     widthImg={42}
                     heightImg={42}
                     backgroundColor={colors.white}
-                    func={() => {console.log(panController2)}}
+                    func={() => {}}
                     marginRight={variables.spaceBetweenElems}
                 />
                 <ButtonImgShadow

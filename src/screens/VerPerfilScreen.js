@@ -39,6 +39,15 @@ const VerPerfilScreen = ({navigation}) => {
                     backgroundColor={colors.white}
                     textColor = {colors.black}
                     func = {() => { navigation.navigate('ListaContactos') }}
+                    marginBottom={variables.spaceBetweenElems}
+                />
+                <DefaultButton
+                    title = 'Cerrar sesión'
+                    center='true'
+                    bold={true}
+                    backgroundColor={colors.black}
+                    textColor={colors.white}
+                    func={()=> {CerrarSesion().then(() => navigation.navigate('Inicio'))}}
                 />
             </View>
         </View>
