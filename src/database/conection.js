@@ -1,6 +1,6 @@
 //import firebase from 'firebase';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 
 
 // Your web app's Firebase configuration
@@ -18,6 +18,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = initializeFirestore(app, {
+    experimentalForceLongPolling: true,
+});
 
 export default { db }

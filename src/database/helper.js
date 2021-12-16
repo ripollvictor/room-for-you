@@ -1,7 +1,7 @@
 import {
     getStorage,
     ref,
-    uploadString,
+    uploadBytes,
     getDownloadURL,
 } from "firebase/storage";
 
@@ -10,6 +10,8 @@ import {
     signOut,
     GoogleAuthProvider,
     signInWithCredential,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword 
 } from "firebase/auth";
 
 import {
@@ -19,51 +21,59 @@ import {
     where,
     getDocs,
     getDoc,
-    setDoc
-} from 'firebase/firestore/lite'
+    setDoc,
+    addDoc,
+    refEqual,
+} from 'firebase/firestore'
 
 import firebase from './conection'
 import * as Google from 'expo-google-app-auth'
+import { OfertaDB } from "./OfertaDB";
+import { UsuarioDB } from "./UsuarioDB"
 
 const db = firebase.db
 
 export async function subirArchivo(uri) {
 
     const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", uri, true);
-      xhr.send(null);
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+            console.log(e);
+            reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
     });
-  
+
     const storage = getStorage();
     const nombreImagen = Math.round(Math.random() * 100000000000);
     const imageRef = ref(storage, "images/" + nombreImagen);
     const result = await uploadBytes(imageRef, blob);
     // We're done with the blob, close and release it
     blob.close();
-  
+
     return await getDownloadURL(imageRef);
 }
 
-export const CerrarSesion = () => {
+export const InicarSesion = async (email, password) => {
+    const auth = getAuth()
+    return signInWithEmailAndPassword(auth, email, password)
+}
+
+export const CerrarSesion = async () => {
     const auth = getAuth();
-    signOut(auth)
-        .then(() => {
-            // Hace algo cuando se cierre sesión
-        })
-        .catch((error) => {
-            // Cuando ha ocurrido algun error
-        });
+    return signOut(auth)
 };
 
+
+/**
+ * 
+ * @returns {integer} 0 - si el usuario ha cancelado la operación de iniciar sesión con google, 1 - si no está registrado en la base de datos, 2 - si está registrado
+ */
 export const IniciarConGoogle = async () => {
 
     const { type, accessToken, idToken } = await Google.logInAsync({
@@ -73,14 +83,22 @@ export const IniciarConGoogle = async () => {
     })
 
     if (type === 'success') {
-        
+
+        // Comprobar si el email ya está en la base de datos y si no lo está registrarlo en la base de datos
+
         const auth = getAuth()
         const credentials = GoogleAuthProvider.credential(idToken, accessToken);
 
-        signInWithCredential(auth, credentials)
+        await signInWithCredential(auth, credentials)
 
+        const res = await GetUserIdFromEmail(auth.currentUser.email)
+        if (res === false) return 1
+
+        return 2
+    } else {
+        return 0
     }
-};
+}
 
 const GetDocsFrom = (collectionName, fieldName, value) => {
     return getDocs(
@@ -97,9 +115,16 @@ export const GetEmailFromCurrentUser = () => {
     if (user.email) return user.email
 }
 
+/**
+ * Obtener el ID de un usario dado su email
+ * @param {string} email 
+ * @returns {bool|integer} Puede devolver falso cuando el usuario no está registrado en la base de datos y si lo está devolverá la ID del usuario
+ */
 export const GetUserIdFromEmail = async email => {
     const promise = GetDocsFrom('Usuario', 'Email', email)
     const res = await promise
+
+    if (res.docs.length === 0) return false
 
     // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
     // el indice 0 y luego obtener la id con su propiedad id.
@@ -136,7 +161,7 @@ export const GetSolicitudes = async () => {
     return r_Solicitudes.docs
 }
 
-export const GetFavoritos = async () => {
+const GetFavoritos = async () => {
     const email = GetEmailFromCurrentUser()
 
     const p_UserId = GetUserIdFromEmail(email)
@@ -160,7 +185,7 @@ export const GetOfertas = async () => {
 
     res.forEach(doc => {
         auxOfertaData = doc.data()
-        ofertas.push(new Oferta(
+        ofertas.push(new OfertaDB(
             doc.id,
             auxOfertaData['Ofertador'],
             auxOfertaData['Direccion'],
@@ -172,6 +197,43 @@ export const GetOfertas = async () => {
     return ofertas
 }
 
+/**
+ * Devuelve las ofertas que el usuario logeado le ha gustado en forma de objeto con su id, dirección, imagenes (array de string) y precio
+ * @returns Un array de objetos OfertaDB
+ */
+export const GetOfertasFavoritas = async () => {
+
+    const solicitudesDoc = await GetFavoritos()
+    const ofertasRef = []
+    const ofertas = []
+
+    solicitudesDoc.forEach(doc => {
+        ofertasRef.push(doc.data()['id_vivienda'])
+    })
+
+    if (ofertasRef.length !== 0) {
+
+        for (const ref of ofertasRef) {
+            const doc = await getDoc(ref)
+            const docAuxData = await doc.data()
+
+            ofertas.push(new OfertaDB(
+                doc.id,
+                docAuxData['Ofertador'],
+                docAuxData['Direccion'],
+                docAuxData['Precio'],
+                docAuxData['Imagenes']
+            ))
+        }
+    }
+
+    return ofertas
+}
+
+export const GetOfertaById = async (ofertaId) => {
+
+}
+
 export const GetUserDataFromEmail = async email => {
     const promise = GetDocsFrom('Usuario', 'Email', email)
     const res = await promise
@@ -179,11 +241,11 @@ export const GetUserDataFromEmail = async email => {
     // res es un objeto que contiene un array con los usuarios con el mismo email (docs). Como solo debe haber uno el resultado tiene que estar en
     // el indice 0 y luego obtener la id con su propiedad id.
     // console.log(res.docs[0].id)
-       
+
     return res.docs[0]
 }
 
-export const ModificarDatosUsuaio = async user =>{
+export const ModificarDatosUsuaio = async user => {
     const data = {
         Apellidos: user.apellidos,
         Contrasena: user.contrasena,
@@ -194,6 +256,101 @@ export const ModificarDatosUsuaio = async user =>{
         tags: user.tags
     };
     console.log(data);
-    const promise =  setDoc(doc(db,"Usuario",user.id_user),data);
+    const promise = setDoc(doc(db, "Usuario", user.id_user), data);
     const res = await promise;
 }
+
+/**
+ * Registrar un usuario en la base de datos
+ * @param {UsuarioDB} userDB 
+ */
+export const RegistrarUsuarioDB = async (userDB, password) => {
+    addDoc(collection(db, 'Usuario'), {
+        'Nombre': userDB.nombre,
+        'Apellidos': userDB.apellidos,
+        'Email': userDB.email,
+        'Telefono': userDB.telefono,
+        'FotoPerfil': userDB.fotoPerfil,
+        'FechaNacimiento': userDB.fechaNacimiento
+    })
+
+    if (password !== undefined) {
+        const auth = getAuth()
+        createUserWithEmailAndPassword(auth, userDB.email, password)
+    }
+}
+
+export const GetEmailOfertador = async ofertadorRef => {
+    const ofertador = await getDoc(ofertadorRef)
+    const email = ofertador.data()['Email']
+    return email
+}
+
+
+export const GetChatsUser = async () => {
+    let usuariosRef = [];
+    //Coger las solicitudoes donde eres el Solicitante
+
+    const email = GetEmailFromCurrentUser()
+
+    const userRef = await GetUserRefByEmail(email);
+
+
+    let Solicitante = await getDocs(query(collection(db, "Chats"), where("Solicitante", "==", userRef)));
+    Solicitante.forEach((doc) => {
+        usuariosRef.push(doc.data()['Ofertador'])
+    });
+    let Ofertador = await getDocs(query(collection(db, "Chats"), where("Ofertador", "==", userRef)));
+    Ofertador.forEach((doc) => {
+        usuariosRef.push(doc.data()['Solicitante'])
+    });
+
+    let usuarios = []
+
+    for (let ref of usuariosRef) {
+        let datos = await getDoc(ref)
+        usuarios.push(datos.data());
+    }
+
+    return removeDuplicates(usuarios, "Email");
+}
+
+function removeDuplicates(originalArray, prop) {
+    var newArray = [];
+    var lookupObject  = {};
+
+    for(var i in originalArray) {
+       lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for(i in lookupObject) {
+        newArray.push(lookupObject[i]);
+    }
+     return newArray;
+}
+
+const GetUserRefByEmail = async email => {
+    const userID = await GetUserIdFromEmail(email);
+    const userRef = doc(db, "Usuario", userID)
+    return userRef
+}
+
+export const CreateSolicitud = async (ofertaId, ofertadorRef) => {
+
+    const email = GetEmailFromCurrentUser()
+    const userRef = await GetUserRefByEmail(email)
+
+    const ofertaRef = doc(db, 'Oferta', ofertaId)
+
+    addDoc(collection(db, 'Solicitud'), {
+        'Estado': 0,
+        'id_usuario': userRef,
+        'id_vivienda': ofertaRef
+    })
+
+    addDoc(collection(db, 'Chats'), {
+        'Ofertador': ofertadorRef,
+        'Solicitante': userRef
+    })
+}
+
