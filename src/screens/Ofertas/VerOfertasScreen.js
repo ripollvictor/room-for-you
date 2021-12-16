@@ -227,7 +227,12 @@ const VerOfertasScreen = () => {
 
     const updateOfertas = async () => {
         const res = await GetOfertas()
-        setOfertas(res)
+
+        const nuevasOfertas = res.sort((a,b) => 0.5 - Math.random())
+
+
+
+        setOfertas(nuevasOfertas)
     }
 
     const NextImg = () => {
