@@ -5,15 +5,21 @@ import { GetOfertasFavoritas, GetEmailOfertador } from '../../database/helper'
 import { OfertaDB } from '../../database/OfertaDB'
 import { global } from '../../styles/global'
 import { variables } from '../../styles/variables'
+import { useIsFocused } from '@react-navigation/native'
 
 const VerFavoritosScreen = ({navigation}) => {
+
+    useIsFocused()
 
     const [ofertasFavoritas, setOfertasFavoritas] = useState([])
     const [favoritos, setFavoritos] = useState([])
 
     const updateFavoritos = async () => {
         const res = await GetOfertasFavoritas()
-        setOfertasFavoritas(res)
+        if (res.length !== 0)
+            setOfertasFavoritas(res)
+        else
+            setOfertasFavoritas([])
     }
 
     useEffect(() => {
@@ -23,7 +29,18 @@ const VerFavoritosScreen = ({navigation}) => {
     }, [])
 
     useEffect(() => {
-        if (ofertasFavoritas.length === 0) return undefined
+        navigation.addListener('focus', () => {
+            updateFavoritos()
+        })
+    }, [navigation])
+
+    useEffect(() => {
+
+        console.log(ofertasFavoritas.length)
+        if (ofertasFavoritas.length === 0) {
+            setFavoritos([])
+            return undefined
+        }
 
         let i = 0
         let ofertasElem = []

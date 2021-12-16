@@ -210,17 +210,20 @@ export const GetOfertasFavoritas = async () => {
         ofertasRef.push(doc.data()['id_vivienda'])
     })
 
-    for (const ref of ofertasRef) {
-        const doc = await getDoc(ref)
-        const docAuxData = doc.data()
-
-        ofertas.push(new OfertaDB(
-            doc.id,
-            docAuxData['Ofertador'],
-            docAuxData['Direccion'],
-            docAuxData['Precio'],
-            docAuxData['Imagenes']
-        ))
+    if (ofertasRef.length !== 0) {
+        
+        for (const ref of ofertasRef) {
+            const doc = await getDoc(ref)
+            const docAuxData = await doc.data()
+    
+            ofertas.push(new OfertaDB(
+                doc.id,
+                docAuxData['Ofertador'],
+                docAuxData['Direccion'],
+                docAuxData['Precio'],
+                docAuxData['Imagenes']
+            ))
+        }
     }
 
     return ofertas
@@ -311,5 +314,19 @@ const GetUserRefByEmail = async email => {
     const userID = await GetUserIdFromEmail(email);
     const userRef = doc(db, "Usuario", userID)
     return userRef
+}
+
+export const CreateSolicitud = async ofertaId => {
+
+    const email = GetEmailFromCurrentUser()
+    const userRef = await GetUserRefByEmail(email)
+
+    const ofertaRef = doc(db, 'Oferta', ofertaId)
+
+    addDoc(collection(db, 'Solicitud'), {
+        'Estado': 0,
+        'id_usuario': userRef,
+        'id_vivienda': ofertaRef
+    })
 }
 

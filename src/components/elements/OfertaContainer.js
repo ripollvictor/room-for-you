@@ -34,7 +34,7 @@ const OfertaContainer = ({funcInfo, moreStyles, color, alpha, rotation, panContr
     if (oferta !== undefined) {
         direccion = oferta.direccion
         precio = oferta.precio
-        imagenURL = {'uri': oferta.imagenes[indexFoto]}
+        imagenURL = {'uri': indexFoto}
     }
     if (oferta === undefined) {
         return(<Text>No hay ofertas</Text>)

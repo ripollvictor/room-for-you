@@ -5,7 +5,7 @@ import { colors } from '../../styles/colors'
 import { global } from '../../styles/global'
 import { variables } from '../../styles/variables'
 import { OfertaDB } from '../../database/OfertaDB'
-import { GetOfertas } from '../../database/helper'
+import { GetOfertas, CreateSolicitud } from '../../database/helper'
 import { ButtonImgShadow } from '../../components/elements/Button'
 import { OfertaContainer } from '../../components/elements/OfertaContainer'
 
@@ -30,6 +30,8 @@ const VerOfertasScreen = () => {
     const opacityAnim = useRef(new Animated.Value(0)).current
     const rotationAnim = useRef(new Animated.Value(0)).current
     const pan = useRef(new Animated.ValueXY()).current
+    const pan2 = useRef(new Animated.ValueXY()).current
+    const pan3 = useRef(new Animated.ValueXY()).current
 
     const rotation = rotationAnim.interpolate({
         inputRange: [-300, 300],
@@ -85,13 +87,97 @@ const VerOfertasScreen = () => {
         }
     })
 
-    const [panController1, setPanController1] = useState(panResponder)
-    const [panController2, setPanController2] = useState({})
-    const [panController3, setPanController3] = useState({})
+    const panResponder2 = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove: (_, gesture) => {
+            if (gesture.dx < 0) { setCurrentColor(colors.primary) }
+                else { setCurrentColor(colors.secondary) }
+            pan2.x.setValue(gesture.dx)
+            pan2.y.setValue(0)
+            rotationAnim.setValue(gesture.dx)
+            opacityAnim.setValue(Math.abs(gesture.dx))
+        },
+        onPanResponderRelease: (_, gesture) => {
 
-    const [pan1, setPan1] = useState(pan)
-    const [pan2, setPan2] = useState({getLayout: () => {}})
-    const [pan3, setPan3] = useState({getLayout: () => {}})
+            if (gesture.dx === 0 && gesture.dy === 0) {
+                // se ha clickado
+
+                if (gesture.x0 > Dimensions.get('screen').width / 2) { NextImg() }
+                else { PrevImg() }
+
+            } else if (gesture.dx > Dimensions.get('screen').width / 2) {
+                // derecha
+                
+                AddFav()
+
+            } else if (Math.abs(gesture.dx) > Dimensions.get('screen').width / 2) {
+                // izquierda
+
+                NotFav()
+
+            } else {
+                Animated.spring(
+                    pan2,
+                    {toValue: {x: 0, y: 0}, useNativeDriver: false}
+                ).start()
+                Animated.spring(
+                    rotationAnim,
+                    {toValue: 0, useNativeDriver: false}
+                ).start()
+                Animated.spring(
+                    opacityAnim,
+                    {toValue: 0, useNativeDriver: false}
+                ).start()
+            }
+        }
+    })
+
+    const panResponder3 = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove: (_, gesture) => {
+            if (gesture.dx < 0) { setCurrentColor(colors.primary) }
+                else { setCurrentColor(colors.secondary) }
+            pan3.x.setValue(gesture.dx)
+            pan3.y.setValue(0)
+            rotationAnim.setValue(gesture.dx)
+            opacityAnim.setValue(Math.abs(gesture.dx))
+        },
+        onPanResponderRelease: (_, gesture) => {
+
+            if (gesture.dx === 0 && gesture.dy === 0) {
+                // se ha clickado
+
+                if (gesture.x0 > Dimensions.get('screen').width / 2) { NextImg() }
+                else { PrevImg() }
+
+            } else if (gesture.dx > Dimensions.get('screen').width / 2) {
+                // derecha
+                
+                AddFav()
+
+            } else if (Math.abs(gesture.dx) > Dimensions.get('screen').width / 2) {
+                // izquierda
+
+                NotFav()
+
+            } else {
+                Animated.spring(
+                    pan3,
+                    {toValue: {x: 0, y: 0}, useNativeDriver: false}
+                ).start()
+                Animated.spring(
+                    rotationAnim,
+                    {toValue: 0, useNativeDriver: false}
+                ).start()
+                Animated.spring(
+                    opacityAnim,
+                    {toValue: 0, useNativeDriver: false}
+                ).start()
+            }
+        }
+    })
+
+
 
     const [opacityController1, setOpacityController1] = useState(opacity)
     const [opacityController2, setOpacityController2] = useState(0)
@@ -123,86 +209,53 @@ const VerOfertasScreen = () => {
 
     useEffect(() => {
         
-    }, [indexOfertaActual])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // useEffect(() => {
-    //     console.log(ofertas.length)
-
-
-    //     let index1 = indexOfertaActual
-    //     let index2 = indexOfertaActual + 1
-    //     let index3 = indexOfertaActual + 2
-
-    //     if (index2 === ofertas.length) { index2 = 0 }
-    //     if (index3 === ofertas.length) { index3 = 0 }
-    //     if (index3 === ofertas.length + 1) { index3 = 1 }
-
-        
-        
-        
-
-        
-    //     if (ofertas[indexOfertaActual] !== undefined) setOferta1(ofertas[index1])
-    //     if (ofertas[indexOfertaActual + 1] !== undefined)  setOferta2(ofertas[index2])
-    //     if (ofertas[indexOfertaActual + 2] !== undefined)  setOferta3(ofertas[index3])
-
-    // }, [ofertas])
-
-    // Cuando se actualiza la oferta que se ve hay que cambiar siempre el indice de la foto actual a 0
-    useEffect(() => {
+        // cada vez que se modifica la oferta actual la imagen vuelve al indice 0
         setIndexFotoActual(0)
-        if (ofertas[indexOfertaActual] !== undefined) { setImgsLength(ofertas[indexOfertaActual].imagenes.length) }
-            else { setImgsLength(0) }
+        
+        // esto sirve para los indicadores que hay encima de los contenedores de las ofertas
+        if (ofertas[indexOfertaActual] !== undefined) setImgsLength(ofertas[indexOfertaActual].imagenes.length)
 
-        if (indexOfertaActual === ofertas.length && ofertas.length > 0) {
-            setIndexOfertaActual(0)
-        }
+        
 
     }, [indexOfertaActual])
 
     useEffect(() => {
-        if (pan === pan1) {
-            setPanController1(panResponder)
-            setPanController2({})
-            setPanController3({})
 
-            setOpacityController1(opacity)
-            setOpacityController2(0)
-            setOpacityController3(0)
+        //console.log(indexFotoActual)
 
-            setRotationController1(rotation)
-            setRotationController2('0deg')
-            setRotationController3('0deg')
+    }, [indexFotoActual])
 
-            setPan2({getLayout: () => {}})
-            setPan3({getLayout: () => {}})
+    const updateOfertas = async () => {
+        const res = await GetOfertas()
+        setOfertas(res)
+    }
+
+    const NextImg = () => {
+        if (indexFotoActual < ofertas[indexOfertaActual].imagenes.length - 1) {
+            let newIndex = indexFotoActual + 1
+            setIndexFotoActual(newIndex)
         }
-    }, [pan1])
+    }
+    const PrevImg = () => {
+        if (indexFotoActual > 0) {
+            setIndexFotoActual(indexFotoActual - 1)
+        }
+    }
 
-    useEffect(() => {
-        if (pan === pan2) {
-            setPanController1({})
-            setPanController2(panResponder)
-            setPanController3({})
+    const NextOferta = () => {
+        setIndexOfertaActual(indexOfertaActual + 1)
+
+        const indexesFunc = [setIndexZ1, setIndexZ2, setIndexZ3]
+        const indexes = [indexZ1, indexZ2, indexZ3]
+
+        indexesFunc.forEach((elem, i) => {
+            if (indexes[i] % 3 === 0) elem(1)
+            else if (indexes[i] % 3 === 2) elem(3)
+            else if (indexes[i] % 3 === 1) elem(2)
+        })
+
+        // falta cambiar rotation, opacity, pan y pancontroller para el siguiente oferta container
+        if (opacityController2 === 0 && opacityController3 === 0) {
 
             setOpacityController1(0)
             setOpacityController2(opacity)
@@ -212,16 +265,8 @@ const VerOfertasScreen = () => {
             setRotationController2(rotation)
             setRotationController3('0deg')
 
-            setPan1({getLayout: () => {}})
-            setPan3({getLayout: () => {}})
         }
-    }, [pan2])
-
-    useEffect(() => {
-        if (pan === pan3) {
-            setPanController1({})
-            setPanController2({})
-            setPanController3(panResponder)
+        else if (opacityController1 === 0 && opacityController3 === 0) {
 
             setOpacityController1(0)
             setOpacityController2(0)
@@ -230,19 +275,151 @@ const VerOfertasScreen = () => {
             setRotationController1('0deg')
             setRotationController2('0deg')
             setRotationController3(rotation)
-
-            setPan1({getLayout: () => {}})
-            setPan2({getLayout: () => {}})
         }
-    }, [pan3])
+        else if (opacityController1 === 0 && opacityController2 === 0) {
 
-    const updateOfertas = async () => {
-        const res = await GetOfertas()
-        setOfertas(res)
+            setOpacityController1(opacity)
+            setOpacityController2(0)
+            setOpacityController3(0)
+
+            setRotationController1(rotation)
+            setRotationController2('0deg')
+            setRotationController3('0deg')
+
+        }
     }
 
-    const GetIndicators = () => {
+    const NotFav = () => {
+        setCurrentColor(colors.secondary)
+        if (indexZ1 === 3) {
+            Animated.spring(
+                pan,
+                {toValue: {x: -500, y: 0}, useNativeDriver: false}
+            ).start(() => {
+                NextOferta()
+                pan.setValue({x: 0, y: 0})
+                rotationAnim.setValue(0)
+                opacityAnim.setValue(0)
+            })
+            Animated.spring(
+                rotationAnim,
+                {toValue: -300, useNativeDriver: false}
+            ).start()
+            Animated.spring(
+                opacityAnim,
+                {toValue: -300, useNativeDriver: false}
+            ).start()
+        }
+        else if (indexZ2 === 3) {
+            Animated.spring(
+                pan2,
+                {toValue: {x: -500, y: 0}, useNativeDriver: false}
+            ).start(() => {
+                NextOferta()
+                pan2.setValue({x: 0, y: 0})
+                rotationAnim.setValue(0)
+                opacityAnim.setValue(0)
+            })
+            Animated.spring(
+                rotationAnim,
+                {toValue: -300, useNativeDriver: false}
+            ).start()
+            Animated.spring(
+                opacityAnim,
+                {toValue: -300, useNativeDriver: false}
+            ).start()
+        }
+        else if (indexZ3 === 3) {
+            Animated.spring(
+                pan3,
+                {toValue: {x: -500, y: 0}, useNativeDriver: false}
+            ).start(() => {
+                NextOferta()
+                pan3.setValue({x: 0, y: 0})
+                rotationAnim.setValue(0)
+                opacityAnim.setValue(0)
+            })
+            Animated.spring(
+                rotationAnim,
+                {toValue: -300, useNativeDriver: false}
+            ).start()
+            Animated.spring(
+                opacityAnim,
+                {toValue: -300, useNativeDriver: false}
+            ).start()
+        }
+
+
+
+
+
         
+    }
+
+    const AddFav = () => {
+        if (indexZ1 === 3) {
+            Animated.spring(
+                pan,
+                {toValue: {x: 500, y: 0}, useNativeDriver: false}
+            ).start(() => {
+                CreateSolicitud(oferta1.id)
+                NextOferta()
+                pan.setValue({x: 0, y: 0})
+                rotationAnim.setValue(0)
+                opacityAnim.setValue(0)
+            })
+            Animated.spring(
+                rotationAnim,
+                {toValue: 300, useNativeDriver: false}
+            ).start()
+            Animated.spring(
+                opacityAnim,
+                {toValue: 300, useNativeDriver: false}
+            ).start()
+        }
+        else if (indexZ2 === 3) {
+            Animated.spring(
+                pan2,
+                {toValue: {x: 500, y: 0}, useNativeDriver: false}
+            ).start(() => {
+                CreateSolicitud(oferta2.id)
+                NextOferta()
+                pan2.setValue({x: 0, y: 0})
+                rotationAnim.setValue(0)
+                opacityAnim.setValue(0)
+            })
+            Animated.spring(
+                rotationAnim,
+                {toValue: 300, useNativeDriver: false}
+            ).start()
+            Animated.spring(
+                opacityAnim,
+                {toValue: 300, useNativeDriver: false}
+            ).start()
+        }
+        else if (indexZ3 === 3) {
+            Animated.spring(
+                pan3,
+                {toValue: {x: 500, y: 0}, useNativeDriver: false}
+            ).start(() => {
+                CreateSolicitud(oferta3.id)
+                NextOferta()
+                pan3.setValue({x: 0, y: 0})
+                rotationAnim.setValue(0)
+                opacityAnim.setValue(0)
+            })
+            Animated.spring(
+                rotationAnim,
+                {toValue: 300, useNativeDriver: false}
+            ).start()
+            Animated.spring(
+                opacityAnim,
+                {toValue: 300, useNativeDriver: false}
+            ).start()
+        }
+    }
+
+    const indicators = () => {
         let res = []
 
         if (imgsLength !== 0) {
@@ -260,74 +437,8 @@ const VerOfertasScreen = () => {
         }
         
 
-        return res
-    }
-
-    const NextImg = () => { if (indexFotoActual < imgsLength - 1) setIndexFotoActual(indexFotoActual + 1) }
-    const PrevImg = () => { if (indexFotoActual > 0) setIndexFotoActual(indexFotoActual - 1) }
-
-    const indicadores = GetIndicators()
-
-    const NextOferta = () => {
-        setIndexOfertaActual(indexOfertaActual + 1)
-
-        const indexesFunc = [setIndexZ1, setIndexZ2, setIndexZ3]
-        const indexes = [indexZ1, indexZ2, indexZ3]
-
-        indexesFunc.forEach((elem, i) => {
-            if (indexes[i] % 3 === 0) elem(1)
-            else if (indexes[i] % 3 === 2) elem(3)
-            else if (indexes[i] % 3 === 1) elem(2)
-        })
-
-        // falta cambiar rotation, opacity, pan y pancontroller para el siguiente oferta container
-        if (pan === pan1) { setPan2(pan) }
-        else if (pan === pan2) { setPan3(pan) }
-        else if (pan === pan3) { setPan1(pan) }
-    }
-
-    const NotFav = () => {
-        setCurrentColor(colors.secondary)
-        Animated.spring(
-            pan,
-            {toValue: {x: -500, y: 0}, useNativeDriver: false}
-        ).start(() => {
-            NextOferta()
-            pan.setValue({x: 0, y: 0})
-            rotationAnim.setValue(0)
-            opacityAnim.setValue(0)
-        })
-        Animated.spring(
-            rotationAnim,
-            {toValue: -300, useNativeDriver: false}
-        ).start()
-        Animated.spring(
-            opacityAnim,
-            {toValue: -300, useNativeDriver: false}
-        ).start()
-    }
-
-    const AddFav = () => {
-        Animated.spring(
-            pan,
-            {toValue: {x: 500, y: 0}, useNativeDriver: false}
-        ).start(() => {
-            NextOferta()
-            pan.setValue({x: 0, y: 0})
-            rotationAnim.setValue(0)
-            opacityAnim.setValue(0)
-        })
-        Animated.spring(
-            rotationAnim,
-            {toValue: 300, useNativeDriver: false}
-        ).start()
-        Animated.spring(
-            opacityAnim,
-            {toValue: 300, useNativeDriver: false}
-        ).start()
-
-        
-    }
+        return(res)
+    } 
 
     return(
         <View style={[global.default, {paddingTop: 71}]}>
@@ -338,7 +449,7 @@ const VerOfertasScreen = () => {
                     marginBottom: 42
                 }}
             >
-                {indicadores}
+                {indicators()}
             </View>
 
             <View style={{
@@ -348,14 +459,14 @@ const VerOfertasScreen = () => {
                 left: variables.spaceHorizontal,
                 bottom: 140,
                 position: 'absolute',
-                zIndex: indexZ1
+                zIndex: indexZ1,
             }}>
                 <OfertaContainer
                     oferta={oferta1}
                     color={currentColor} alpha={opacityController1} rotation={rotationController1}
-                    indexFoto={indexFotoActual}
-                    panController={panController1.panHandlers}
-                    panLayout={pan1.getLayout()}
+                    indexFoto={oferta1.imagenes[indexFotoActual]}
+                    panController={panResponder.panHandlers}
+                    panLayout={pan.getLayout()}
                 />
             </View>
 
@@ -366,13 +477,13 @@ const VerOfertasScreen = () => {
                 left: variables.spaceHorizontal,
                 bottom: 140,
                 position: 'absolute',
-                zIndex: indexZ2
+                zIndex: indexZ2,
             }}>
                 <OfertaContainer
                     oferta={oferta2}
                     color={currentColor} alpha={opacityController2} rotation={rotationController2}
-                    indexFoto={indexFotoActual}
-                    panController={panController2.panHandlers}
+                    indexFoto={oferta2.imagenes[indexFotoActual]}
+                    panController={panResponder2.panHandlers}
                     panLayout={pan2.getLayout()}
                 />
             </View>
@@ -384,13 +495,13 @@ const VerOfertasScreen = () => {
                 left: variables.spaceHorizontal,
                 bottom: 140,
                 position: 'absolute',
-                zIndex: indexZ3
+                zIndex: indexZ3,
             }}>
                 <OfertaContainer
                     oferta={oferta3}
                     color={currentColor} alpha={opacityController3} rotation={rotationController3}
-                    indexFoto={indexFotoActual}
-                    panController={panController3.panHandlers}
+                    indexFoto={oferta3.imagenes[indexFotoActual]}
+                    panController={panResponder3.panHandlers}
                     panLayout={pan3.getLayout()}
                 />
             </View>
@@ -424,7 +535,7 @@ const VerOfertasScreen = () => {
                     widthImg={42}
                     heightImg={42}
                     backgroundColor={colors.white}
-                    func={() => {}}
+                    func={() => {console.log(panController2)}}
                     marginRight={variables.spaceBetweenElems}
                 />
                 <ButtonImgShadow

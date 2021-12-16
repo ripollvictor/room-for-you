@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native'
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 
 import { MainNavigator } from './src/navigation/MainNavigator';
@@ -7,8 +8,9 @@ import { colors } from './src/styles/colors';
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
 
-
 const App = () => {
+
+    LogBox.ignoreLogs(['Setting a timer'])
 
     const [fontsLoaded] = useFonts({
         'nk57-monospace': require('./assets/fonts/nk57-monospace.ttf'),

@@ -10,6 +10,9 @@ import * as ImagePicker from 'expo-image-picker'
 
 const RegistrarUsuario1Screen = ({navigation}) => {
 
+    const [width, setWidth] = useState(25)
+    const [border, setBorder] = useState(0)
+
     const [imgSource, setImgSource] = useState(require('../../../assets/registrar/suma.png'))
 
     const   [email, setEmail] = useState(''),
@@ -81,6 +84,8 @@ const RegistrarUsuario1Screen = ({navigation}) => {
                 alert('No has seleccionado ninguna Imagen')
                 return
             }
+            setWidth(93)
+            setBorder(variables.borderRadius)
             setImgSource({uri:respuesta.image})
             setPerfilSource(respuesta.image)
     }
@@ -110,10 +115,11 @@ const RegistrarUsuario1Screen = ({navigation}) => {
                     imgSource={imgSource} 
                     widthContianer={93}
                     heightContianer={93}
-                    widthImg={25}
-                    heightImg={25}
+                    widthImg={width}
+                    heightImg={width}
                     backgroundColor={colors.gray}
                     func={CargarImagen}
+                    borderRadiusImg={border}
                 />
             </View>
             <Text style={[global.title, {marginBottom: 54}]}>
