@@ -215,7 +215,7 @@ const VerOfertasScreen = () => {
         // esto sirve para los indicadores que hay encima de los contenedores de las ofertas
         if (ofertas[indexOfertaActual] !== undefined) setImgsLength(ofertas[indexOfertaActual].imagenes.length)
 
-        
+        // modificar las ofertas
 
     }, [indexOfertaActual])
 
