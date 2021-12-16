@@ -50,22 +50,9 @@ const RegistrarUsuario2Screen = ({route, navigation}) => {
             const fechaNacDateObj = new Date(anyo, mes, dia)
             const newUser = new UsuarioDB(nombre, apellidos, email, fechaNacDateObj, urlImgFirebase, telefono)
 
-            await RegistrarUsuarioDB(newUser)
-
-            Alert.alert('¿Qué quieres hacer?', '', [
-                {
-                    text: 'Registrar una habitación',
-                    onPress: () => {
-                        navigation.navigate('Oferta 1')
-                    }
-                },
-                {
-                    text: 'Buscar un piso',
-                    onPress: () => {
-                        navigation.navigate('Busqueda')
-                    }
-                }
-            ])
+            await RegistrarUsuarioDB(newUser, password)
+            
+            navigation.navigate('Main')
 
         } else {
             // mostrar errores
