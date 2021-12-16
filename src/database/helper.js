@@ -316,7 +316,7 @@ const GetUserRefByEmail = async email => {
     return userRef
 }
 
-export const CreateSolicitud = async ofertaId => {
+export const CreateSolicitud = async (ofertaId, ofertadorRef) => {
 
     const email = GetEmailFromCurrentUser()
     const userRef = await GetUserRefByEmail(email)
@@ -327,6 +327,11 @@ export const CreateSolicitud = async ofertaId => {
         'Estado': 0,
         'id_usuario': userRef,
         'id_vivienda': ofertaRef
+    })
+
+    addDoc(collection(db, 'Chats'), {
+        'Ofertador': ofertadorRef,
+        'Solicitante': userRef
     })
 }
 

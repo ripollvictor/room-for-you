@@ -11,6 +11,8 @@ import RegistrarOfertaScreen from   '../screens/Ofertas/RegistrarOfertaScreen'
 import VerOfertaScreen from         '../screens/Ofertas/VerOfertaScreen'
 import VerSolicitantesScreen from   '../screens/Favoritos/VerSolicitantesScreen'
 import ListaContactosScreen from '../screens/Mensajeria/ListaContactosScreen'
+import ChatScreen from '../screens/Mensajeria/ChatScreen'
+
 
 
 const Stack = createStackNavigator()
@@ -26,7 +28,7 @@ const OfertasNavigator = () => {
 const BusquedaNavigator = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: false }} >
-            <Stack.Screen name='ListaContactos' component={ ListaContactosScreen } />
+            <Stack.Screen name='BusquedaScreen' component={ BusquedaScreen } />
         </Stack.Navigator>
     )
 }
@@ -43,6 +45,8 @@ const PerfilNavigator = () => {
     return(
         <Stack.Navigator screenOptions={{ headerShown: false }} >
             <Stack.Screen name='Ver Perfil' component={ VerPerfilScreen } />
+            <Stack.Screen name="ListaContactos" component={ ListaContactosScreen } />
+            <Stack.Screen name='Chat2' component={ ChatScreen } />
         </Stack.Navigator>
     )
 }

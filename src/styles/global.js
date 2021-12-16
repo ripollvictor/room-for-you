@@ -8,6 +8,11 @@ const global = StyleSheet.create({
         flexDirection: 'column',
         paddingHorizontal: variables.spaceHorizontal,
     },
+
+    inputSearch: {
+        marginTop: 70,
+
+    },
     
     font: {
         fontFamily: 'nk57-monospace'

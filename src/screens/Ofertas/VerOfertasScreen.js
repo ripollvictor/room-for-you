@@ -362,7 +362,7 @@ const VerOfertasScreen = () => {
                 pan,
                 {toValue: {x: 500, y: 0}, useNativeDriver: false}
             ).start(() => {
-                CreateSolicitud(oferta1.id)
+                CreateSolicitud(oferta1.id, oferta1.ofertador)
                 NextOferta()
                 pan.setValue({x: 0, y: 0})
                 rotationAnim.setValue(0)
@@ -382,7 +382,7 @@ const VerOfertasScreen = () => {
                 pan2,
                 {toValue: {x: 500, y: 0}, useNativeDriver: false}
             ).start(() => {
-                CreateSolicitud(oferta2.id)
+                CreateSolicitud(oferta2.id, oferta2.ofertador)
                 NextOferta()
                 pan2.setValue({x: 0, y: 0})
                 rotationAnim.setValue(0)
@@ -402,7 +402,7 @@ const VerOfertasScreen = () => {
                 pan3,
                 {toValue: {x: 500, y: 0}, useNativeDriver: false}
             ).start(() => {
-                CreateSolicitud(oferta3.id)
+                CreateSolicitud(oferta3.id, oferta3.ofertador)
                 NextOferta()
                 pan3.setValue({x: 0, y: 0})
                 rotationAnim.setValue(0)
