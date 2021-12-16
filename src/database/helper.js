@@ -10,7 +10,8 @@ import {
     signOut,
     GoogleAuthProvider,
     signInWithCredential,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword 
 } from "firebase/auth";
 
 import {
@@ -263,7 +264,7 @@ export const ModificarDatosUsuaio = async user => {
  * Registrar un usuario en la base de datos
  * @param {UsuarioDB} userDB 
  */
-export const RegistrarUsuarioDB = async userDB => {
+export const RegistrarUsuarioDB = async (userDB, password) => {
     addDoc(collection(db, 'Usuario'), {
         'Nombre': userDB.nombre,
         'Apellidos': userDB.apellidos,
@@ -272,6 +273,11 @@ export const RegistrarUsuarioDB = async userDB => {
         'FotoPerfil': userDB.fotoPerfil,
         'FechaNacimiento': userDB.fechaNacimiento
     })
+
+    if (password !== undefined) {
+        const auth = getAuth()
+        createUserWithEmailAndPassword(auth, userDB.email, password)
+    }
 }
 
 export const GetEmailOfertador = async ofertadorRef => {
