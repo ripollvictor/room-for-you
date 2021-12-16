@@ -212,11 +212,11 @@ export const GetOfertasFavoritas = async () => {
     })
 
     if (ofertasRef.length !== 0) {
-        
+
         for (const ref of ofertasRef) {
             const doc = await getDoc(ref)
             const docAuxData = await doc.data()
-    
+
             ofertas.push(new OfertaDB(
                 doc.id,
                 docAuxData['Ofertador'],
@@ -294,7 +294,7 @@ export const GetChatsUser = async () => {
     const email = GetEmailFromCurrentUser()
 
     const userRef = await GetUserRefByEmail(email);
-    
+
 
     let Solicitante = await getDocs(query(collection(db, "Chats"), where("Solicitante", "==", userRef)));
     Solicitante.forEach((doc) => {
@@ -312,8 +312,21 @@ export const GetChatsUser = async () => {
         usuarios.push(datos.data());
     }
 
+    return removeDuplicates(usuarios, "Email");
+}
 
-    return usuarios;
+function removeDuplicates(originalArray, prop) {
+    var newArray = [];
+    var lookupObject  = {};
+
+    for(var i in originalArray) {
+       lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for(i in lookupObject) {
+        newArray.push(lookupObject[i]);
+    }
+     return newArray;
 }
 
 const GetUserRefByEmail = async email => {
